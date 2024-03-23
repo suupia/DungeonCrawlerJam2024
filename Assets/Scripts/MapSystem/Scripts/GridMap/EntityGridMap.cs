@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using DungeonCrawler.Map.Interfaces;
 using DungeonCrawlerMap.Interfaces;
@@ -46,6 +47,36 @@ namespace DungeonCrawler.Map.Scripts
             }
             // _blockPresenterは初期化していなことに注意
             return this;
+        }
+        
+        public void FillAll(IEntity entity)
+        {
+            for (int i = 0; i < Length; i++)
+            {
+                _entityMaps[i].Add(entity);
+            }
+        }
+        
+        public void DebugPrint()
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    var entities = GetSingleTypeList<IEntity>(new Vector2Int(x,y));
+                    if (entities.Any())
+                    {
+                        sb.Append(entities[0].ToString());
+                    }
+                    else
+                    {
+                        sb.Append("null");
+                    }
+                }
+                sb.Append("\n");
+            }
+            Debug.Log(sb.ToString());
         }
 
         //Getter
@@ -135,6 +166,7 @@ namespace DungeonCrawler.Map.Scripts
             return _entityMaps[index];
         }
         
+        // AddEntity
         public void AddEntity(Vector2Int vector, IEntity entity)
         {
             var x = vector.x;
@@ -148,7 +180,6 @@ namespace DungeonCrawler.Map.Scripts
 
             AddEntity(ToSubscript(x, y), entity);
         }
-        
         
         public void AddEntity(int index, IEntity entity)
         {
@@ -171,7 +202,7 @@ namespace DungeonCrawler.Map.Scripts
             
         }
 
-        
+        // RemoveEntity
         public void RemoveEntity<T>(int x, int y, T entity) where T : IEntity
         {
             if (_coordinate. IsOutOfDataArea(x, y))
