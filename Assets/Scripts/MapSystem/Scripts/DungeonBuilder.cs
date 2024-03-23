@@ -26,11 +26,8 @@ namespace DungeonCrawler.MapSystem.Scripts
         
         public EntityGridMap CreateDungeon()
         {
-            // Step1: Fill the map with walls
             var map = new EntityGridMap(_coordinate);
-            // Step2: Divide the map into two areas
             var areas = DivideMap(map);
-            // Step3: Create the room in each area
             var rooms = new List<Room>();
             foreach (var area in areas)
             {
@@ -42,25 +39,13 @@ namespace DungeonCrawler.MapSystem.Scripts
                 Debug.Log($"Room i: {i}, X: {room.X}, Y: {room.Y}, Width: {room.Width}, Height: {room.Height}");
             }
             
-            // Step4: Connect the rooms
-            // var connectMap = ConnectRoom(roomMap);
 
-            var resMap = PlaceRooms(map, rooms);
+            var placedRoomsMap = PlaceRooms(map, rooms);
+            var placedWallMap = PlaceWall(map);
             
-            // resMap = FillEntity<CharacterPath>(resMap);
-            // return resMap;
-            
-            resMap =PlaceWall(resMap);
-            
-            return resMap;
+            return placedWallMap;
         }
         
-        // EntityGridMap InitMap()
-        // {
-        //     var map = new EntityGridMap(_coordinate);
-        //     map.FillAll(_wall);
-        //     return map;
-        // }
         
         List<Area> DivideMap(EntityGridMap map)
         {
@@ -134,10 +119,7 @@ namespace DungeonCrawler.MapSystem.Scripts
             }
             return map;
         }
-        EntityGridMap ConnectRoom(EntityGridMap map)
-        {
-            return map;
-        }
+
     }
     
     class Room
