@@ -1,11 +1,14 @@
 ﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Codice.Client.BaseCommands;
 using DungeonCrawler.MapSystem.Interfaces;
 using DungeonCrawler.MapSystem.Scripts;
 using DungeonCrawler.MapSystem.Scripts.Entity;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Random = UnityEngine.Random;
 
 
 namespace DungeonCrawler.MapSystem.Scripts
@@ -29,38 +32,42 @@ namespace DungeonCrawler.MapSystem.Scripts
         public EntityGridMap CreateDungeonDivide()
         {
             var map = new EntityGridMap(_coordinate);
-            var areas = RecursiveDivideArea(new Area()
+            var area = new Area
             {
                 X = 0,
                 Y = 0,
                 Width = map.Width,
-                Height = map.Height
-            });
-            Debug.Log($"areas.count: {areas.Count}");
-            var rooms = new List<Room>();
-            foreach (var area in areas)
-            {
-                rooms.Add( CreateRoom(area));
-            }
-            // Debug
-            foreach (var (room, i) in rooms.Select((v, i) => (v, i)))
-            {
-                Debug.Log($"Room i: {i}, X: {room.X}, Y: {room.Y}, Width: {room.Width}, Height: {room.Height}");
-            }
-            
-
-            map = PlaceRooms(map, rooms);
+                Height = map.Height,
+                Rooms =  new Room[]
+                {
+                    new Room
+                    {
+                        X = 0,
+                        Y = 0,
+                        Width = map.Width - MinRoomMargin * 2,
+                        Height = map.Height - MinRoomMargin * 2
+                    }
+                },
+            };
+            // map = PlaceRooms(map, rooms);
+            map = PlaceRoomsRe(map, area);
             // map = PlacePath(map, CreatePathNaive(rooms[0], rooms[1]));
             map = PlaceWall(map);  // this should be last
             
             return map;
         }
 
-        (Area area1, Area area2) DivideArea(Area area)
+        (Area area, bool idDivided) DivideArea(Area area)
         {
+            if(!CanDivideArea(area))
+            {
+                return (area, false);
+            }
+            
             // Preconditions
             Assert.IsTrue(area.Width >= MinAreaSize*2 || area.Height >= MinAreaSize*2);
-            
+
+
             bool isDivideByVertical = Random.Range(0, 2) == 0;
             if(area.Width < MinAreaSize*2)
             {
@@ -83,6 +90,11 @@ namespace DungeonCrawler.MapSystem.Scripts
                     new Area{X = area.X, Y = area.Y, Width = area.Width, Height = divideX},
                     new Area{X = area.X, Y = area.Y + divideX, Width = area.Width, Height = area.Height - divideX}
                 );
+            
+            Debug.Log($"result.Item1: X: {result.Item1.X}, Y: {result.Item1.Y}, Width: {result.Item1.Width}, Height: {result.Item1.Height}");
+            Debug.Log($"result.Item2: X: {result.Item2.X}, Y: {result.Item2.Y}, Width: {result.Item2.Width}, Height: {result.Item2.Height}");
+            var finalResult = AddRoomEach(result.Item1, result.Item2);
+            var mergedArea = MergeArea(finalResult.area1, finalResult.area2);
 
             Assert.IsTrue(result.Item1.Width >= MinRoomSize);
             Assert.IsTrue(result.Item2.Width >= MinRoomSize);
@@ -91,29 +103,45 @@ namespace DungeonCrawler.MapSystem.Scripts
             
             // Debug
             Debug.Log($"DivideArea: X: {area.X}, Y: {area.Y}, Width: {area.Width}, Height: {area.Height}");
-            Debug.Log($"result.Item1.: X: {result.Item1.X}, Y: {result.Item1.Y}, Width: {result.Item1.Width}, Height: {result.Item1.Height}");
+            Debug.Log($"result.Item1: X: {result.Item1.X}, Y: {result.Item1.Y}, Width: {result.Item1.Width}, Height: {result.Item1.Height}");
             Debug.Log($"result.Item2: X: {result.Item2.X}, Y: {result.Item2.Y}, Width: {result.Item2.Width}, Height: {result.Item2.Height}");
             
-            return result;
+            return (mergedArea, true);
+            
+            // Local Functions
+            bool CanDivideArea(Area area)
+            {
+                return area.Width >= MinAreaSize*2 || area.Height >= MinAreaSize*2;            
+            }
+            
+            (Area area1, Area area2) AddRoomEach(Area area1, Area area2)
+            {
+                return (AddRoom(area1), AddRoom(area2));
+            }
+            
+            Area MergeArea(Area area1, Area area2)
+            {
+                return new Area
+                {
+                    X = Mathf.Min(area1.X, area2.X),
+                    Y = Mathf.Min(area1.Y, area2.Y),
+                    Width = area1.Width + area2.Width,
+                    Height = area1.Height + area2.Height,
+                };
+            }
         }
 
-        List<Area> RecursiveDivideArea(Area initArea ,int counter = 0)
+        Area RecursiveDivideArea(Area initArea ,int counter = 0)
         {
             Debug.Log($"initArea: X: {initArea.X}, Y: {initArea.Y}, Width: {initArea.Width}, Height: {initArea.Height}");
-            var result = new List<Area>();
-            if (CanDivideArea(initArea))
+            var (dividedArea, idDivided) = DivideArea(initArea);
+            Debug.Log($"isDivided: {idDivided}");
+            if (idDivided)
             {
-                var (area1,area2) = DivideArea(initArea);
-                result.AddRange(RecursiveDivideArea(area1,counter+1));
-                result.AddRange(RecursiveDivideArea(area2,counter+1));
+               return RecursiveDivideArea(dividedArea, counter+1);
             }
-            else
-            {
-                result.Add(initArea);
-            }
-            if (counter >= 3) return result;
-
-            return result;
+            return dividedArea;
+            
         }
 
         bool CanDivideArea(Area area)
@@ -131,6 +159,26 @@ namespace DungeonCrawler.MapSystem.Scripts
             room.Height = Random.Range(MinRoomSize, Mathf.Min( MaxRoomSize, area.Height - (room.Y-area.Y)));
             return room;
         }
+
+        Area AddRoom(Area area)
+        {
+            var room = new Room();
+            room.X = Random.Range(area.X + MinRoomMargin, area.X + area.Width - (MinRoomSize + MinRoomMargin * 2));
+            room.Y = Random.Range(area.Y + MinRoomMargin, area.Y + area.Height - (MinRoomSize + MinRoomMargin * 2));
+            room.Width = Random.Range(MinRoomSize, Mathf.Min( MaxRoomSize, area.Width - (room.X-area.X)));
+            room.Height = Random.Range(MinRoomSize, Mathf.Min( MaxRoomSize, area.Height - (room.Y-area.Y)));
+            Debug.Log($"area.Rooms.Length: {area.Rooms.Length}");
+            Debug.Log($"area.Rooms: {area.Rooms}");
+            var result = new Area()
+            {
+                X = area.X,
+                Y = area.Y,
+                Width = area.Width,
+                Height = area.Height,
+                Rooms = area.Rooms.Length == 0 ? new Room[]{room} : area.Rooms.Append(room).ToArray()
+            };
+            return result;
+        }
         
         EntityGridMap PlaceRooms(EntityGridMap map, List<Room> rooms)
         {
@@ -146,7 +194,20 @@ namespace DungeonCrawler.MapSystem.Scripts
             }
             return map;
         }
-
+        EntityGridMap PlaceRoomsRe(EntityGridMap map, Area area)
+        {
+            foreach (var room in area.Rooms)
+            {
+                for (int y = room.Y; y < room.Y + room.Height; y++)
+                {
+                    for (int x = room.X; x < room.X + room.Width; x++)
+                    {
+                        map.AddEntity(x,y, _path);
+                    }
+                }
+            }
+            return map;
+        }
         EntityGridMap PlaceWall(EntityGridMap map)
         {
             for (int y = 0; y < map.Height; y++)
@@ -214,17 +275,18 @@ namespace DungeonCrawler.MapSystem.Scripts
     }
     
     
-    struct Area
+    record Area
     {
         public int X, Y, Width, Height;
+        public Room[] Rooms = Array.Empty<Room>();
     }
-    struct Room
+    record Room
     {
         public int X, Y, Width, Height;
         public (int x, int y) Leader;
     }
 
-    struct Path
+    record Path
     {
         public (int x, int y)[] Points;
     }
