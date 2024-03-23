@@ -26,38 +26,9 @@ namespace DungeonCrawler.MapSystem.Scripts
             _coordinate = coordinate;
         }
         
-        public EntityGridMap CreateDungeonDivideByX()
-        {
-            var map = new EntityGridMap(_coordinate);
-            var areas = DivideMapByX(map);
-            var rooms = new List<Room>();
-            foreach (var area in areas)
-            {
-                rooms.Add( CreateRoom(area));
-            }
-            // Debug
-            foreach (var (room, i) in rooms.Select((v, i) => (v, i)))
-            {
-                Debug.Log($"Room i: {i}, X: {room.X}, Y: {room.Y}, Width: {room.Width}, Height: {room.Height}");
-            }
-            
-
-            map = PlaceRooms(map, rooms);
-            map = PlacePath(map, CreatePathNaive(rooms[0], rooms[1]));
-            map = PlaceWall(map);  // this should be last
-            
-            return map;
-        }
         public EntityGridMap CreateDungeonDivide()
         {
             var map = new EntityGridMap(_coordinate);
-            // var areas = DivideArea(new Area()
-            // {
-            //     X = 0,
-            //     Y = 0,
-            //     Width = map.Width,
-            //     Height = map.Height
-            // });
             var areas = RecursiveDivideArea(new Area()
             {
                 X = 0,
@@ -151,46 +122,7 @@ namespace DungeonCrawler.MapSystem.Scripts
         {
             return area.Width >= MinAreaSize*2 || area.Height >= MinAreaSize*2;            
         }
-
-        List<Area> DivideMapByX(EntityGridMap map)
-        {
-            var minX = MinRoomSize + MinRoomMargin * 2; // Ensure that the room can be placed in the left area
-            var maxX = map.Width - (MinRoomSize + MinRoomMargin * 2); // Ensure that the room can be placed in the right area
-            var divideX = Random.Range(minX, maxX);
-            var areas = new List<Area>();
-            areas.Add(new Area{X = 0, Y = 0, Width = divideX, Height = map.Height});
-            areas.Add(new Area{X = divideX, Y = 0, Width = map.Width - divideX, Height = map.Height});
-            
-            Assert.IsTrue(areas[0].Width >= MinRoomSize);
-            Assert.IsTrue(areas[1].Width >= MinRoomSize);
-            
-            // Debug
-            foreach (var (area, i) in areas.Select((v, i) => (v, i)))
-            {
-                Debug.Log($"Area i: {i}, X: {area.X}, Y: {area.Y}, Width: {area.Width}, Height: {area.Height}");
-            }
-            
-            return areas;
-        }
         
-        List<Area> DivideMapByY(EntityGridMap map)
-        {
-            var minY = (MinRoomSize + MinRoomMargin * 2);
-            var maxY = map.Height - (MinRoomSize + MinRoomMargin * 2);
-            var divideY = Random.Range(minY, maxY);
-            var areas = new List<Area>();
-            areas.Add(new Area{X = 0, Y = 0, Width = map.Width, Height = divideY});
-            areas.Add(new Area{X = 0, Y = divideY, Width = map.Width, Height = map.Height - divideY});
-            
-            // Debug
-            foreach (var (area, i) in areas.Select((v, i) => (v, i)))
-            {
-                Debug.Log($"Area i: {i}, X: {area.X}, Y: {area.Y}, Width: {area.Width}, Height: {area.Height}");
-            }
-            
-            return areas;
-        }
-
         
         Room CreateRoom(Area area)
         {

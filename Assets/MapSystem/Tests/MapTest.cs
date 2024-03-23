@@ -33,7 +33,7 @@ public class MapTest
         var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(10, 10));
     
         // Act
-        var map = dungeonBuilder.CreateDungeonDivideByX();
+        var map = dungeonBuilder.CreateDungeonDivide();
 
         // Debug
         map.DebugPrint();
