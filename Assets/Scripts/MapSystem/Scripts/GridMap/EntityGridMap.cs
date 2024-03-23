@@ -56,22 +56,45 @@ namespace DungeonCrawler.MapSystem.Scripts
                 _entityMaps[i].Add(entity);
             }
         }
-        
+
         public void DebugPrint()
         {
             StringBuilder sb = new StringBuilder();
+            int maxStringLength = 0;
+
+            // Calculate maxStringLength
             for (int y = 0; y < Height; y++)
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    var entities = GetSingleTypeList<IEntity>(new Vector2Int(x,y));
+                    var entities = GetSingleTypeList<IEntity>(new Vector2Int(x, y));
                     if (entities.Any())
                     {
-                        sb.Append(entities[0].ToString());
+                        int length = entities[0].ToString().Length;
+                        if (length > maxStringLength)
+                            maxStringLength = length;
                     }
                     else
                     {
-                        sb.Append("null");
+                        if (4 > maxStringLength)  // "null" の文字列長
+                            maxStringLength = 4;
+                    }
+                }
+            }
+
+            // Output string with fixed width
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    var entities = GetSingleTypeList<IEntity>(new Vector2Int(x, y));
+                    if (entities.Any())
+                    {
+                        sb.Append(entities[0].ToString().PadRight(maxStringLength));
+                    }
+                    else
+                    {
+                        sb.Append("null".PadRight(maxStringLength));
                     }
                 }
                 sb.Append("\n");
@@ -85,6 +108,10 @@ namespace DungeonCrawler.MapSystem.Scripts
             int x = vector.x;
             int y = vector.y;
 
+            return GetSingleEntity<T>(x, y);
+        }
+        public T? GetSingleEntity<T>(int x, int y) where T : IEntity
+        {
             if (_coordinate.IsOutOfDataArea(x, y)) {return default(T);}
 
             return GetSingleEntity<T>(ToSubscript(x, y));
@@ -111,12 +138,15 @@ namespace DungeonCrawler.MapSystem.Scripts
                 return entity;
             }
         }
-
         public List<T> GetSingleTypeList<T>(Vector2Int vector) where T : IEntity
         {
             var x = vector.x;
             var y = vector.y;
 
+            return GetSingleTypeList<T>(ToSubscript(x, y));
+        }
+        public List<T> GetSingleTypeList<T>(int x, int y) where T : IEntity
+        {
             if (_coordinate.IsOutOfDataArea(x, y)) return new List<T>();
 
             return GetSingleTypeList<T>(ToSubscript(x, y));
@@ -172,20 +202,25 @@ namespace DungeonCrawler.MapSystem.Scripts
             var x = vector.x;
             var y = vector.y;
 
+            AddEntity(x,y, entity);
+        }
+        public void AddEntity(int x, int y, IEntity entity)
+        {
+
             if (_coordinate.IsOutOfDataArea(x, y))
             {
-                Debug.LogError($"IsOutOfDataRangeArea({x},{y})がtrueです");
+                Debug.LogWarning($"IsOutOfDataRange({x},{y}) is true");
                 return;
             }
 
             AddEntity(ToSubscript(x, y), entity);
         }
-        
+
         public void AddEntity(int index, IEntity entity)
         {
             if (index < 0 || index > Length)
             {
-                Debug.LogError("領域外に値を設定しようとしました");
+                Debug.LogError("You are trying to get a value out of range.");
                 return;
             }
 
@@ -193,8 +228,7 @@ namespace DungeonCrawler.MapSystem.Scripts
 
             if (entities.Any())
             {
-                Debug.LogWarning(
-                    $"[注意!!] 既に{typeof(IEntity)}が入っています。現在の数: {entities.Count}");
+                Debug.LogWarning($"[Warning] {typeof(IEntity)} is already in. Current Count: {entities.Count}");
             }
 
             // domain
@@ -207,7 +241,7 @@ namespace DungeonCrawler.MapSystem.Scripts
         {
             if (_coordinate. IsOutOfDataArea(x, y))
             {
-                Debug.LogWarning($"IsOutOfDataRange({x},{y})がtrueです");
+                Debug.LogWarning($"IsOutOfDataRange({x},{y}) is true");
                 return;
             }
 

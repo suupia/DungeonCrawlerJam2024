@@ -30,17 +30,17 @@ public class MapTest
     public void TestDungeonBuilder()
     {
         // Arrange
-        var entityGridMap = new EntityGridMap(new SquareGridCoordinate(10, 10));
-        
-        // Act
         var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(10, 10));
-        
+    
+        // Act
+        var map = dungeonBuilder.CreateDungeon();
+
         // Debug
-        entityGridMap.DebugPrint();
+        map.DebugPrint();
         
         // Assert
-        Assert.AreEqual(10, entityGridMap.Width);
-        Assert.AreEqual(10, entityGridMap.Height);
-        Assert.AreEqual(100, entityGridMap.Length);
+        Assert.AreEqual(10, map.Width);
+        Assert.AreEqual(10, map.Height);
+        Assert.AreEqual(100, map.Length);
     }
 }

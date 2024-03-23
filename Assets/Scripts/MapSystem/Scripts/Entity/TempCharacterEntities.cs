@@ -7,7 +7,7 @@ namespace DungeonCrawler.MapSystem.Scripts.Entity
     {
         public override string ToString()
         {
-            return "#";
+            return "W";
         }
     }
     
@@ -15,7 +15,15 @@ namespace DungeonCrawler.MapSystem.Scripts.Entity
     {
         public override string ToString()
         {
-            return ".";
+            return "P";
+        }
+    }
+    
+    public class CharacterArea: IEntity
+    {
+        public override string ToString()
+        {
+            return "A";
         }
     }
 }
