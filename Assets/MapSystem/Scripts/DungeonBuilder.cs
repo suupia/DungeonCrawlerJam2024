@@ -56,7 +56,7 @@ namespace DungeonCrawler.MapSystem.Scripts
             return map;
         }
 
-        List<Area> DivideArea(Area area)
+        (Area area1, Area area2) DivideArea(Area area)
         {
             // Preconditions
             Assert.IsTrue(area.Width >= MinAreaSize*2 || area.Height >= MinAreaSize*2);
@@ -73,28 +73,28 @@ namespace DungeonCrawler.MapSystem.Scripts
             var minX = MinAreaSize; // Ensure that the room can be placed in the left area
             var maxX = areaSize - MinAreaSize; // Ensure that the room can be placed in the right area
             var divideX = Random.Range(minX, maxX);
-            var areas = new List<Area>();
-            if (isDivideByVertical)
-            {
-                areas.Add(new Area{X = area.X, Y = area.Y, Width = divideX, Height = area.Height});
-                areas.Add(new Area{X = area.X + divideX, Y = area.Y, Width = area.Width - divideX, Height = area.Height});
-            }
-            else
-            {
-                areas.Add(new Area{X = area.X, Y = area.Y, Width = area.Width, Height = divideX});
-                areas.Add(new Area{X = area.X, Y = area.Y + divideX, Width = area.Width, Height = area.Height - divideX});
-            }
-            
-            Assert.IsTrue(areas[0].Width >= MinRoomSize);
-            Assert.IsTrue(areas[1].Width >= MinRoomSize);
+            var result = isDivideByVertical ?
+                (
+                    new Area{X = area.X, Y = area.Y, Width = divideX, Height = area.Height},
+                    new Area{X = area.X + divideX, Y = area.Y, Width = area.Width - divideX, Height = area.Height}
+                )
+                :
+                (
+                    new Area{X = area.X, Y = area.Y, Width = area.Width, Height = divideX},
+                    new Area{X = area.X, Y = area.Y + divideX, Width = area.Width, Height = area.Height - divideX}
+                );
+
+            Assert.IsTrue(result.Item1.Width >= MinRoomSize);
+            Assert.IsTrue(result.Item2.Width >= MinRoomSize);
+            Assert.IsTrue(result.Item1.Height >= MinRoomSize);
+            Assert.IsTrue(result.Item2.Height >= MinRoomSize);
             
             // Debug
-            foreach (var (a, i) in areas.Select((v, i) => (v, i)))
-            {
-                Debug.Log($"Area i: {i}, X: {a.X}, Y: {a.Y}, Width: {a.Width}, Height: {a.Height}");
-            }
+            Debug.Log($"DivideArea: X: {area.X}, Y: {area.Y}, Width: {area.Width}, Height: {area.Height}");
+            Debug.Log($"result.Item1.: X: {result.Item1.X}, Y: {result.Item1.Y}, Width: {result.Item1.Width}, Height: {result.Item1.Height}");
+            Debug.Log($"result.Item2: X: {result.Item2.X}, Y: {result.Item2.Y}, Width: {result.Item2.Width}, Height: {result.Item2.Height}");
             
-            return areas;
+            return result;
         }
 
         List<Area> RecursiveDivideArea(Area initArea ,int counter = 0)
@@ -103,11 +103,9 @@ namespace DungeonCrawler.MapSystem.Scripts
             var result = new List<Area>();
             if (CanDivideArea(initArea))
             {
-                var dividedAreas = DivideArea(initArea);
-                foreach (var area in dividedAreas)
-                {
-                    result.AddRange(RecursiveDivideArea(area,counter+1));
-                }
+                var (area1,area2) = DivideArea(initArea);
+                result.AddRange(RecursiveDivideArea(area1,counter+1));
+                result.AddRange(RecursiveDivideArea(area2,counter+1));
             }
             else
             {
@@ -218,17 +216,12 @@ namespace DungeonCrawler.MapSystem.Scripts
     
     struct Area
     {
-        public int X;
-        public int Y;
-        public int Width;
-        public int Height;
+        public int X, Y, Width, Height;
     }
     struct Room
     {
-        public int X;
-        public int Y;
-        public int Width;
-        public int Height;
+        public int X, Y, Width, Height;
+        public (int x, int y) Leader;
     }
 
     struct Path
