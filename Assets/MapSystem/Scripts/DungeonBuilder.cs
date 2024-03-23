@@ -38,47 +38,47 @@ namespace DungeonCrawler.MapSystem.Scripts
                 Y = 0,
                 Width = map.Width,
                 Height = map.Height,
-                Rooms =  new Room[]
+                Room = new Room
                 {
-                    new Room
-                    {
-                        X = 0,
-                        Y = 0,
-                        Width = map.Width - MinRoomMargin * 2,
-                        Height = map.Height - MinRoomMargin * 2
-                    }
-                },
+                    X = MinRoomMargin,
+                    Y = MinRoomMargin,
+                    Width = map.Width - MinRoomMargin * 2,
+                    Height = map.Height - MinRoomMargin * 2
+                }
+                
             };
+            var areas = RecursiveDivideArea(area);   
             // map = PlaceRooms(map, rooms);
-            map = PlaceRoomsRe(map, area);
+            map = PlaceRoomsRe(map, areas);
             // map = PlacePath(map, CreatePathNaive(rooms[0], rooms[1]));
             map = PlaceWall(map);  // this should be last
             
             return map;
         }
 
-        (Area area, bool idDivided) DivideArea(Area area)
+        (Area area1, Area area2, bool idDivided) DivideArea(Area area)
         {
             if(!CanDivideArea(area))
             {
-                return (area, false);
+                return (area,area, false);
             }
             
             // Preconditions
-            Assert.IsTrue(area.Width >= MinAreaSize*2 || area.Height >= MinAreaSize*2);
+            Assert.IsTrue(area.Width > MinAreaSize*2 || area.Height > MinAreaSize*2);
 
 
             bool isDivideByVertical = Random.Range(0, 2) == 0;
-            if(area.Width < MinAreaSize*2)
-            {
-                isDivideByVertical = false;
-            }else if (area.Height < MinAreaSize*2)
+            if(area.Width > MinAreaSize*2)
             {
                 isDivideByVertical = true;
+            }else if (area.Height > MinAreaSize*2)
+            {
+                isDivideByVertical = false;
             }
             int areaSize = isDivideByVertical ? area.Width : area.Height;
             var minX = MinAreaSize; // Ensure that the room can be placed in the left area
             var maxX = areaSize - MinAreaSize; // Ensure that the room can be placed in the right area
+            Assert.IsTrue(minX < maxX, $"minX: {minX}, maxX: {maxX}, areaSize: {areaSize}");
             var divideX = Random.Range(minX, maxX);
             var result = isDivideByVertical ?
                 (
@@ -94,24 +94,24 @@ namespace DungeonCrawler.MapSystem.Scripts
             Debug.Log($"result.Item1: X: {result.Item1.X}, Y: {result.Item1.Y}, Width: {result.Item1.Width}, Height: {result.Item1.Height}");
             Debug.Log($"result.Item2: X: {result.Item2.X}, Y: {result.Item2.Y}, Width: {result.Item2.Width}, Height: {result.Item2.Height}");
             var finalResult = AddRoomEach(result.Item1, result.Item2);
-            var mergedArea = MergeArea(finalResult.area1, finalResult.area2);
+            // var mergedArea = MergeArea(finalResult.area1, finalResult.area2);
 
-            Assert.IsTrue(result.Item1.Width >= MinRoomSize);
-            Assert.IsTrue(result.Item2.Width >= MinRoomSize);
-            Assert.IsTrue(result.Item1.Height >= MinRoomSize);
-            Assert.IsTrue(result.Item2.Height >= MinRoomSize);
+            Assert.IsTrue(result.Item1.Width >= MinAreaSize);
+            Assert.IsTrue(result.Item2.Width >= MinAreaSize);
+            Assert.IsTrue(result.Item1.Height >= MinAreaSize);
+            Assert.IsTrue(result.Item2.Height >= MinAreaSize);
             
             // Debug
             Debug.Log($"DivideArea: X: {area.X}, Y: {area.Y}, Width: {area.Width}, Height: {area.Height}");
             Debug.Log($"result.Item1: X: {result.Item1.X}, Y: {result.Item1.Y}, Width: {result.Item1.Width}, Height: {result.Item1.Height}");
             Debug.Log($"result.Item2: X: {result.Item2.X}, Y: {result.Item2.Y}, Width: {result.Item2.Width}, Height: {result.Item2.Height}");
             
-            return (mergedArea, true);
+            return (finalResult.area1, finalResult.area2 , true);
             
             // Local Functions
             bool CanDivideArea(Area area)
             {
-                return area.Width >= MinAreaSize*2 || area.Height >= MinAreaSize*2;            
+                return area.Width > MinAreaSize*2 || area.Height > MinAreaSize*2;            
             }
             
             (Area area1, Area area2) AddRoomEach(Area area1, Area area2)
@@ -131,16 +131,22 @@ namespace DungeonCrawler.MapSystem.Scripts
             }
         }
 
-        Area RecursiveDivideArea(Area initArea ,int counter = 0)
+        List<Area> RecursiveDivideArea(Area initArea ,int counter = 0)
         {
             Debug.Log($"initArea: X: {initArea.X}, Y: {initArea.Y}, Width: {initArea.Width}, Height: {initArea.Height}");
-            var (dividedArea, idDivided) = DivideArea(initArea);
+            var (area1, area2, idDivided) = DivideArea(initArea);
             Debug.Log($"isDivided: {idDivided}");
+            var result = new List<Area>();
             if (idDivided)
             {
-               return RecursiveDivideArea(dividedArea, counter+1);
+               result.AddRange(RecursiveDivideArea(area1,counter+1));
+               result.AddRange(RecursiveDivideArea(area2,counter+1));
             }
-            return dividedArea;
+            else
+            {
+                result.Add(area1);
+            }
+            return result;
             
         }
 
@@ -167,15 +173,13 @@ namespace DungeonCrawler.MapSystem.Scripts
             room.Y = Random.Range(area.Y + MinRoomMargin, area.Y + area.Height - (MinRoomSize + MinRoomMargin * 2));
             room.Width = Random.Range(MinRoomSize, Mathf.Min( MaxRoomSize, area.Width - (room.X-area.X)));
             room.Height = Random.Range(MinRoomSize, Mathf.Min( MaxRoomSize, area.Height - (room.Y-area.Y)));
-            Debug.Log($"area.Rooms.Length: {area.Rooms.Length}");
-            Debug.Log($"area.Rooms: {area.Rooms}");
             var result = new Area()
             {
                 X = area.X,
                 Y = area.Y,
                 Width = area.Width,
                 Height = area.Height,
-                Rooms = area.Rooms.Length == 0 ? new Room[]{room} : area.Rooms.Append(room).ToArray()
+                Room = room,
             };
             return result;
         }
@@ -194,18 +198,20 @@ namespace DungeonCrawler.MapSystem.Scripts
             }
             return map;
         }
-        EntityGridMap PlaceRoomsRe(EntityGridMap map, Area area)
+        EntityGridMap PlaceRoomsRe(EntityGridMap map, List<Area> areas)
         {
-            foreach (var room in area.Rooms)
+            foreach (var area in areas)
             {
+                var room = area.Room;
                 for (int y = room.Y; y < room.Y + room.Height; y++)
                 {
                     for (int x = room.X; x < room.X + room.Width; x++)
                     {
-                        map.AddEntity(x,y, _path);
+                        map.AddEntity(x, y, _path);
                     }
                 }
             }
+
             return map;
         }
         EntityGridMap PlaceWall(EntityGridMap map)
@@ -278,7 +284,7 @@ namespace DungeonCrawler.MapSystem.Scripts
     record Area
     {
         public int X, Y, Width, Height;
-        public Room[] Rooms = Array.Empty<Room>();
+        public Room Room;
     }
     record Room
     {
