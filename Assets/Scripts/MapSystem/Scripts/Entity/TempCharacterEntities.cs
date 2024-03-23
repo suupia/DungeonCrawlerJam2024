@@ -1,7 +1,7 @@
 ﻿#nullable enable
-using DungeonCrawlerMap.Interfaces;
+using DungeonCrawler.MapSystem.Interfaces;
 
-namespace MapSystem.Scripts.Entity
+namespace DungeonCrawler.MapSystem.Scripts.Entity
 {
     public class CharacterWall: IEntity
     {

@@ -1,8 +1,8 @@
 ﻿#nullable enable
-using DungeonCrawler.Map.Interfaces;
+using DungeonCrawler.MapSystem.Interfaces;
 using UnityEngine;
 
-namespace DungeonCrawler.Map.Scripts
+namespace DungeonCrawler.MapSystem.Scripts
 {
     public sealed class SquareGridCoordinate : IGridCoordinate
     {

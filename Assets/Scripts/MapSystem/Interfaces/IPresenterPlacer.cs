@@ -1,7 +1,7 @@
 ﻿#nullable enable
-using DungeonCrawler.Map.Scripts;
+using DungeonCrawler.MapSystem.Scripts;
 
-namespace DungeonCrawler.Map.Interfaces
+namespace DungeonCrawler.MapSystem.Interfaces
 {
     public interface IPresenterPlacer
     {

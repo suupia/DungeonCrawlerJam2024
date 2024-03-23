@@ -1,5 +1,5 @@
 ﻿#nullable enable
-namespace DungeonCrawler.Map.Interfaces
+namespace DungeonCrawler.MapSystem.Interfaces
 {
     public interface IMapSwitcher
     {

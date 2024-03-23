@@ -1,6 +1,6 @@
 ﻿#nullable enable
 
-namespace DungeonCrawlerMap.Interfaces
+namespace DungeonCrawler.MapSystem.Interfaces
 {
     public interface  IEntity
     {
