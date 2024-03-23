@@ -47,10 +47,16 @@ namespace DungeonCrawler.MapSystem.Scripts
             
             return map;
         }
-        public EntityGridMap CreateDungeonDivideByY()
+        public EntityGridMap CreateDungeonDivide()
         {
             var map = new EntityGridMap(_coordinate);
-            var areas = DivideMapByY(map);
+            var areas = DivideArea(new Area()
+            {
+                X = 0,
+                Y = 0,
+                Width = map.Width,
+                Height = map.Height
+            });
             var rooms = new List<Room>();
             foreach (var area in areas)
             {
@@ -70,27 +76,38 @@ namespace DungeonCrawler.MapSystem.Scripts
             return map;
         }
 
-        // List<Area> DivideArea(Area area)
-        // {
-        //     bool isDivideVertically = Random.Range(0, 2) == 0;
-        //
-        //     var minX = (MinRoomSize + MinRoomMargin * 2);
-        //     var maxX = (isDivideVertically ? area.Width : area.Height) - (MinRoomSize + MinRoomMargin * 2);
-        //     var divideX = Random.Range(minX, maxX);
-        //     var areas = new List<Area>();
-        //     areas.Add(new Area{X = 0, Y = 0, Width = divideX, Height = area.Height});
-        //     areas.Add(new Area{X = divideX, Y = 0, Width = area.Width - divideX, Height = area.Height});
-        //     
-        //     // Debug
-        //     foreach (var (area, i) in areas.Select((v, i) => (v, i)))
-        //     {
-        //         Debug.Log($"Area i: {i}, X: {area.X}, Y: {area.Y}, Width: {area.Width}, Height: {area.Height}");
-        //     }
-        //     
-        //     return areas;
-        // }
-        
-        
+        List<Area> DivideArea(Area area)
+        {
+            bool isDivideByVertical = Random.Range(0, 2) == 0;
+            int areaSize = isDivideByVertical ? area.Width : area.Height;
+            var minX = MinRoomSize + MinRoomMargin * 2; // Ensure that the room can be placed in the left area
+            var maxX = areaSize - (MinRoomSize + MinRoomMargin * 2); // Ensure that the room can be placed in the right area
+            var divideX = Random.Range(minX, maxX);
+            var areas = new List<Area>();
+            if (isDivideByVertical)
+            {
+                areas.Add(new Area{X = 0, Y = 0, Width = divideX, Height = area.Height});
+                areas.Add(new Area{X = divideX, Y = 0, Width = area.Width - divideX, Height = area.Height});
+            }
+            else
+            {
+                areas.Add(new Area{X = 0, Y = 0, Width = area.Width, Height = divideX});
+                areas.Add(new Area{X = 0, Y = divideX, Width = area.Width, Height = area.Height - divideX});
+            }
+            
+            Assert.IsTrue(areas[0].Width >= MinRoomSize);
+            Assert.IsTrue(areas[1].Width >= MinRoomSize);
+            
+            // Debug
+            foreach (var (a, i) in areas.Select((v, i) => (v, i)))
+            {
+                Debug.Log($"Area i: {i}, X: {a.X}, Y: {a.Y}, Width: {a.Width}, Height: {a.Height}");
+            }
+            
+            return areas;
+        }
+
+
         List<Area> DivideMapByX(EntityGridMap map)
         {
             var minX = MinRoomSize + MinRoomMargin * 2; // Ensure that the room can be placed in the left area

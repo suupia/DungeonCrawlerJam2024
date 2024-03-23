@@ -63,9 +63,9 @@ namespace DungeonCrawler
                 Debug.Log("Build Dungeon");
                 
                 // Domain
-                var map = new EntityGridMap(new SquareGridCoordinate(10, 10));
-                var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(10, 10));
-                map = dungeonBuilder.CreateDungeonDivideByY();
+                var map = new EntityGridMap(new SquareGridCoordinate(20, 10));
+                var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(20, 10));
+                map = dungeonBuilder.CreateDungeonDivide();
                 
                 // Mono
                 foreach(var tile in _pool)
