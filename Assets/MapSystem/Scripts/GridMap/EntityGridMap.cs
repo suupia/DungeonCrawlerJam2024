@@ -209,7 +209,7 @@ namespace DungeonCrawler.MapSystem.Scripts
 
             if (_coordinate.IsOutOfDataArea(x, y))
             {
-                Debug.LogWarning($"IsOutOfDataRange({x},{y}) is true");
+                    Debug.LogWarning($"IsOutOfDataRange({x},{y}) is true");
                 return;
             }
 

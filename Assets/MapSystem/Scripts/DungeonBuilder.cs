@@ -5,6 +5,7 @@ using DungeonCrawler.MapSystem.Interfaces;
 using DungeonCrawler.MapSystem.Scripts;
 using DungeonCrawler.MapSystem.Scripts.Entity;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 
 namespace DungeonCrawler.MapSystem.Scripts
@@ -68,16 +69,39 @@ namespace DungeonCrawler.MapSystem.Scripts
             
             return map;
         }
+
+        // List<Area> DivideArea(Area area)
+        // {
+        //     bool isDivideVertically = Random.Range(0, 2) == 0;
+        //
+        //     var minX = (MinRoomSize + MinRoomMargin * 2);
+        //     var maxX = (isDivideVertically ? area.Width : area.Height) - (MinRoomSize + MinRoomMargin * 2);
+        //     var divideX = Random.Range(minX, maxX);
+        //     var areas = new List<Area>();
+        //     areas.Add(new Area{X = 0, Y = 0, Width = divideX, Height = area.Height});
+        //     areas.Add(new Area{X = divideX, Y = 0, Width = area.Width - divideX, Height = area.Height});
+        //     
+        //     // Debug
+        //     foreach (var (area, i) in areas.Select((v, i) => (v, i)))
+        //     {
+        //         Debug.Log($"Area i: {i}, X: {area.X}, Y: {area.Y}, Width: {area.Width}, Height: {area.Height}");
+        //     }
+        //     
+        //     return areas;
+        // }
         
         
         List<Area> DivideMapByX(EntityGridMap map)
         {
-            var minX = (MinRoomSize + MinRoomMargin * 2);
-            var maxX = map.Width - (MinRoomSize + MinRoomMargin * 2);
+            var minX = MinRoomSize + MinRoomMargin * 2; // Ensure that the room can be placed in the left area
+            var maxX = map.Width - (MinRoomSize + MinRoomMargin * 2); // Ensure that the room can be placed in the right area
             var divideX = Random.Range(minX, maxX);
             var areas = new List<Area>();
             areas.Add(new Area{X = 0, Y = 0, Width = divideX, Height = map.Height});
             areas.Add(new Area{X = divideX, Y = 0, Width = map.Width - divideX, Height = map.Height});
+            
+            Assert.IsTrue(areas[0].Width >= MinRoomSize);
+            Assert.IsTrue(areas[1].Width >= MinRoomSize);
             
             // Debug
             foreach (var (area, i) in areas.Select((v, i) => (v, i)))
@@ -110,8 +134,8 @@ namespace DungeonCrawler.MapSystem.Scripts
         Room CreateRoom(Area area)
         {
             var room = new Room();
-            room.X = Random.Range(area.X + MinRoomMargin, area.X + area.Width - MinRoomSize - MinRoomMargin);
-            room.Y = Random.Range(area.Y + MinRoomMargin, area.Y + area.Height - MinRoomSize - MinRoomMargin);
+            room.X = Random.Range(area.X + MinRoomMargin, area.X + area.Width - (MinRoomSize + MinRoomMargin * 2));
+            room.Y = Random.Range(area.Y + MinRoomMargin, area.Y + area.Height - (MinRoomSize + MinRoomMargin * 2));
             room.Width = Random.Range(MinRoomSize, Mathf.Min( MaxRoomSize, area.Width - (room.X-area.X)));
             room.Height = Random.Range(MinRoomSize, Mathf.Min( MaxRoomSize, area.Height - (room.Y-area.Y)));
             return room;
