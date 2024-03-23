@@ -1,0 +1,16 @@
+{
+    "name": "MapSystemTest",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c305a8046ff8f7a4ea0537002f7b7c55"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
