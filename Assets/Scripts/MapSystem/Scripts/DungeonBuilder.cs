@@ -40,10 +40,11 @@ namespace DungeonCrawler.MapSystem.Scripts
             }
             
 
-            var placedRoomsMap = PlaceRooms(map, rooms);
-            var placedWallMap = PlaceWall(map);
+            map = PlaceRooms(map, rooms);
+            map = PlacePath(map, CreatePathNaive(rooms[0], rooms[1]));
+            map = PlaceWall(map);  // this should be last
             
-            return placedWallMap;
+            return map;
         }
         
         
@@ -105,6 +106,16 @@ namespace DungeonCrawler.MapSystem.Scripts
             }
             return map;
         }
+        
+        EntityGridMap PlacePath(EntityGridMap map, Path path)
+        {
+            foreach (var (x, y) in path.Points)
+            {
+                map.AddEntity(x, y, _path);
+            }
+            return map;
+        }
+        
         EntityGridMap FillEntity<TEntity>(EntityGridMap map) where TEntity : IEntity , new()
         {
             for (int y = 0; y < map.Height; y++)
@@ -119,22 +130,52 @@ namespace DungeonCrawler.MapSystem.Scripts
             }
             return map;
         }
+        
+        Path CreatePathNaive(Room start, Room end)
+        {
+            var points = new List<(int x, int y)>();
+            var x = start.X;
+            var y = start.Y;
+            while (x != end.X)
+            {
+                points.Add((x, y));
+                x += x < end.X ? 1 : -1;
+            }
+            while (y != end.Y)
+            {
+                points.Add((x, y));
+                y += y < end.Y ? 1 : -1;
+            }
+            
+            // Debug
+            foreach (var (point, i) in points.Select((v, i) => (v, i)))
+            {
+                Debug.Log($"Point i: {i}, X: {point.x}, Y: {point.y}");
+            }
+            
+            return new Path{Points = points.ToArray()};
+        }
 
     }
     
-    class Room
+    
+    struct Area
     {
         public int X;
         public int Y;
         public int Width;
         public int Height;
     }
-    
-    class Area
+    struct Room
     {
         public int X;
         public int Y;
         public int Width;
         public int Height;
+    }
+
+    struct Path
+    {
+        public (int x, int y)[] Points;
     }
 }
