@@ -15,6 +15,7 @@ namespace DungeonCrawler
     {
         [SerializeField] TileMono tilePrefab = null!;
         [SerializeField] Button buildButton = null!;
+        [SerializeField] Button buildButton2 = null!;
 
         readonly List<GameObject> _pool = new List<GameObject>();
         void Start()
@@ -26,7 +27,7 @@ namespace DungeonCrawler
                 // Domain
                 var map = new EntityGridMap(new SquareGridCoordinate(10, 10));
                 var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(10, 10));
-                map = dungeonBuilder.CreateDungeon();
+                map = dungeonBuilder.CreateDungeonDivideByX();
                 
                 // Mono
                 foreach(var tile in _pool)
@@ -53,6 +54,35 @@ namespace DungeonCrawler
                         // }
                         # endregion
                         
+                    }
+                }
+            });
+            
+            buildButton2.onClick.AddListener(() =>
+            {
+                Debug.Log("Build Dungeon");
+                
+                // Domain
+                var map = new EntityGridMap(new SquareGridCoordinate(10, 10));
+                var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(10, 10));
+                map = dungeonBuilder.CreateDungeonDivideByY();
+                
+                // Mono
+                foreach(var tile in _pool)
+                {
+                    Destroy(tile);
+                }
+                for(int y = 0; y < map.Height; y++)
+                {
+                    for(int x = 0; x < map.Width; x++)
+                    {
+                        var tile = Instantiate(tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
+                        _pool.Add(tile.gameObject);
+                        if(map.GetSingleEntity<IEntity>(x,y) is {} entity)
+                        {
+                            tile.SetSprite(entity);
+                        }
+
                     }
                 }
             });

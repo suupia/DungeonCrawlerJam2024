@@ -24,10 +24,32 @@ namespace DungeonCrawler.MapSystem.Scripts
             _coordinate = coordinate;
         }
         
-        public EntityGridMap CreateDungeon()
+        public EntityGridMap CreateDungeonDivideByX()
         {
             var map = new EntityGridMap(_coordinate);
-            var areas = DivideMap(map);
+            var areas = DivideMapByX(map);
+            var rooms = new List<Room>();
+            foreach (var area in areas)
+            {
+                rooms.Add( CreateRoom(area));
+            }
+            // Debug
+            foreach (var (room, i) in rooms.Select((v, i) => (v, i)))
+            {
+                Debug.Log($"Room i: {i}, X: {room.X}, Y: {room.Y}, Width: {room.Width}, Height: {room.Height}");
+            }
+            
+
+            map = PlaceRooms(map, rooms);
+            map = PlacePath(map, CreatePathNaive(rooms[0], rooms[1]));
+            map = PlaceWall(map);  // this should be last
+            
+            return map;
+        }
+        public EntityGridMap CreateDungeonDivideByY()
+        {
+            var map = new EntityGridMap(_coordinate);
+            var areas = DivideMapByY(map);
             var rooms = new List<Room>();
             foreach (var area in areas)
             {
@@ -48,7 +70,7 @@ namespace DungeonCrawler.MapSystem.Scripts
         }
         
         
-        List<Area> DivideMap(EntityGridMap map)
+        List<Area> DivideMapByX(EntityGridMap map)
         {
             var minX = (MinRoomSize + MinRoomMargin * 2);
             var maxX = map.Width - (MinRoomSize + MinRoomMargin * 2);
@@ -56,6 +78,24 @@ namespace DungeonCrawler.MapSystem.Scripts
             var areas = new List<Area>();
             areas.Add(new Area{X = 0, Y = 0, Width = divideX, Height = map.Height});
             areas.Add(new Area{X = divideX, Y = 0, Width = map.Width - divideX, Height = map.Height});
+            
+            // Debug
+            foreach (var (area, i) in areas.Select((v, i) => (v, i)))
+            {
+                Debug.Log($"Area i: {i}, X: {area.X}, Y: {area.Y}, Width: {area.Width}, Height: {area.Height}");
+            }
+            
+            return areas;
+        }
+        
+        List<Area> DivideMapByY(EntityGridMap map)
+        {
+            var minY = (MinRoomSize + MinRoomMargin * 2);
+            var maxY = map.Height - (MinRoomSize + MinRoomMargin * 2);
+            var divideY = Random.Range(minY, maxY);
+            var areas = new List<Area>();
+            areas.Add(new Area{X = 0, Y = 0, Width = map.Width, Height = divideY});
+            areas.Add(new Area{X = 0, Y = divideY, Width = map.Width, Height = map.Height - divideY});
             
             // Debug
             foreach (var (area, i) in areas.Select((v, i) => (v, i)))
