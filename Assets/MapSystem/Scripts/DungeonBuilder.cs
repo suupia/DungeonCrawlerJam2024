@@ -20,6 +20,7 @@ namespace DungeonCrawler.MapSystem.Scripts
         const int MinRoomSize = 3;
         const int MaxRoomSize = 7;
         const int MinRoomMargin = 1;
+        const int MinAreaSize = MinRoomSize + MinRoomMargin * 2;
         public DungeonBuilder(IGridCoordinate coordinate)
         {
             _coordinate = coordinate;
@@ -50,13 +51,21 @@ namespace DungeonCrawler.MapSystem.Scripts
         public EntityGridMap CreateDungeonDivide()
         {
             var map = new EntityGridMap(_coordinate);
-            var areas = DivideArea(new Area()
+            // var areas = DivideArea(new Area()
+            // {
+            //     X = 0,
+            //     Y = 0,
+            //     Width = map.Width,
+            //     Height = map.Height
+            // });
+            var areas = RecursiveDivideArea(new Area()
             {
                 X = 0,
                 Y = 0,
                 Width = map.Width,
                 Height = map.Height
             });
+            Debug.Log($"areas.count: {areas.Count}");
             var rooms = new List<Room>();
             foreach (var area in areas)
             {
@@ -70,7 +79,7 @@ namespace DungeonCrawler.MapSystem.Scripts
             
 
             map = PlaceRooms(map, rooms);
-            map = PlacePath(map, CreatePathNaive(rooms[0], rooms[1]));
+            // map = PlacePath(map, CreatePathNaive(rooms[0], rooms[1]));
             map = PlaceWall(map);  // this should be last
             
             return map;
@@ -78,21 +87,31 @@ namespace DungeonCrawler.MapSystem.Scripts
 
         List<Area> DivideArea(Area area)
         {
+            // Preconditions
+            Assert.IsTrue(area.Width >= MinAreaSize*2 || area.Height >= MinAreaSize*2);
+            
             bool isDivideByVertical = Random.Range(0, 2) == 0;
+            if(area.Width < MinAreaSize*2)
+            {
+                isDivideByVertical = false;
+            }else if (area.Height < MinAreaSize*2)
+            {
+                isDivideByVertical = true;
+            }
             int areaSize = isDivideByVertical ? area.Width : area.Height;
-            var minX = MinRoomSize + MinRoomMargin * 2; // Ensure that the room can be placed in the left area
-            var maxX = areaSize - (MinRoomSize + MinRoomMargin * 2); // Ensure that the room can be placed in the right area
+            var minX = MinAreaSize; // Ensure that the room can be placed in the left area
+            var maxX = areaSize - MinAreaSize; // Ensure that the room can be placed in the right area
             var divideX = Random.Range(minX, maxX);
             var areas = new List<Area>();
             if (isDivideByVertical)
             {
-                areas.Add(new Area{X = 0, Y = 0, Width = divideX, Height = area.Height});
-                areas.Add(new Area{X = divideX, Y = 0, Width = area.Width - divideX, Height = area.Height});
+                areas.Add(new Area{X = area.X, Y = area.Y, Width = divideX, Height = area.Height});
+                areas.Add(new Area{X = area.X + divideX, Y = area.Y, Width = area.Width - divideX, Height = area.Height});
             }
             else
             {
-                areas.Add(new Area{X = 0, Y = 0, Width = area.Width, Height = divideX});
-                areas.Add(new Area{X = 0, Y = divideX, Width = area.Width, Height = area.Height - divideX});
+                areas.Add(new Area{X = area.X, Y = area.Y, Width = area.Width, Height = divideX});
+                areas.Add(new Area{X = area.X, Y = area.Y + divideX, Width = area.Width, Height = area.Height - divideX});
             }
             
             Assert.IsTrue(areas[0].Width >= MinRoomSize);
@@ -107,6 +126,31 @@ namespace DungeonCrawler.MapSystem.Scripts
             return areas;
         }
 
+        List<Area> RecursiveDivideArea(Area initArea ,int counter = 0)
+        {
+            Debug.Log($"initArea: X: {initArea.X}, Y: {initArea.Y}, Width: {initArea.Width}, Height: {initArea.Height}");
+            var result = new List<Area>();
+            if (CanDivideArea(initArea))
+            {
+                var dividedAreas = DivideArea(initArea);
+                foreach (var area in dividedAreas)
+                {
+                    result.AddRange(RecursiveDivideArea(area,counter+1));
+                }
+            }
+            else
+            {
+                result.Add(initArea);
+            }
+            if (counter >= 3) return result;
+
+            return result;
+        }
+
+        bool CanDivideArea(Area area)
+        {
+            return area.Width >= MinAreaSize*2 || area.Height >= MinAreaSize*2;            
+        }
 
         List<Area> DivideMapByX(EntityGridMap map)
         {
