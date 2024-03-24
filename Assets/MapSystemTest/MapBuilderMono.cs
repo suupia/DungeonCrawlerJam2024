@@ -21,90 +21,62 @@ namespace DungeonCrawler
 
         readonly List<GameObject> _pool = new List<GameObject>();
 
+        DivideAreaExecutor _divideAreaExecutor;
+        DungeonBuilder _dungeonBuilder;
+            
+        void Awake()
+        {
+            // Domain
+            _divideAreaExecutor = new DivideAreaExecutor();
+            _dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(30, 30), _divideAreaExecutor);
+        }
+
         void Start()
         {
-            // buildButton.onClick.AddListener(() =>
-            // {
-            //     Debug.Log("Build Dungeon");
-            //     
-            //     // Domain
-            //     var map = new EntityGridMap(new SquareGridCoordinate(20, 10));
-            //     var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(20, 10));
-            //     var area1 = new Area(
-            //         X: 0,
-            //         Y: 0,
-            //         Width: map.Width/2,
-            //         Height: map.Height,
-            //         Room: new Room(
-            //             X: DungeonBuilder.MinRoomMargin,
-            //             Y: DungeonBuilder.MinRoomMargin,
-            //             Width: map.Width/2 - DungeonBuilder.MinRoomMargin * 2,
-            //             Height: map.Height - DungeonBuilder.MinRoomMargin * 2
-            //         ),
-            //         AdjacentAreas: new List<(Area area, Path path)>()
-            //     );
-            //     var area2 = new Area(
-            //         X: map.Width/2,
-            //         Y: 0,
-            //         Width: map.Width/2,
-            //         Height: map.Height,
-            //         Room: new Room(
-            //             X: DungeonBuilder.MinRoomMargin + map.Width/2,
-            //             Y: DungeonBuilder.MinRoomMargin,
-            //             Width: map.Width/2 - DungeonBuilder.MinRoomMargin * 2,
-            //             Height: map.Height - DungeonBuilder.MinRoomMargin * 2
-            //         ),
-            //         AdjacentAreas: new List<(Area area, Path path)>()
-            //     );
-            //     var path = dungeonBuilder.CreatePath(area1, area2, map.Width / 2, true);
-            //     area1.AdjacentAreas.Add((area2, path));
-            //     area2.AdjacentAreas.Add((area1, path));
-            //     
-            //     // place paths and walls 
-            //     var areas = new List<Area> {area1, area2};
-            //     var paths = areas.SelectMany(area => area.AdjacentAreas.Select(tuple => tuple.path)).ToList();
-            //     map = dungeonBuilder.PlaceRooms(map, areas);
-            //     map = dungeonBuilder.PlacePath(map, paths);
-            //     map = dungeonBuilder.PlaceWall(map);  // this should be last
-            //     
-            //     // Mono
-            //     foreach(var tile in _pool)
-            //     {
-            //         Destroy(tile);
-            //     }
-            //     for(int y = 0; y < map.Height; y++)
-            //     {
-            //         for(int x = 0; x < map.Width; x++)
-            //         {
-            //             var tile = Instantiate(tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
-            //             _pool.Add(tile.gameObject);
-            //             if(map.GetSingleEntity<IEntity>(x,y) is {} entity)
-            //             {
-            //                 tile.SetSprite(entity);
-            //             }
-            //             # region Comment
-            //             // This has the same meaning as the following code:
-            //             
-            //             // var entity = map.GetSingleEntity<IEntity>(x,y);
-            //             // if(entity != null)
-            //             // {
-            //             //     tile.SetSprite(entity);
-            //             // }
-            //             # endregion
-            //             
-            //         }
-            //     }
-            // });
+            buildButton.onClick.AddListener(() =>
+            {
+                Debug.Log("Build Dungeon");
+                
+                // Domain
+                var map = new EntityGridMap(new SquareGridCoordinate(30, 30));
+                var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(30, 30), _divideAreaExecutor);
+                var areas = CreateTestAreas(map);
+                var path = _divideAreaExecutor.CreatePath(areas[0], areas[1], map.Width / 2, true);
+                areas[0].AdjacentAreas.Add((areas[1], path));
+                areas[1].AdjacentAreas.Add((areas[0], path));
+                
+                // place paths and walls 
+                var paths = areas.SelectMany(area => area.AdjacentAreas.Select(tuple => tuple.path)).ToList();
+                map = dungeonBuilder.PlaceRooms(map, areas);
+                map = dungeonBuilder.PlacePath(map, paths);
+                map = dungeonBuilder.PlaceWall(map);  // this should be last
+                
+                // Mono
+                foreach(var tile in _pool)
+                {
+                    Destroy(tile);
+                }
+                for(int y = 0; y < map.Height; y++)
+                {
+                    for(int x = 0; x < map.Width; x++)
+                    {
+                        var tile = Instantiate(tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
+                        _pool.Add(tile.gameObject);
+                        if(map.GetSingleEntity<IEntity>(x,y) is {} entity)
+                        {
+                            tile.SetSprite(entity);
+                        }
+
+                    }
+                }
+            });
             
-            // Domain
-            var map = new EntityGridMap(new SquareGridCoordinate(30, 30));
-            var divideAreaExecutor = new DivideAreaExecutor();
-            var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(30, 30), divideAreaExecutor);
+
             
             buildButton2.onClick.AddListener(() =>
             {
                 Debug.Log("Build Dungeon");
-                map = dungeonBuilder.CreateDungeonDivideByStep();
+                var map = _dungeonBuilder.CreateDungeonDivideByStep();
 
                 // Mono
                 foreach(var tile in _pool)
@@ -134,8 +106,53 @@ namespace DungeonCrawler
                 {
                     Destroy(tile);
                 }
-                dungeonBuilder.Reset();   
+                _dungeonBuilder.Reset();   
             });
+        }
+
+        List<Area> CreateTestAreas(EntityGridMap map)
+        {
+            var area1 = new Area(
+                X: 0,
+                Y: 0,
+                Width: map.Width/2,
+                Height: map.Height,
+                Room: new Room(
+                    X: DivideAreaExecutor.MinRoomMargin,
+                    Y: DivideAreaExecutor.MinRoomMargin,
+                    Width: map.Width/2 - DivideAreaExecutor.MinRoomMargin * 2,
+                    Height: map.Height - DivideAreaExecutor.MinRoomMargin * 2
+                ),
+                AdjacentAreas: new List<(Area area, Path path)>()
+            );
+            var area2 = new Area(
+                X: map.Width/2,
+                Y: 0,
+                Width: map.Width/2,
+                Height: map.Height/2,
+                Room: new Room(
+                    X: DivideAreaExecutor.MinRoomMargin + map.Width/2,
+                    Y: DivideAreaExecutor.MinRoomMargin,
+                    Width: map.Width/2 - DivideAreaExecutor.MinRoomMargin * 2,
+                    Height: map.Height/2 - DivideAreaExecutor.MinRoomMargin * 2
+                ),
+                AdjacentAreas: new List<(Area area, Path path)>()
+            );
+            var area3 = new Area(
+                X: map.Width/2,
+                Y: map.Height/2,
+                Width: map.Width/2,
+                Height: map.Height/2,
+                Room: new Room(
+                    X: DivideAreaExecutor.MinRoomMargin + map.Width/2,
+                    Y: DivideAreaExecutor.MinRoomMargin + map.Height/2,
+                    Width: map.Width/2 - DivideAreaExecutor.MinRoomMargin * 2,
+                    Height: map.Height/2 - DivideAreaExecutor.MinRoomMargin * 2
+                ),
+                AdjacentAreas: new List<(Area area, Path path)>()
+            );
+            return new List<Area>() {area1, area2, area3};
+                
         }
         
     }

@@ -82,7 +82,7 @@ namespace DungeonCrawler.MapSystem.Scripts
             return (AddRoom(dividedArea1), AddRoom(dividedArea2));
         }
         
-        Path CreatePath(Area area1, Area area2, int divideX, bool isDivideByVertical)
+        public Path CreatePath(Area area1, Area area2, int divideX, bool isDivideByVertical)
         {
             Assert.IsNotNull(area1.Room);
             Assert.IsNotNull(area2.Room);

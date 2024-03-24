@@ -80,7 +80,7 @@ namespace DungeonCrawler.MapSystem.Scripts
             );
         }
 
-        EntityGridMap PlaceRooms(EntityGridMap map, List<Area> areas)
+        public EntityGridMap PlaceRooms(EntityGridMap map, List<Area> areas)
         {
             foreach (var area in areas)
             {
@@ -97,7 +97,7 @@ namespace DungeonCrawler.MapSystem.Scripts
             return map;
         }
         
-        EntityGridMap PlaceWall(EntityGridMap map)
+        public EntityGridMap PlaceWall(EntityGridMap map)
         {
             for (int y = 0; y < map.Height; y++)
             {
@@ -112,7 +112,7 @@ namespace DungeonCrawler.MapSystem.Scripts
             return map;
         }
         
-        EntityGridMap PlacePath(EntityGridMap map, List<Path> paths)
+        public EntityGridMap PlacePath(EntityGridMap map, List<Path> paths)
         {
             foreach (var path in paths)
             {
