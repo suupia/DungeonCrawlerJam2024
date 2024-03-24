@@ -121,9 +121,6 @@ namespace DungeonCrawler.MapSystem.Scripts
         }
         Path CreatePath(Area area1, Area area2, int divideX, bool isDivideByVertical)
         {
-            // todo : create path here 
-
-            isDivideByVertical = true; // todo : for debug
             var path = new Path(new List<(int x, int y)>());
             if (isDivideByVertical)
             {
@@ -147,6 +144,30 @@ namespace DungeonCrawler.MapSystem.Scripts
                 {
                     path.Points.Add((divideX, minY));
                     minY++;
+                }
+            }
+            else
+            {
+                var randX1 = Random.Range(area1.Room.X + 1, area1.Room.X + area1.Room.Width - 1);  // Excluding both ends
+                var (x1, y1) = (randX1, area1.Room.Y + area1.Room.Height);
+                var randX2 = Random.Range(area2.Room.X + 1, area2.Room.X + area2.Room.Width - 1);  // Excluding both ends
+                var (x2, y2) = (randX2, area2.Room.Y);
+                while (y1 < divideX)
+                {
+                    path.Points.Add((x1, y1));
+                    y1++;
+                }
+                while (y2 > divideX)
+                {
+                    path.Points.Add((x2, y2));
+                    y2--;
+                }
+                var minX = Mathf.Min(x1, x2);
+                var maxX = Mathf.Max(x1, x2);
+                while (minX <= maxX)
+                {
+                    path.Points.Add((minX, divideX));
+                    minX++;
                 }
             }
             Debug.Log($"paths: {string.Join(',', path.Points.Select(p => $"({p.x},{p.y})"))}");
@@ -180,7 +201,7 @@ namespace DungeonCrawler.MapSystem.Scripts
         
         (List<Area> areas, List<Path> paths) LoopDivideArea(Area initArea ,int counter = 0)
         {
-            const int divideLimit = 1;
+            const int divideLimit = 2;
             var areas = new List<Area>(){initArea}; // todo : use priority queue
             var paths = new List<Path>();
             for(int i = 0; i< divideLimit; i++)
