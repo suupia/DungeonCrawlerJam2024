@@ -47,23 +47,20 @@ namespace DungeonCrawler.MapSystem.Scripts
             area1.AdjacentAreas.Add((area2, connectPath));  // This process must be done after AddRoomEach
             area2.AdjacentAreas.Add((area1, connectPath));
             
-            // Add area's AdjacentAreas to area1
+            // Update path of area <-> adjacentArea
             foreach (var (adjacentArea, adjacentPath) in area.AdjacentAreas)
             {
+                // 1. Update path of area -> adjacentArea to area1 -> adjacentArea
+                // (Caution) you don't have to area.AdjacentAreas.Remove((adjacentArea, adjacentPath)); , because area is never used after this process.
+                // And you cannot remove the element from the list while iterating the list.
                 area1.AdjacentAreas.Add((adjacentArea, CreatePath(area1,adjacentArea, adjacentPath.DivideX,isDivideByVertical)));
+                
+                // 2. Update path of adjacentArea -> area to adjacentArea -> area1
+                adjacentArea.AdjacentAreas.Remove((area, adjacentPath));
+                adjacentArea.AdjacentAreas.Add((area1, CreatePath(adjacentArea, area1, adjacentPath.DivideX, isDivideByVertical)));
                 
             }
             
-            foreach (var (adjacentArea, adjacentPath) in area.AdjacentAreas)
-            {
-                // adjacentArea から areaへのパスを削除して、
-                // adjacentArea から area1へ貼りなおす必要がある
-                adjacentArea.AdjacentAreas.Remove((area, adjacentPath));
-                adjacentArea.AdjacentAreas.Add((area1, CreatePath(adjacentArea, area1, adjacentPath.DivideX, isDivideByVertical)));
-
-
-            }
-
             // Debug
             Debug.Log($"DivideArea: X: {area.X}, Y: {area.Y}, Width: {area.Width}, Height: {area.Height}");
 
