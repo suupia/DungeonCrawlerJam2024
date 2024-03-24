@@ -5,7 +5,6 @@ using System.Linq;
 using DungeonCrawler.MapSystem.Interfaces;
 using DungeonCrawler.MapSystem.Scripts;
 using DungeonCrawler.MapSystem.Scripts.Entity;
-using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;

@@ -2,13 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Codice.Client.BaseCommands;
 using DungeonCrawler.MapSystem.Interfaces;
 using DungeonCrawler.MapSystem.Scripts;
 using DungeonCrawler.MapSystem.Scripts.Entity;
 using UnityEngine;
 using UnityEngine.Assertions;
-using Random = UnityEngine.Random;
 
 
 namespace DungeonCrawler.MapSystem.Scripts
@@ -121,10 +119,9 @@ namespace DungeonCrawler.MapSystem.Scripts
 
 
     }
-
+    public record Area(int X, int Y, int Width, int Height, Room Room, List<(Area area, Path path)> AdjacentAreas);
+    public record Room(int X, int Y, int Width, int Height);
+    public record Path(List<(int x, int y)> Points, (bool isDivideByVertical, int coord) DivideInfo);
 }
 
 
-public record Area(int X, int Y, int Width, int Height, Room Room, List<(Area area, Path path)> AdjacentAreas);
-public record Room(int X, int Y, int Width, int Height);
-public record Path(List<(int x, int y)> Points, (bool isDivideByVertical, int coord) DivideInfo);
