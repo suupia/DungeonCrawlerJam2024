@@ -13,7 +13,7 @@ namespace DungeonCrawler
         [SerializeField] Sprite pathSprite = null!;
         [SerializeField] Sprite roomSprite = null!;
         [SerializeField] SpriteRenderer floorSpriteRenderer = null!;
-        [SerializeField] TextMeshProUGUI debugText = null!;
+        [SerializeField] TextMeshPro debugText = null!;
 
         public void SetSprite(IEntity entity)
         {
@@ -34,6 +34,11 @@ namespace DungeonCrawler
             {
                 Debug.LogError("Unknown entity");
             }
+        }
+        
+        public void SetDebugText(string text)
+        {
+            debugText.text = text;
         }
 
     }

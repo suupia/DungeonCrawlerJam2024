@@ -63,7 +63,7 @@ namespace DungeonCrawler.MapSystem.Scripts
             }
         }
         
-        Area GetInitArea(EntityGridMap map)
+        public Area GetInitArea(EntityGridMap map)
         {
             return new Area(
                 X: 0,

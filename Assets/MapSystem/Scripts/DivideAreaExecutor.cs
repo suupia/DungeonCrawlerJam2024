@@ -64,7 +64,7 @@ namespace DungeonCrawler.MapSystem.Scripts
 
         }
         
-        int RandomizeCoord(bool isDivideByVertical, Area area)
+        public int RandomizeCoord(bool isDivideByVertical, Area area)
         {
             int areaSize = isDivideByVertical ? area.Width : area.Height;
             var minX = MinAreaSize; // Ensure that the room can be placed in the left area
@@ -74,7 +74,7 @@ namespace DungeonCrawler.MapSystem.Scripts
             return divideCoord;
         }
 
-        (Area area1, Area area2) DivideAreaByCoord(Area area, int divideCoord, bool isDivideByVertical)
+        public (Area area1, Area area2) DivideAreaByCoord(Area area, int divideCoord, bool isDivideByVertical)
         {
             var (dividedArea1, dividedArea2) = isDivideByVertical
                 ? (

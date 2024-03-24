@@ -5,6 +5,7 @@ using System.Linq;
 using DungeonCrawler.MapSystem.Interfaces;
 using DungeonCrawler.MapSystem.Scripts;
 using DungeonCrawler.MapSystem.Scripts.Entity;
+using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -42,7 +43,10 @@ namespace DungeonCrawler
                 var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(30, 30), _divideAreaExecutor);
                 var areas = CreateTestAreas(map);
                 
-                var path = _divideAreaExecutor.CreatePath(areas[0], areas[1], map.Width / 2, true);
+                var divideCoord = _divideAreaExecutor.RandomizeCoord(true, dungeonBuilder.GetInitArea(map));
+                Debug.Log($"DivideCoord: {divideCoord}");
+                Debug.Log($"map.Width / 2 : {map.Width / 2}");
+                var path = _divideAreaExecutor.CreatePath(areas[0], areas[1],  divideCoord, true);
                 areas[0].AdjacentAreas.Add((areas[1], path));
                 areas[1].AdjacentAreas.Add((areas[0], path));
                 
@@ -93,6 +97,16 @@ namespace DungeonCrawler
                         if(map.GetSingleEntity<IEntity>(x,y) is {} entity)
                         {
                             tile.SetSprite(entity);
+                        }
+
+                        if (map.GetSingleTypeList<IEntity>(x, y) is { } entities)
+                        {
+                            string frontEntityName = entities.First().GetType().Name;
+                            Debug.Log($"frontEntityName: {frontEntityName}");
+                            // 先頭から5文字を削除
+                            string typeName = frontEntityName.Length > 9 ? frontEntityName.Substring(9) : frontEntityName;
+                            string count = entities.Count.ToString();
+                            tile.SetDebugText($"{typeName}\n{count}");
                         }
 
                     }
