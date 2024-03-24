@@ -11,6 +11,7 @@ namespace DungeonCrawler
     {
         [SerializeField] Sprite wallSprite = null!;
         [SerializeField] Sprite pathSprite = null!;
+        [SerializeField] Sprite roomSprite = null!;
         [SerializeField] SpriteRenderer floorSpriteRenderer = null!;
         [SerializeField] TextMeshProUGUI debugText = null!;
 
@@ -24,6 +25,14 @@ namespace DungeonCrawler
             else if(entity is CharacterPath)
             {
                 floorSpriteRenderer.sprite = pathSprite;
+            }
+            else if(entity is CharacterRoom)
+            {
+                floorSpriteRenderer.sprite = roomSprite;
+            }
+            else
+            {
+                Debug.LogError("Unknown entity");
             }
         }
 

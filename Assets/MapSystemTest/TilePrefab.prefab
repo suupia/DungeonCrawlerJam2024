@@ -100,7 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallSprite: {fileID: 21300000, guid: 7b0dac7726a182a4e969ab178598178f, type: 3}
-  pathSprite: {fileID: 21300000, guid: 9645cbf085afe2440b448972d2c4e409, type: 3}
+  pathSprite: {fileID: 21300000, guid: e211e2e7055cf624095369098fc64523, type: 3}
+  roomSprite: {fileID: 21300000, guid: 9645cbf085afe2440b448972d2c4e409, type: 3}
   floorSpriteRenderer: {fileID: 7098429336475425929}
   debugText: {fileID: 0}
 --- !u!1 &4201918087485047638

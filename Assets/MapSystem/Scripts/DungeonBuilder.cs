@@ -17,7 +17,7 @@ namespace DungeonCrawler.MapSystem.Scripts
     {
         readonly CharacterWall _wall = new CharacterWall();
         readonly IEntity _path = new CharacterPath();
-        readonly IEntity _area = new CharacterArea();
+        readonly IEntity _room = new CharacterRoom();
         readonly IGridCoordinate _coordinate;
 
         int _divideCount;
@@ -89,7 +89,7 @@ namespace DungeonCrawler.MapSystem.Scripts
                 {
                     for (int x = room.X; x < room.X + room.Width; x++)
                     {
-                        map.AddEntity(x, y, _path);
+                        map.AddEntity(x, y, _room);
                     }
                 }
             }
