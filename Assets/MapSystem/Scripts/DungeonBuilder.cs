@@ -20,11 +20,10 @@ namespace DungeonCrawler.MapSystem.Scripts
         readonly IEntity _area = new CharacterArea();
         readonly IGridCoordinate _coordinate;
                 
-        const int MinRoomSize = 3;
-        const int MaxRoomSize = 20;
-        const int MinRoomMargin = 2;  // This should be larger than 2, because the rooms are connected to each other by a path.
-
-        const int MinAreaSize = MinRoomSize + MinRoomMargin * 2;
+        public const int MinRoomSize = 3;
+        public const int MaxRoomSize = 20;
+        public const int MinRoomMargin = 2;  // This should be larger than 2, because the rooms are connected to each other by a path.
+        public const int MinAreaSize = MinRoomSize + MinRoomMargin * 2;
         public DungeonBuilder(IGridCoordinate coordinate)
         {
             _coordinate = coordinate;
@@ -120,7 +119,7 @@ namespace DungeonCrawler.MapSystem.Scripts
             foreach (var (adjacentArea, adjacentPath) in area.AdjacentAreas)
             {
                 // if (adjacentArea == area1) continue;
-                area1.AdjacentAreas.Add((adjacentArea, CreatePath(area1,area,adjacentPath.DivideX,isDivideByVertical)));
+                area1.AdjacentAreas.Add((adjacentArea, CreatePath(area1,adjacentArea, adjacentPath.DivideX,isDivideByVertical)));
             }
 
             Assert.IsTrue(dividedArea1.Width >= MinAreaSize);
@@ -146,7 +145,8 @@ namespace DungeonCrawler.MapSystem.Scripts
             return (AddRoom(area1), AddRoom(area2));
         }
         
-        Path CreatePath(Area area1, Area area2, int divideX, bool isDivideByVertical)
+        // todo : public for the test
+        public Path CreatePath(Area area1, Area area2, int divideX, bool isDivideByVertical)
         {
             Assert.IsNotNull(area1.Room);
             Assert.IsNotNull(area2.Room);
@@ -244,7 +244,7 @@ namespace DungeonCrawler.MapSystem.Scripts
     
             return new Room(roomX, roomY, roomWidth, roomHeight);
         }
-        EntityGridMap PlaceRooms(EntityGridMap map, List<Area> areas)
+        public EntityGridMap PlaceRooms(EntityGridMap map, List<Area> areas)
         {
             foreach (var area in areas)
             {
@@ -260,7 +260,7 @@ namespace DungeonCrawler.MapSystem.Scripts
 
             return map;
         }
-        EntityGridMap PlaceWall(EntityGridMap map)
+        public EntityGridMap PlaceWall(EntityGridMap map)
         {
             for (int y = 0; y < map.Height; y++)
             {
@@ -275,7 +275,7 @@ namespace DungeonCrawler.MapSystem.Scripts
             return map;
         }
         
-        EntityGridMap PlacePath(EntityGridMap map, List<Path> paths)
+        public EntityGridMap PlacePath(EntityGridMap map, List<Path> paths)
         {
             foreach (var path in paths)
             {
@@ -291,7 +291,9 @@ namespace DungeonCrawler.MapSystem.Scripts
 
     }
 
-    record Area(int X, int Y, int Width, int Height, Room Room, List<(Area area, Path path)> AdjacentAreas);
-    record Room(int X, int Y, int Width, int Height);
-    record Path(List<(int x, int y)> Points, int DivideX);
 }
+
+
+public record Area(int X, int Y, int Width, int Height, Room Room, List<(Area area, Path path)> AdjacentAreas);
+public record Room(int X, int Y, int Width, int Height);
+public record Path(List<(int x, int y)> Points, int DivideX);
