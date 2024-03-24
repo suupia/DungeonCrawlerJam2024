@@ -19,6 +19,14 @@ namespace DungeonCrawler.MapSystem.Scripts.Entity
         }
     }
     
+    public class CharacterRoom: IEntity
+    {
+        public override string ToString()
+        {
+            return "R";
+        }
+    }
+    
     public class CharacterArea: IEntity
     {
         public override string ToString()

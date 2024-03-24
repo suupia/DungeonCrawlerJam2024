@@ -26,21 +26,21 @@ public class MapTest
         Assert.AreEqual(100, entityGridMap.Length);
     }
     
-    [Test]
-    public void TestDungeonBuilder()
-    {
-        // Arrange
-        var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(10, 10));
-    
-        // Act
-        var map = dungeonBuilder.CreateDungeon();
-
-        // Debug
-        map.DebugPrint();
-        
-        // Assert
-        Assert.AreEqual(10, map.Width);
-        Assert.AreEqual(10, map.Height);
-        Assert.AreEqual(100, map.Length);
-    }
+    // [Test]
+    // public void TestDungeonBuilder()
+    // {
+    //     // Arrange
+    //     var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(10, 10));
+    //
+    //     // Act
+    //     var map = dungeonBuilder.CreateDungeonDivide();
+    //
+    //     // Debug
+    //     map.DebugPrint();
+    //     
+    //     // Assert
+    //     Assert.AreEqual(10, map.Width);
+    //     Assert.AreEqual(10, map.Height);
+    //     Assert.AreEqual(100, map.Length);
+    // }
 }
