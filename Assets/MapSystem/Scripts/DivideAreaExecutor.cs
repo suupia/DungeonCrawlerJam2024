@@ -46,14 +46,17 @@ namespace DungeonCrawler.MapSystem.Scripts
             // Update path of area <-> adjacentArea
             foreach (var (adjacentArea, adjacentPath) in area.AdjacentAreas)
             {
-                // 1. Update path of area -> adjacentArea to area1 -> adjacentArea
+                // Step1. Prepare path connecting area1 and adjacentArea
+                var pathArea1ToAdjacent = CreatePath(area1, adjacentArea, adjacentPath.DivideInfo.coord , adjacentPath.DivideInfo.isDivideByVertical);
+                
+                // Step2. Update path of area -> adjacentArea to area1 -> adjacentArea
                 // (Caution) you don't have to area.AdjacentAreas.Remove((adjacentArea, adjacentPath)); , because area is never used after this process.
                 // And you cannot remove the element from the list while iterating the list.
-                area1.AdjacentAreas.Add((adjacentArea, CreatePath(area1,adjacentArea, adjacentPath.DivideInfo.coord , adjacentPath.DivideInfo.isDivideByVertical)));
+                area1.AdjacentAreas.Add((adjacentArea, pathArea1ToAdjacent));
                 
-                // 2. Update path of adjacentArea -> area to adjacentArea -> area1
+                // Step3. Update path of adjacentArea -> area to adjacentArea -> area1
                 adjacentArea.AdjacentAreas.Remove((area, adjacentPath));
-                adjacentArea.AdjacentAreas.Add((area1, CreatePath(adjacentArea, area1, adjacentPath.DivideInfo.coord , adjacentPath.DivideInfo.isDivideByVertical)));
+                adjacentArea.AdjacentAreas.Add((area1, pathArea1ToAdjacent));
                 
             }
             

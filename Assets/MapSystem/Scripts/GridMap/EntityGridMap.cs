@@ -172,19 +172,19 @@ namespace DungeonCrawler.MapSystem.Scripts
             return filteredEntities;
         }
 
-
         public IEnumerable<IEntity> GetAllTypeList(Vector2Int vector)
         {
-            int x, y;
-            x = vector.x;
-            y = vector.y;
+            return GetSingleTypeList<IEntity>(vector.x, vector.y);
 
+        }
+        public IEnumerable<IEntity> GetAllTypeList(int x, int y)
+        {
             if (_coordinate.IsOutOfDataArea(x, y)) return  new List<IEntity>();
             
             return GetSingleTypeList<IEntity>(ToSubscript(x, y));
 
         }
-        
+
         public IEnumerable<IEntity> GetAllTypeList(int  index)
         {
             if (index < 0 || index > Length)

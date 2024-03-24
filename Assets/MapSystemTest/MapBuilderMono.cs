@@ -98,15 +98,20 @@ namespace DungeonCrawler
                         {
                             tile.SetSprite(entity);
                         }
+                        
 
-                        if (map.GetSingleTypeList<IEntity>(x, y) is { } entities)
+                        if (map.GetAllTypeList(x, y).Count() != 0)
                         {
-                            string frontEntityName = entities.First().GetType().Name;
-                            Debug.Log($"frontEntityName: {frontEntityName}");
-                            // 先頭から5文字を削除
-                            string typeName = frontEntityName.Length > 9 ? frontEntityName.Substring(9) : frontEntityName;
-                            string count = entities.Count.ToString();
-                            tile.SetDebugText($"{typeName}\n{count}");
+                            string result = "";
+                            var allEntityList = map.GetAllTypeList(x, y).ToList();
+                            foreach (var entity1 in allEntityList)
+                            {
+                                int count = allEntityList.Count(e => e.ToString() == entity1.ToString());
+
+                                result += entity1.ToString() + $"({count})\n";
+                            }
+
+                            tile.SetDebugText(result);
                         }
 
                     }
