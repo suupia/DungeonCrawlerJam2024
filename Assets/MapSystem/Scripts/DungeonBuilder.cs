@@ -47,10 +47,8 @@ namespace DungeonCrawler.MapSystem.Scripts
                 AdjacentAreas: new List<(Area area, Path path)>()
             );
             var (areas, paths) = LoopDivideArea(area);   
-            // map = PlaceRooms(map, rooms);
-            map = PlaceRoomsRe(map, areas);
+            map = PlaceRooms(map, areas);
             map = PlacePath(map, paths);
-            // map = PlacePath(map, CreatePathNaive(rooms[0], rooms[1]));
             map = PlaceWall(map);  // this should be last
             DebugAllAreasAdjacentAreas(areas);
             return map;
@@ -115,7 +113,7 @@ namespace DungeonCrawler.MapSystem.Scripts
             dividedArea1.AdjacentAreas.Add((area2, connectPath));  // This process must be done after AddRoomEach
             dividedArea2.AdjacentAreas.Add((area1, connectPath));
             var path = new Path(new List<(int x, int y)>());
-            //  path.Points.AddRange(connectPath.Points);
+            path.Points.AddRange(connectPath.Points);
             
             Debug.Log($"adjacentArea : {string.Join(',', area.AdjacentAreas.Select(a => $"({a.area.X},{a.area.Y})"))}");
             foreach (var (adjacentArea, prePath ) in area.AdjacentAreas)
@@ -241,29 +239,14 @@ namespace DungeonCrawler.MapSystem.Scripts
 
         Room GenerateRandomRoom(Area area)
         {
-            var roomX = UnityEngine.Random.Range(area.X + MinRoomMargin, area.X + area.Width - (MinRoomSize + MinRoomMargin * 2));
-            var roomY = UnityEngine.Random.Range(area.Y + MinRoomMargin, area.Y + area.Height - (MinRoomSize + MinRoomMargin * 2));
-            var roomWidth = UnityEngine.Random.Range(MinRoomSize, Mathf.Min(MaxRoomSize, area.Width - (roomX - area.X)));
-            var roomHeight = UnityEngine.Random.Range(MinRoomSize, Mathf.Min(MaxRoomSize, area.Height - (roomY - area.Y)));
+            var roomX = Random.Range(area.X + MinRoomMargin, area.X + area.Width - (MinRoomSize + MinRoomMargin * 2));
+            var roomY = Random.Range(area.Y + MinRoomMargin, area.Y + area.Height - (MinRoomSize + MinRoomMargin * 2));
+            var roomWidth = Random.Range(MinRoomSize, Mathf.Min(MaxRoomSize, area.Width - (roomX - area.X)));
+            var roomHeight = Random.Range(MinRoomSize, Mathf.Min(MaxRoomSize, area.Height - (roomY - area.Y)));
     
             return new Room(roomX, roomY, roomWidth, roomHeight);
         }
-        
-        EntityGridMap PlaceRooms(EntityGridMap map, List<Room> rooms)
-        {
-            foreach (var room in rooms)
-            {
-                for (int y = room.Y; y < room.Y + room.Height; y++)
-                {
-                    for (int x = room.X; x < room.X + room.Width; x++)
-                    {
-                        map.AddEntity(x,y, _path);
-                    }
-                }
-            }
-            return map;
-        }
-        EntityGridMap PlaceRoomsRe(EntityGridMap map, List<Area> areas)
+        EntityGridMap PlaceRooms(EntityGridMap map, List<Area> areas)
         {
             foreach (var area in areas)
             {
@@ -306,46 +289,7 @@ namespace DungeonCrawler.MapSystem.Scripts
             }
             return map;
         }
-        
-        EntityGridMap FillEntity<TEntity>(EntityGridMap map) where TEntity : IEntity , new()
-        {
-            for (int y = 0; y < map.Height; y++)
-            {
-                for (int x = 0; x < map.Width; x++)
-                {
-                    if (map.GetSingleEntity<TEntity>(x, y) != null)
-                    {
-                        map.AddEntity(x,y, new TEntity());
-                    }
-                }
-            }
-            return map;
-        }
-        
-        Path CreatePathNaive(Room start, Room end)
-        {
-            var points = new List<(int x, int y)>();
-            var x = start.X;
-            var y = start.Y;
-            while (x != end.X)
-            {
-                points.Add((x, y));
-                x += x < end.X ? 1 : -1;
-            }
-            while (y != end.Y)
-            {
-                points.Add((x, y));
-                y += y < end.Y ? 1 : -1;
-            }
-            
-            // Debug
-            foreach (var (point, i) in points.Select((v, i) => (v, i)))
-            {
-                Debug.Log($"Point i: {i}, X: {point.x}, Y: {point.y}");
-            }
-            
-            return new Path(points);
-        }
+
 
     }
 
