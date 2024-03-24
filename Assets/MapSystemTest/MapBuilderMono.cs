@@ -41,6 +41,7 @@ namespace DungeonCrawler
                 var map = new EntityGridMap(new SquareGridCoordinate(30, 30));
                 var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(30, 30), _divideAreaExecutor);
                 var areas = CreateTestAreas(map);
+                
                 var path = _divideAreaExecutor.CreatePath(areas[0], areas[1], map.Width / 2, true);
                 areas[0].AdjacentAreas.Add((areas[1], path));
                 areas[1].AdjacentAreas.Add((areas[0], path));

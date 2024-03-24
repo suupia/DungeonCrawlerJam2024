@@ -33,11 +33,7 @@ namespace DungeonCrawler.MapSystem.Scripts
 
             bool isDivideByVertical = area.Width >= area.Height;  // todo : Randomize this may be more interesting
             
-            int areaSize = isDivideByVertical ? area.Width : area.Height;
-            var minX = MinAreaSize; // Ensure that the room can be placed in the left area
-            var maxX = areaSize - MinAreaSize; // Ensure that the room can be placed in the right area
-            Assert.IsTrue(minX < maxX, $"minX: {minX}, maxX: {maxX}, areaSize: {areaSize}");
-            var divideCoord = Random.Range(minX, maxX);
+            var divideCoord = RandomizeCoord(isDivideByVertical, area);
             
             var (area1, area2) = DivideAreaByCoord(area, divideCoord, isDivideByVertical);
 
@@ -66,6 +62,16 @@ namespace DungeonCrawler.MapSystem.Scripts
 
             return (area1, area2);
 
+        }
+        
+        int RandomizeCoord(bool isDivideByVertical, Area area)
+        {
+            int areaSize = isDivideByVertical ? area.Width : area.Height;
+            var minX = MinAreaSize; // Ensure that the room can be placed in the left area
+            var maxX = areaSize - MinAreaSize; // Ensure that the room can be placed in the right area
+            Assert.IsTrue(minX < maxX, $"minX: {minX}, maxX: {maxX}, areaSize: {areaSize}");
+            var divideCoord = Random.Range(minX, maxX);
+            return divideCoord;
         }
 
         (Area area1, Area area2) DivideAreaByCoord(Area area, int divideCoord, bool isDivideByVertical)
