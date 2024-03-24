@@ -24,6 +24,8 @@ namespace DungeonCrawler
         IGridCoordinate _coordinate = null!;
         DivideAreaExecutor _divideAreaExecutor = null!;
         DungeonBuilder _dungeonBuilder = null!;
+
+        EntityGridMap? _map;
             
         void Awake()
         {
@@ -58,8 +60,9 @@ namespace DungeonCrawler
         {
             Debug.Log("CreateDungeonByStep");
             DestroyAllTiles();
-            var map = _dungeonBuilder.CreateDungeonByStep();
-            UpdateSprites(map);
+            _map ??= new EntityGridMap(_coordinate);
+            _map = _dungeonBuilder.CreateDungeonByStep(_map);
+            UpdateSprites(_map);
         }
 
         void DestroyAllTiles()

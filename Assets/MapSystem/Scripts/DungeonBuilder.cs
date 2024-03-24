@@ -39,11 +39,11 @@ namespace DungeonCrawler.MapSystem.Scripts
             _room = room;
         }
 
-        public EntityGridMap CreateDungeonByStep()
+        public EntityGridMap CreateDungeonByStep(EntityGridMap map)
         {
-            var map = new EntityGridMap(_coordinate);
             var areas =_divideCount == 0 ? new List<Area>{GetInitArea(map)} : _divideAreaExecutor.DivideAreaOnce(_areas);
             var paths = areas.SelectMany(area => area.AdjacentAreas.Select(tuple => tuple.path)).ToList();
+            map.ClearMap();
             map = PlaceRooms(map, areas);
             map = PlacePath(map, paths);
             map = PlaceWall(map);  // this should be last
