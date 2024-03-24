@@ -21,7 +21,7 @@ namespace DungeonCrawler.MapSystem.Scripts
         readonly IGridCoordinate _coordinate;
                 
         const int MinRoomSize = 3;
-        const int MaxRoomSize = 7;
+        const int MaxRoomSize = 20;
         const int MinRoomMargin = 2;  // This should be larger than 2, because the rooms are connected to each other by a path.
 
         const int MinAreaSize = MinRoomSize + MinRoomMargin * 2;
@@ -43,7 +43,8 @@ namespace DungeonCrawler.MapSystem.Scripts
                     Y: MinRoomMargin,
                     Width: map.Width - MinRoomMargin * 2,
                     Height: map.Height - MinRoomMargin * 2
-                )
+                ),
+                AdjacentAreas: new List<Area>()
             );
             var (areas, paths) = LoopDivideArea(area);   
             // map = PlaceRooms(map, rooms);
@@ -81,18 +82,34 @@ namespace DungeonCrawler.MapSystem.Scripts
             var divideX = Random.Range(minX, maxX);
             var (dividedArea1, dividedArea2) = isDivideByVertical
                 ? (
-                    new Area(area.X, area.Y, divideX, area.Height, null),
-                    new Area(area.X + divideX, area.Y, area.Width - divideX, area.Height, null)
+                    new Area(area.X, area.Y, divideX, area.Height, null, new List<Area>()),
+                    new Area(area.X + divideX, area.Y, area.Width - divideX, area.Height, null,new List<Area>())
                 )
                 : (
-                    new Area(area.X, area.Y, area.Width, divideX, null),
-                    new Area(area.X, area.Y + divideX, area.Width, area.Height - divideX, null)
+                    new Area(area.X, area.Y, area.Width, divideX, null,new List<Area>()),
+                    new Area(area.X, area.Y + divideX, area.Width, area.Height - divideX, null,new List<Area>())
                 );
+
             
+            // todo : temp
+            dividedArea1.AdjacentAreas.AddRange(area.AdjacentAreas);
             Debug.Log($"dividedArea1: X: {dividedArea1.X}, Y: {dividedArea1.Y}, Width: {dividedArea1.Width}, Height: {dividedArea1.Height}");
             Debug.Log($"dividedArea2: X: {dividedArea2.X}, Y: {dividedArea2.Y}, Width: {dividedArea2.Width}, Height: {dividedArea2.Height}");
             var (area1, area2) = AddRoomEach(dividedArea1, dividedArea2);
-            var path = CreatePath(area1, area2, divideX,isDivideByVertical);
+            // var path = CreatePath(area1, area2, divideX,isDivideByVertical);
+            
+            dividedArea1.AdjacentAreas.Add(area2);  // This process must be done after AddRoomEach
+            dividedArea2.AdjacentAreas.Add(area1);
+            var path = new Path(new List<(int x, int y)>());
+            foreach (var adjacentArea in dividedArea1.AdjacentAreas)
+            {
+                if (adjacentArea == null)
+                {
+                    Debug.Log("adjacentArea is null");
+                    continue;
+                }
+                path.Points.AddRange(CreatePath(area1, adjacentArea, divideX, isDivideByVertical).Points);
+            }
 
             Assert.IsTrue(dividedArea1.Width >= MinAreaSize);
             Assert.IsTrue(dividedArea2.Width >= MinAreaSize);
@@ -197,9 +214,6 @@ namespace DungeonCrawler.MapSystem.Scripts
             }
             return (areas, paths);
         }
-
-        record Area(int X, int Y, int Width, int Height, Room Room);
-        record Room(int X, int Y, int Width, int Height);
 
         Area AddRoom(Area area)
         {
@@ -316,9 +330,8 @@ namespace DungeonCrawler.MapSystem.Scripts
         }
 
     }
-    
-    
-    record Area(int X, int Y, int Width, int Height, Room Room);
+
+    record Area(int X, int Y, int Width, int Height, Room Room, List<Area> AdjacentAreas);
     record Room(int X, int Y, int Width, int Height);
     record Path(List<(int x, int y)> Points);
 }
