@@ -47,19 +47,19 @@ namespace DungeonCrawler.MapSystem.Scripts
             foreach (var (adjacentArea, adjacentPath) in area.AdjacentAreas)
             {
                 // Step0. Decide which area is connected to adjacentArea
-                //var leaderArea = CalculateAreaDistance(area1, adjacentArea) < CalculateAreaDistance(area2, adjacentArea) ? area1 : area2;
+                var leaderArea = CalculateAreaDistance(area1, adjacentArea) < CalculateAreaDistance(area2, adjacentArea) ? area1 : area2;
                 
                 // Step1. Prepare path connecting area1 and adjacentArea
-                //var pathArea1ToAdjacent = CreatePath(leaderArea, adjacentArea, adjacentPath.DivideInfo.coord , adjacentPath.DivideInfo.isDivideByVertical);
+                var pathArea1ToAdjacent = CreatePath(leaderArea, adjacentArea, adjacentPath.DivideInfo.coord , adjacentPath.DivideInfo.isDivideByVertical);
                 
                 // Step2. Update path of area -> adjacentArea to area1 -> adjacentArea
                 // (Caution) you don't have to area.AdjacentAreas.Remove((adjacentArea, adjacentPath)); , because area is never used after this process.
                 // And you cannot remove the element from the list while iterating the list.
-                //leaderArea.AdjacentAreas.Add((adjacentArea, pathArea1ToAdjacent));
+                leaderArea.AdjacentAreas.Add((adjacentArea, pathArea1ToAdjacent));
                 
                 // Step3. Update path of adjacentArea -> area to adjacentArea -> area1
                 adjacentArea.AdjacentAreas.Remove((area, adjacentPath));
-                //adjacentArea.AdjacentAreas.Add((leaderArea, pathArea1ToAdjacent));
+                adjacentArea.AdjacentAreas.Add((leaderArea, pathArea1ToAdjacent));
                 
             }
             
@@ -74,9 +74,16 @@ namespace DungeonCrawler.MapSystem.Scripts
         {
             Assert.IsTrue(area1.X != area2.X || area1.Y != area2.Y, $"area1: ({area1.X}, {area1.Y}), area2: ({area2.X}, {area2.Y})");
             if(area1.X > area2.X) (area1, area2) = (area2, area1);
-            if(area1.Y > area2.Y) (area1, area2) = (area2, area1);
-            
-            return (area2.X - (area1.X + area1.Width)) + (area2.Y - (area1.Y + area1.Height));
+            int distance = area1.Y > area2.Y
+                ? GridDistance((area1.X + area1.Width, area1.Y), (area2.X, area2.Y + area2.Height)) 
+                : GridDistance((area1.X + area1.Width, area1.Y + area1.Height), (area2.X, area2.Y));
+
+            return distance;
+        }
+        
+        int GridDistance((int x, int y) point1, (int x, int y) point2)
+        {
+            return Mathf.Abs(point1.x - point2.x) + Mathf.Abs(point1.y - point2.y);
         }
         
         public int RandomizeCoord(bool isDivideByVertical, Area area)
