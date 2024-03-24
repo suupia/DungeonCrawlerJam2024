@@ -29,6 +29,32 @@ namespace DungeonCrawler.MapSystem.Scripts
             _coordinate = coordinate;
         }
         
+        public EntityGridMap CreateDungeonDivideByStep(ref List<Area> result, int loopCount)
+        {
+            var map = new EntityGridMap(_coordinate);
+            var initArea = new Area(
+                X: 0,
+                Y: 0,
+                Width: map.Width,
+                Height: map.Height,
+                Room: new Room(
+                    X: MinRoomMargin,
+                    Y: MinRoomMargin,
+                    Width: map.Width - MinRoomMargin * 2,
+                    Height: map.Height - MinRoomMargin * 2
+                ),
+                AdjacentAreas: new List<(Area area, Path path)>()
+            );
+            var areas = DivideAreaOnce(initArea,result,loopCount);
+            result = areas;
+            var paths = areas.SelectMany(area => area.AdjacentAreas.Select(tuple => tuple.path)).ToList();
+            map = PlaceRooms(map, areas);
+            map = PlacePath(map, paths);
+            map = PlaceWall(map);  // this should be last
+            DebugAllAreasAdjacentAreas(areas);
+            return map;
+        }
+        
         public EntityGridMap CreateDungeonDivide()
         {
             var map = new EntityGridMap(_coordinate);
@@ -116,8 +142,18 @@ namespace DungeonCrawler.MapSystem.Scripts
             // Add area's AdjacentAreas to area1
             foreach (var (adjacentArea, adjacentPath) in area.AdjacentAreas)
             {
-                // if (adjacentArea == area1) continue;
                 area1.AdjacentAreas.Add((adjacentArea, CreatePath(area1,adjacentArea, adjacentPath.DivideX,isDivideByVertical)));
+                
+            }
+            
+            foreach (var (adjacentArea, adjacentPath) in area.AdjacentAreas)
+            {
+                // adjacentArea から areaへのパスを削除して、
+                // adjacentArea から area1へ貼りなおす必要がある
+                adjacentArea.AdjacentAreas.Remove((area, adjacentPath));
+                adjacentArea.AdjacentAreas.Add((area1, CreatePath(adjacentArea, area1, adjacentPath.DivideX, isDivideByVertical)));
+
+
             }
 
             Assert.IsTrue(dividedArea1.Width >= MinAreaSize);
@@ -224,6 +260,30 @@ namespace DungeonCrawler.MapSystem.Scripts
                     // what should I do?
                 }
             }
+            return result;
+        }
+        
+        List<Area> DivideAreaOnce(Area initArea, List<Area> result,  int counter = 0)
+        {
+            if (counter == 0)
+            {
+                result = new List<Area>() { initArea };
+            }
+
+            Debug.Log($"counter: {counter}");
+            var frontArea = result.First();
+            var (area1, area2, isDivided) = DivideArea(frontArea);
+            if (isDivided)
+            {
+                result.RemoveAt(0);
+                result.Add(area1);
+                result.Add(area2);
+            }
+            else
+            {
+                // what should I do?
+            }
+            
             return result;
         }
 
