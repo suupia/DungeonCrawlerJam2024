@@ -133,4 +133,4 @@ namespace DungeonCrawler.MapSystem.Scripts
 
 public record Area(int X, int Y, int Width, int Height, Room Room, List<(Area area, Path path)> AdjacentAreas);
 public record Room(int X, int Y, int Width, int Height);
-public record Path(List<(int x, int y)> Points, int DivideX);
+public record Path(List<(int x, int y)> Points, (bool isDivideByVertical, int coord) DivideInfo);
