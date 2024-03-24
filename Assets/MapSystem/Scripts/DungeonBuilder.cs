@@ -46,7 +46,9 @@ namespace DungeonCrawler.MapSystem.Scripts
                 ),
                 AdjacentAreas: new List<(Area area, Path path)>()
             );
-            var (areas, paths) = LoopDivideArea(area);   
+            var areasAndPaths = LoopDivideArea(area);
+            var areas = areasAndPaths.Select(tuple => tuple.area).ToList();
+            var paths = areasAndPaths.Select(tuple => tuple.path).ToList();
             map = PlaceRooms(map, areas);
             map = PlacePath(map, paths);
             map = PlaceWall(map);  // this should be last
@@ -206,29 +208,28 @@ namespace DungeonCrawler.MapSystem.Scripts
         }
 
         
-        (List<Area> areas, List<Path> paths) LoopDivideArea(Area initArea ,int counter = 0)
+        List<(Area area, Path path)> LoopDivideArea(Area initArea ,int counter = 0)
         {
             const int divideLimit = 2;
-            var areas = new List<Area>(){initArea}; // todo : use priority queue
-            var paths = new List<Path>();
+            var result = new List<(Area area, Path path)>() { (initArea, new Path( new List<(int x, int y)>())) };
             for(int i = 0; i< divideLimit; i++)
             {
                 Debug.Log($"counter: {counter}");
-                var frontArea = areas.First();
+                var (frontArea, frontPath) = result.First();
                 var (area1, area2, path, isDivided) = DivideArea(frontArea);
                 if (isDivided)
                 {
-                    areas.RemoveAt(0);
-                    areas.Add(area1);
-                    areas.Add(area2);
-                    paths.Add(path);
+                    result.RemoveAt(0);
+                    result.Add((area1, path));
+                    result.Add((area2, path));
+                    
                 }
                 else
                 {
                     // what should I do?
                 }
             }
-            return (areas, paths);
+            return result;
         }
 
         Area AddRoom(Area area)
