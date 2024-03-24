@@ -114,7 +114,7 @@ namespace DungeonCrawler.MapSystem.Scripts
                 var randY1 = Random.Range(area1.Room.Y + 1, area1.Room.Y + area1.Room.Height - 1);  // Excluding both ends
                 var (x1, y1) = (area1.Room.X + area1.Room.Width, randY1);
                 var randY2 = Random.Range(area2.Room.Y + 1, area2.Room.Y + area2.Room.Height - 1);  // Excluding both ends
-                var (x2, y2) = (area2.Room.X, randY2);
+                var (x2, y2) = (area2.Room.X-1, randY2);
                 while (x1 < divideCoord)
                 {
                     path.Points.Add((x1, y1));
@@ -138,7 +138,7 @@ namespace DungeonCrawler.MapSystem.Scripts
                 var randX1 = Random.Range(area1.Room.X + 1, area1.Room.X + area1.Room.Width - 1);  // Excluding both ends
                 var (x1, y1) = (randX1, area1.Room.Y + area1.Room.Height);
                 var randX2 = Random.Range(area2.Room.X + 1, area2.Room.X + area2.Room.Width - 1);  // Excluding both ends
-                var (x2, y2) = (randX2, area2.Room.Y);
+                var (x2, y2) = (randX2, area2.Room.Y-1);
                 while (y1 < divideCoord)
                 {
                     path.Points.Add((x1, y1));
