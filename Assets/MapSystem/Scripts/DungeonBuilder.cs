@@ -2,39 +2,46 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Codice.Client.BaseCommands;
 using DungeonCrawler.MapSystem.Interfaces;
 using DungeonCrawler.MapSystem.Scripts;
 using DungeonCrawler.MapSystem.Scripts.Entity;
 using UnityEngine;
 using UnityEngine.Assertions;
-using Random = UnityEngine.Random;
 
 
 namespace DungeonCrawler.MapSystem.Scripts
 {
     public class DungeonBuilder
     {
-        readonly CharacterWall _wall = new CharacterWall();
-        readonly IEntity _path = new CharacterPath();
-        readonly IEntity _room = new CharacterRoom();
+        readonly IEntity _wall;
+        readonly IEntity _path;
+        readonly IEntity _room;
         readonly IGridCoordinate _coordinate;
 
         int _divideCount;
         List<Area> _areas = new ();
 
         readonly DivideAreaExecutor _divideAreaExecutor;
-        public DungeonBuilder(IGridCoordinate coordinate , DivideAreaExecutor divideAreaExecutor)
+
+        public DungeonBuilder(
+            IGridCoordinate coordinate,
+            DivideAreaExecutor divideAreaExecutor,
+            IEntity wall,
+            IEntity path,
+            IEntity room)
         {
             _coordinate = coordinate;
             _divideAreaExecutor = divideAreaExecutor;
+            _wall = wall;
+            _path = path;
+            _room = room;
         }
 
-        public EntityGridMap CreateDungeonByStep()
+        public EntityGridMap CreateDungeonByStep(EntityGridMap map)
         {
-            var map = new EntityGridMap(_coordinate);
             var areas =_divideCount == 0 ? new List<Area>{GetInitArea(map)} : _divideAreaExecutor.DivideAreaOnce(_areas);
             var paths = areas.SelectMany(area => area.AdjacentAreas.Select(tuple => tuple.path)).ToList();
+            map.ClearMap();
             map = PlaceRooms(map, areas);
             map = PlacePath(map, paths);
             map = PlaceWall(map);  // this should be last
@@ -112,10 +119,9 @@ namespace DungeonCrawler.MapSystem.Scripts
 
 
     }
-
+    public record Area(int X, int Y, int Width, int Height, Room Room, List<(Area area, Path path)> AdjacentAreas);
+    public record Room(int X, int Y, int Width, int Height);
+    public record Path(List<(int x, int y)> Points, (bool isDivideByVertical, int coord) DivideInfo);
 }
 
 
-public record Area(int X, int Y, int Width, int Height, Room Room, List<(Area area, Path path)> AdjacentAreas);
-public record Room(int X, int Y, int Width, int Height);
-public record Path(List<(int x, int y)> Points, (bool isDivideByVertical, int coord) DivideInfo);

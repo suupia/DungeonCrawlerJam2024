@@ -5,7 +5,6 @@ using System.Linq;
 using DungeonCrawler.MapSystem.Interfaces;
 using DungeonCrawler.MapSystem.Scripts;
 using DungeonCrawler.MapSystem.Scripts.Entity;
-using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -24,13 +23,15 @@ namespace DungeonCrawler
         IGridCoordinate _coordinate = null!;
         DivideAreaExecutor _divideAreaExecutor = null!;
         DungeonBuilder _dungeonBuilder = null!;
+
+        EntityGridMap? _map;
             
         void Awake()
         {
             // Domain
             _coordinate = new SquareGridCoordinate(50, 50);
             _divideAreaExecutor = new DivideAreaExecutor();
-            _dungeonBuilder = new DungeonBuilder(_coordinate, _divideAreaExecutor);
+            _dungeonBuilder = new DungeonBuilder(_coordinate, _divideAreaExecutor, new CharacterWall(), new CharacterPath(), new CharacterRoom());
         }
 
         void Start()
@@ -58,8 +59,9 @@ namespace DungeonCrawler
         {
             Debug.Log("CreateDungeonByStep");
             DestroyAllTiles();
-            var map = _dungeonBuilder.CreateDungeonByStep();
-            UpdateSprites(map);
+            _map ??= new EntityGridMap(_coordinate);
+            _map = _dungeonBuilder.CreateDungeonByStep(_map);
+            UpdateSprites(_map);
         }
 
         void DestroyAllTiles()
