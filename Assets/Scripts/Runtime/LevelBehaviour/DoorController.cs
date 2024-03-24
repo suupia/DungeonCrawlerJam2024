@@ -28,7 +28,7 @@ namespace DungeonCrawler.Runtime.LevelBehaviour
             if (dir >= _forwardDirection) end = endRot ?? start * Quaternion.Euler(0, -90, 0);
             else end = endRot ?? start * Quaternion.Euler(0, 90, 0);
 
-            transform.rotation = Quaternion.Slerp(start, end, progress);
+            transform.parent.rotation = Quaternion.Slerp(start, end, progress);
         }
 
         private void OpenDoor(Vector3 playerPos)
@@ -36,7 +36,7 @@ namespace DungeonCrawler.Runtime.LevelBehaviour
             if (!_isChanging)
             {
                 _isChanging = true;
-                Quaternion StartRot = transform.rotation;
+                Quaternion StartRot = transform.parent.rotation;
                 float dir = Vector3.Dot(_forward, (playerPos - transform.position).normalized);
                 GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
                     this,
@@ -85,8 +85,8 @@ namespace DungeonCrawler.Runtime.LevelBehaviour
 
         private void Awake()
         {
-            _startRotation = transform.rotation.eulerAngles;
-            _forward = transform.forward;
+            _startRotation = transform.parent.rotation.eulerAngles;
+            _forward = -transform.parent.right;
         }
     }
 }
