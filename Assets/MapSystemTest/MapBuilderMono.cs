@@ -30,7 +30,7 @@ namespace DungeonCrawler
             // Domain
             _coordinate = new SquareGridCoordinate(50, 50);
             _divideAreaExecutor = new DivideAreaExecutor();
-            _dungeonBuilder = new DungeonBuilder(_coordinate, _divideAreaExecutor);
+            _dungeonBuilder = new DungeonBuilder(_coordinate, _divideAreaExecutor, new CharacterWall(), new CharacterPath(), new CharacterRoom());
         }
 
         void Start()

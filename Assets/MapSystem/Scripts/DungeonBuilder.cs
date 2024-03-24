@@ -15,19 +15,28 @@ namespace DungeonCrawler.MapSystem.Scripts
 {
     public class DungeonBuilder
     {
-        readonly CharacterWall _wall = new CharacterWall();
-        readonly IEntity _path = new CharacterPath();
-        readonly IEntity _room = new CharacterRoom();
+        readonly IEntity _wall;
+        readonly IEntity _path;
+        readonly IEntity _room;
         readonly IGridCoordinate _coordinate;
 
         int _divideCount;
         List<Area> _areas = new ();
 
         readonly DivideAreaExecutor _divideAreaExecutor;
-        public DungeonBuilder(IGridCoordinate coordinate , DivideAreaExecutor divideAreaExecutor)
+
+        public DungeonBuilder(
+            IGridCoordinate coordinate,
+            DivideAreaExecutor divideAreaExecutor,
+            IEntity wall,
+            IEntity path,
+            IEntity room)
         {
             _coordinate = coordinate;
             _divideAreaExecutor = divideAreaExecutor;
+            _wall = wall;
+            _path = path;
+            _room = room;
         }
 
         public EntityGridMap CreateDungeonByStep()
