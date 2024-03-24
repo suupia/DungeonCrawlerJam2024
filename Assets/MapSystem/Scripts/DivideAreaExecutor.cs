@@ -12,34 +12,24 @@ namespace DungeonCrawler.MapSystem.Scripts
         const int MinRoomSize = 3;
         const int MaxRoomSize = 20;
         const int MinAreaSize = MinRoomSize + MinRoomMargin * 2;
-        public List<Area> DivideAreaOnce(List<Area> result)
+        public List<Area> DivideAreaOnce(List<Area> areas)
         {
-            var frontArea = result.First();
-            var (area1, area2, isDivided) = DivideArea(frontArea);
-            if (isDivided)
+            var frontArea = areas.First(); // todo : Pop the largest area
+            if (CanDivideArea(frontArea))
             {
-                result.RemoveAt(0);
-                result.Add(area1);
-                result.Add(area2);
-            }
-            else
-            {
-                // what should I do?
+                var (area1, area2) = DivideArea(frontArea); 
+                areas.RemoveAt(0);
+                areas.Add(area1);
+                areas.Add(area2);
             }
             
-            return result;
+            return areas;
         }
         
-        (Area area1, Area area2, bool idDivided) DivideArea(Area area)
+        (Area area1, Area area2) DivideArea(Area area)
         {
-            if(!CanDivideArea(area))
-            {
-                return (area, area, false);
-            }
-            
-            // Preconditions
-            Assert.IsTrue(area.Width > MinAreaSize*2 || area.Height > MinAreaSize*2);
-
+            // [Precondition]
+            Assert.IsTrue(CanDivideArea(area));
 
             bool isDivideByVertical = Random.Range(0, 2) == 0;
             if(area.Width > MinAreaSize*2)
@@ -103,15 +93,11 @@ namespace DungeonCrawler.MapSystem.Scripts
             Debug.Log($"dividedArea1: X: {dividedArea1.X}, Y: {dividedArea1.Y}, Width: {dividedArea1.Width}, Height: {dividedArea1.Height}");
             Debug.Log($"dividedArea2: X: {dividedArea2.X}, Y: {dividedArea2.Y}, Width: {dividedArea2.Width}, Height: {dividedArea2.Height}");
             
-            return (area1, area2, true);
+            return (area1, area2);
 
         }
         
-        
-
-        
-        // todo : public for the test
-        public Path CreatePath(Area area1, Area area2, int divideX, bool isDivideByVertical)
+        Path CreatePath(Area area1, Area area2, int divideX, bool isDivideByVertical)
         {
             Assert.IsNotNull(area1.Room);
             Assert.IsNotNull(area2.Room);
@@ -184,10 +170,6 @@ namespace DungeonCrawler.MapSystem.Scripts
             var room = GenerateRandomRoom(area);
             return area with { Room = room };
         }
-        
-        
-
-
         Room GenerateRandomRoom(Area area)
         {
             var roomX = Random.Range(area.X + MinRoomMargin, area.X + area.Width - (MinRoomSize + MinRoomMargin * 2));
