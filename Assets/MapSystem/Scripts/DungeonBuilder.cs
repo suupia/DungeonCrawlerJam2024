@@ -44,7 +44,7 @@ namespace DungeonCrawler.MapSystem.Scripts
                     Width: map.Width - MinRoomMargin * 2,
                     Height: map.Height - MinRoomMargin * 2
                 ),
-                AdjacentAreas: new List<Area>()
+                AdjacentAreas: new List<(Area area, Path path)>()
             );
             var (areas, paths) = LoopDivideArea(area);   
             // map = PlaceRooms(map, rooms);
@@ -52,8 +52,21 @@ namespace DungeonCrawler.MapSystem.Scripts
             map = PlacePath(map, paths);
             // map = PlacePath(map, CreatePathNaive(rooms[0], rooms[1]));
             map = PlaceWall(map);  // this should be last
-            
+            DebugAllAreasAdjacentAreas(areas);
             return map;
+        }
+        
+        void DebugAllAreasAdjacentAreas(List<Area> areas)
+        {
+            foreach (var area in areas)
+            {
+                Debug.LogWarning($"Area: X: {area.X}, Y: {area.Y}, Width: {area.Width}, Height: {area.Height}");
+                foreach (var (adjacentArea, path) in area.AdjacentAreas)
+                {
+                    Debug.LogWarning($">> AdjacentArea: X: {adjacentArea.X}, Y: {adjacentArea.Y}, Width: {adjacentArea.Width}, Height: {adjacentArea.Height}");
+                    Debug.LogWarning($">> Path: {string.Join(',', path.Points.Select(p => $"({p.x},{p.y})"))}");
+                }
+            }
         }
 
         (Area area1, Area area2, Path path, bool idDivided) DivideArea(Area area)
@@ -82,33 +95,38 @@ namespace DungeonCrawler.MapSystem.Scripts
             var divideX = Random.Range(minX, maxX);
             var (dividedArea1, dividedArea2) = isDivideByVertical
                 ? (
-                    new Area(area.X, area.Y, divideX, area.Height, null, new List<Area>()),
-                    new Area(area.X + divideX, area.Y, area.Width - divideX, area.Height, null,new List<Area>())
+                    new Area(area.X, area.Y, divideX, area.Height, null, new List<(Area area, Path path)>()),
+                    new Area(area.X + divideX, area.Y, area.Width - divideX, area.Height, null,new List<(Area area, Path path)>())
                 )
                 : (
-                    new Area(area.X, area.Y, area.Width, divideX, null,new List<Area>()),
-                    new Area(area.X, area.Y + divideX, area.Width, area.Height - divideX, null,new List<Area>())
+                    new Area(area.X, area.Y, area.Width, divideX, null,new List<(Area area, Path path)>()),
+                    new Area(area.X, area.Y + divideX, area.Width, area.Height - divideX, null,new List<(Area area, Path path)>())
                 );
 
             
             // todo : temp
-            dividedArea1.AdjacentAreas.AddRange(area.AdjacentAreas);
+            // dividedArea1.AdjacentAreas.AddRange(area.AdjacentAreas);
             Debug.Log($"dividedArea1: X: {dividedArea1.X}, Y: {dividedArea1.Y}, Width: {dividedArea1.Width}, Height: {dividedArea1.Height}");
             Debug.Log($"dividedArea2: X: {dividedArea2.X}, Y: {dividedArea2.Y}, Width: {dividedArea2.Width}, Height: {dividedArea2.Height}");
             var (area1, area2) = AddRoomEach(dividedArea1, dividedArea2);
             // var path = CreatePath(area1, area2, divideX,isDivideByVertical);
             
-            dividedArea1.AdjacentAreas.Add(area2);  // This process must be done after AddRoomEach
-            dividedArea2.AdjacentAreas.Add(area1);
+            var connectPath = CreatePath(area1, area2, divideX, isDivideByVertical);
+            dividedArea1.AdjacentAreas.Add((area2, connectPath));  // This process must be done after AddRoomEach
+            dividedArea2.AdjacentAreas.Add((area1, connectPath));
             var path = new Path(new List<(int x, int y)>());
-            foreach (var adjacentArea in dividedArea1.AdjacentAreas)
+            //  path.Points.AddRange(connectPath.Points);
+            
+            Debug.Log($"adjacentArea : {string.Join(',', area.AdjacentAreas.Select(a => $"({a.area.X},{a.area.Y})"))}");
+            foreach (var (adjacentArea, prePath ) in area.AdjacentAreas)
             {
-                if (adjacentArea == null)
+                if (adjacentArea == dividedArea1)
                 {
-                    Debug.Log("adjacentArea is null");
-                    continue;
+                    Debug.Log("adjacentArea == dividedArea1");
+                    area.AdjacentAreas.Remove((adjacentArea, prePath));
+                    var rePath = CreatePath(area2, adjacentArea, divideX, isDivideByVertical);
+                    path.Points.AddRange(rePath.Points);
                 }
-                path.Points.AddRange(CreatePath(area1, adjacentArea, divideX, isDivideByVertical).Points);
             }
 
             Assert.IsTrue(dividedArea1.Width >= MinAreaSize);
@@ -331,7 +349,7 @@ namespace DungeonCrawler.MapSystem.Scripts
 
     }
 
-    record Area(int X, int Y, int Width, int Height, Room Room, List<Area> AdjacentAreas);
+    record Area(int X, int Y, int Width, int Height, Room Room, List<(Area area, Path path)> AdjacentAreas);
     record Room(int X, int Y, int Width, int Height);
     record Path(List<(int x, int y)> Points);
 }
