@@ -33,7 +33,7 @@ namespace DungeonCrawler.MapSystem.Scripts
         public EntityGridMap CreateDungeonDivide()
         {
             var map = new EntityGridMap(_coordinate);
-            var area = new Area(
+            var initArea = new Area(
                 X: 0,
                 Y: 0,
                 Width: map.Width,
@@ -46,9 +46,10 @@ namespace DungeonCrawler.MapSystem.Scripts
                 ),
                 AdjacentAreas: new List<(Area area, Path path)>()
             );
-            var areasAndPaths = LoopDivideArea(area);
-            var areas = areasAndPaths.Select(tuple => tuple.area).ToList();
-            var paths = areasAndPaths.Select(tuple => tuple.path).ToList();
+            var areas = LoopDivideArea(initArea);
+            // var areas = areasAndPaths.Select(tuple => tuple.area).ToList();
+            // var paths = areasAndPaths.Select(tuple => tuple.path).ToList();
+            var paths = areas.SelectMany(area => area.AdjacentAreas.Select(tuple => tuple.path)).ToList();
             map = PlaceRooms(map, areas);
             map = PlacePath(map, paths);
             map = PlaceWall(map);  // this should be last
@@ -69,11 +70,11 @@ namespace DungeonCrawler.MapSystem.Scripts
             }
         }
 
-        (Area area1, Area area2, Path path, bool idDivided) DivideArea(Area area)
+        (Area area1, Area area2, bool idDivided) DivideArea(Area area)
         {
             if(!CanDivideArea(area))
             {
-                return (area, area, new Path(new List<(int x, int y)>()), false);
+                return (area, area, false);
             }
             
             // Preconditions
@@ -115,17 +116,12 @@ namespace DungeonCrawler.MapSystem.Scripts
             area1.AdjacentAreas.Add((area2, connectPath));  // This process must be done after AddRoomEach
             area2.AdjacentAreas.Add((area1, connectPath));
             
-            // Debug.Log($"adjacentArea : {string.Join(',', area.AdjacentAreas.Select(a => $"({a.area.X},{a.area.Y})"))}");
-            // foreach (var (adjacentArea, prePath ) in area.AdjacentAreas)
-            // {
-            //     if (adjacentArea == dividedArea1)
-            //     {
-            //         Debug.Log("adjacentArea == dividedArea1");
-            //         area.AdjacentAreas.Remove((adjacentArea, prePath));
-            //         var rePath = CreatePath(area2, adjacentArea, divideX, isDivideByVertical);
-            //         path.Points.AddRange(rePath.Points);
-            //     }
-            // }
+            // Add area's AdjacentAreas to area1
+            foreach (var (adjacentArea, adjacentPath) in area.AdjacentAreas)
+            {
+                // if (adjacentArea == area1) continue;
+                area1.AdjacentAreas.Add((adjacentArea, CreatePath(area1,area,divideX,isDivideByVertical)));
+            }
 
             Assert.IsTrue(dividedArea1.Width >= MinAreaSize);
             Assert.IsTrue(dividedArea2.Width >= MinAreaSize);
@@ -137,7 +133,7 @@ namespace DungeonCrawler.MapSystem.Scripts
             Debug.Log($"dividedArea1: X: {dividedArea1.X}, Y: {dividedArea1.Y}, Width: {dividedArea1.Width}, Height: {dividedArea1.Height}");
             Debug.Log($"dividedArea2: X: {dividedArea2.X}, Y: {dividedArea2.Y}, Width: {dividedArea2.Width}, Height: {dividedArea2.Height}");
             
-            return (area1, area2 , path, true);
+            return (area1, area2, true);
 
         }
         bool CanDivideArea(Area area)
@@ -206,20 +202,20 @@ namespace DungeonCrawler.MapSystem.Scripts
         }
 
         
-        List<(Area area, Path path)> LoopDivideArea(Area initArea ,int counter = 0)
+        List<Area> LoopDivideArea(Area initArea ,int counter = 0)
         {
             const int divideLimit = 2;
-            var result = new List<(Area area, Path path)>() { (initArea, new Path( new List<(int x, int y)>())) };
+            var result = new List<Area>() { initArea };
             for(int i = 0; i< divideLimit; i++)
             {
                 Debug.Log($"counter: {counter}");
-                var (frontArea, frontPath) = result.First();
-                var (area1, area2, path, isDivided) = DivideArea(frontArea);
+                var frontArea = result.First();
+                var (area1, area2, isDivided) = DivideArea(frontArea);
                 if (isDivided)
                 {
                     result.RemoveAt(0);
-                    result.Add((area1, path));
-                    result.Add((area2, path));
+                    result.Add(area1);
+                    result.Add(area2);
                     
                 }
                 else
