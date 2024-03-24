@@ -20,9 +20,6 @@ namespace DungeonCrawler
         [SerializeField] Button button3 = null!;
 
         readonly List<GameObject> _pool = new List<GameObject>();
-        
-        int _loopCount = 0;
-        List<Area> _result = new List<Area>();
 
         void Start()
         {
@@ -99,16 +96,15 @@ namespace DungeonCrawler
                 }
             });
             
+            // Domain
+            var map = new EntityGridMap(new SquareGridCoordinate(15, 15));
+            var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(15, 15));
+            
             buildButton2.onClick.AddListener(() =>
             {
                 Debug.Log("Build Dungeon");
-                
-                // Domain
-                var map = new EntityGridMap(new SquareGridCoordinate(15, 15));
-                var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(15, 15));
-                map = dungeonBuilder.CreateDungeonDivideByStep(ref _result,_loopCount);
-                _loopCount++;
-                
+                map = dungeonBuilder.CreateDungeonDivideByStep();
+
                 // Mono
                 foreach(var tile in _pool)
                 {
@@ -132,8 +128,12 @@ namespace DungeonCrawler
             button3.onClick.AddListener(() =>
             {
                 Debug.Log($"Reset Dungeon");
-                _loopCount = 0;
-                _result = new List<Area>();     
+                // Mono
+                foreach(var tile in _pool)
+                {
+                    Destroy(tile);
+                }
+                dungeonBuilder.Reset();   
             });
         }
         

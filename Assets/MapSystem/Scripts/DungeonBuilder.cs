@@ -22,14 +22,17 @@ namespace DungeonCrawler.MapSystem.Scripts
                 
         public const int MinRoomSize = 3;
         public const int MaxRoomSize = 20;
-        public const int MinRoomMargin = 2;  // This should be larger than 2, because the rooms are connected to each other by a path.
+        public const int MinRoomMargin = 2;  // This should be 2 or greater, because the rooms are connected to each other by a path.
         public const int MinAreaSize = MinRoomSize + MinRoomMargin * 2;
+        
+        int _divideCount = 0;
+        List<Area> _areas = new ();
         public DungeonBuilder(IGridCoordinate coordinate)
         {
             _coordinate = coordinate;
         }
         
-        public EntityGridMap CreateDungeonDivideByStep(ref List<Area> result, int loopCount)
+        public EntityGridMap CreateDungeonDivideByStep()
         {
             var map = new EntityGridMap(_coordinate);
             var initArea = new Area(
@@ -45,14 +48,21 @@ namespace DungeonCrawler.MapSystem.Scripts
                 ),
                 AdjacentAreas: new List<(Area area, Path path)>()
             );
-            var areas = DivideAreaOnce(initArea,result,loopCount);
-            result = areas;
+            var areas =_divideCount == 0 ? new List<Area>{initArea} : DivideAreaOnce(_areas);
             var paths = areas.SelectMany(area => area.AdjacentAreas.Select(tuple => tuple.path)).ToList();
             map = PlaceRooms(map, areas);
             map = PlacePath(map, paths);
             map = PlaceWall(map);  // this should be last
             DebugAllAreasAdjacentAreas(areas);
+            _divideCount++;
+            _areas = areas;
             return map;
+        }
+        
+        public void Reset()
+        {
+            _divideCount = 0;
+            _areas = new List<Area>();
         }
         
         public EntityGridMap CreateDungeonDivide()
@@ -263,14 +273,8 @@ namespace DungeonCrawler.MapSystem.Scripts
             return result;
         }
         
-        List<Area> DivideAreaOnce(Area initArea, List<Area> result,  int counter = 0)
+        List<Area> DivideAreaOnce( List<Area> result)
         {
-            if (counter == 0)
-            {
-                result = new List<Area>() { initArea };
-            }
-
-            Debug.Log($"counter: {counter}");
             var frontArea = result.First();
             var (area1, area2, isDivided) = DivideArea(frontArea);
             if (isDivided)
