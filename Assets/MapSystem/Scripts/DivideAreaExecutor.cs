@@ -46,17 +46,20 @@ namespace DungeonCrawler.MapSystem.Scripts
             // Update path of area <-> adjacentArea
             foreach (var (adjacentArea, adjacentPath) in area.AdjacentAreas)
             {
+                // Step0. Decide which area is connected to adjacentArea
+                //var leaderArea = CalculateAreaDistance(area1, adjacentArea) < CalculateAreaDistance(area2, adjacentArea) ? area1 : area2;
+                
                 // Step1. Prepare path connecting area1 and adjacentArea
-                var pathArea1ToAdjacent = CreatePath(area1, adjacentArea, adjacentPath.DivideInfo.coord , adjacentPath.DivideInfo.isDivideByVertical);
+                //var pathArea1ToAdjacent = CreatePath(leaderArea, adjacentArea, adjacentPath.DivideInfo.coord , adjacentPath.DivideInfo.isDivideByVertical);
                 
                 // Step2. Update path of area -> adjacentArea to area1 -> adjacentArea
                 // (Caution) you don't have to area.AdjacentAreas.Remove((adjacentArea, adjacentPath)); , because area is never used after this process.
                 // And you cannot remove the element from the list while iterating the list.
-                area1.AdjacentAreas.Add((adjacentArea, pathArea1ToAdjacent));
+                //leaderArea.AdjacentAreas.Add((adjacentArea, pathArea1ToAdjacent));
                 
                 // Step3. Update path of adjacentArea -> area to adjacentArea -> area1
                 adjacentArea.AdjacentAreas.Remove((area, adjacentPath));
-                adjacentArea.AdjacentAreas.Add((area1, pathArea1ToAdjacent));
+                //adjacentArea.AdjacentAreas.Add((leaderArea, pathArea1ToAdjacent));
                 
             }
             
@@ -67,12 +70,22 @@ namespace DungeonCrawler.MapSystem.Scripts
 
         }
         
+        int CalculateAreaDistance(Area area1, Area area2)
+        {
+            Assert.IsTrue(area1.X != area2.X || area1.Y != area2.Y, $"area1: ({area1.X}, {area1.Y}), area2: ({area2.X}, {area2.Y})");
+            if(area1.X > area2.X) (area1, area2) = (area2, area1);
+            if(area1.Y > area2.Y) (area1, area2) = (area2, area1);
+            
+            return (area2.X - (area1.X + area1.Width)) + (area2.Y - (area1.Y + area1.Height));
+        }
+        
         public int RandomizeCoord(bool isDivideByVertical, Area area)
         {
             int areaSize = isDivideByVertical ? area.Width : area.Height;
-            var minX = MinAreaSize; // Ensure that the room can be placed in the left area
-            var maxX = areaSize - MinAreaSize; // Ensure that the room can be placed in the right area
-            Assert.IsTrue(minX < maxX, $"minX: {minX}, maxX: {maxX}, areaSize: {areaSize}");
+            int areaCoord = isDivideByVertical ? area.X : area.Y;
+            var minX = areaCoord + MinAreaSize; // Ensure that the room can be placed in the left area
+            var maxX = areaCoord + areaSize - MinAreaSize; // Ensure that the room can be placed in the right area
+            Assert.IsTrue(minX < maxX, $"minX: {minX}, maxX: {maxX}, areaSize: {areaSize}"); 
             var divideCoord = Random.Range(minX, maxX);
             return divideCoord;
         }
@@ -157,6 +170,7 @@ namespace DungeonCrawler.MapSystem.Scripts
                     minX++;
                 }
             }
+            Debug.Log($"CreatePath: isDivideByVertical: {isDivideByVertical}, divideCoord: {divideCoord}");
             Debug.Log($"area1: ({area1.X}, {area1.Y}) -> area2: ({area2.X}, {area2.Y})");
             Debug.Log($"paths: {string.Join(',', path.Points.Select(p => $"({p.x},{p.y})"))}");
             return path;

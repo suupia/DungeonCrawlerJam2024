@@ -119,7 +119,7 @@ namespace DungeonCrawler.MapSystem.Scripts
                 foreach (var (x, y) in path.Points)
                 {
                     map.AddEntity(x, y, _path);
-                    Debug.Log($"PlacePath: X: {x}, Y: {y}");
+                    // Debug.Log($"PlacePath: X: {x}, Y: {y}");
                 }
             }
             return map;

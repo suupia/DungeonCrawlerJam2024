@@ -17,7 +17,6 @@ namespace DungeonCrawler
 
         public void SetSprite(IEntity entity)
         {
-            Debug.Log("SetSprite");
             if(entity is CharacterWall)
             {
                 floorSpriteRenderer.sprite = wallSprite;
