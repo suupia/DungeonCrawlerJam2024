@@ -97,9 +97,9 @@ namespace DungeonCrawler
             // });
             
             // Domain
-            var map = new EntityGridMap(new SquareGridCoordinate(15, 15));
+            var map = new EntityGridMap(new SquareGridCoordinate(30, 30));
             var divideAreaExecutor = new DivideAreaExecutor();
-            var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(15, 15), divideAreaExecutor);
+            var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(30, 30), divideAreaExecutor);
             
             buildButton2.onClick.AddListener(() =>
             {
