@@ -105,20 +105,18 @@ namespace DungeonCrawler.MapSystem.Scripts
             Debug.Log($"dividedArea2: X: {dividedArea2.X}, Y: {dividedArea2.Y}, Width: {dividedArea2.Width}, Height: {dividedArea2.Height}");
             
             return (area1, area2 , path, true);
-            
-            // Local Functions
-            bool CanDivideArea(Area area)
-            {
-                return area.Width > MinAreaSize*2 || area.Height > MinAreaSize*2;            
-            }
-            
-            (Area area1, Area area2) AddRoomEach(Area area1, Area area2)
-            {
-                return (AddRoom(area1), AddRoom(area2));
-            }
-            
 
         }
+        bool CanDivideArea(Area area)
+        {
+            return area.Width > MinAreaSize*2 || area.Height > MinAreaSize*2;            
+        }
+        
+        (Area area1, Area area2) AddRoomEach(Area area1, Area area2)
+        {
+            return (AddRoom(area1), AddRoom(area2));
+        }
+        
         Path CreatePath(Area area1, Area area2, int divideX, bool isDivideByVertical)
         {
             var path = new Path(new List<(int x, int y)>());
@@ -174,30 +172,6 @@ namespace DungeonCrawler.MapSystem.Scripts
             return path;
         }
 
-        // (List<Area> areas, List<Path> paths) RecursiveDivideArea(Area initArea,List<Path> paths ,int counter = 0)
-        // {
-        //     Debug.Log($"initArea: X: {initArea.X}, Y: {initArea.Y}, Width: {initArea.Width}, Height: {initArea.Height}");
-        //     var (area1, area2, path ,isDivided ) = DivideArea(initArea);
-        //     Debug.Log($"isDivided: {isDivided}");
-        //     var areas = new List<Area>();
-        //     paths.Add(path);
-        //     if (isDivided)
-        //     {
-        //         var (areas1, paths1) = RecursiveDivideArea(area1, paths,counter + 1);
-        //         var (areas2, paths2) = RecursiveDivideArea(area2, paths, counter + 1);
-        //         areas.AddRange(areas1);
-        //         areas.AddRange(areas2);
-        //         paths.AddRange(paths1);
-        //         paths.AddRange(paths2);
-        //     }
-        //     else
-        //     {
-        //         areas.Add(area1);
-        //     }
-        //     Debug.Log($"areas.Count: {areas.Count}");
-        //     Debug.Log($"paths.Count: {paths.Count}");
-        //     return (areas, paths);
-        // }
         
         (List<Area> areas, List<Path> paths) LoopDivideArea(Area initArea ,int counter = 0)
         {
@@ -222,34 +196,6 @@ namespace DungeonCrawler.MapSystem.Scripts
                 }
             }
             return (areas, paths);
-            
-            
-            //
-            // Debug.Log($"initArea: X: {initArea.X}, Y: {initArea.Y}, Width: {initArea.Width}, Height: {initArea.Height}");
-            // var (area1, area2, path ,isDivided ) = DivideArea(initArea);
-            // Debug.Log($"isDivided: {isDivided}");
-            // paths.Add(path);
-            // if (isDivided)
-            // {
-            //     var (areas1, paths1) = RecursiveDivideArea(area1, paths,counter + 1);
-            //     var (areas2, paths2) = RecursiveDivideArea(area2, paths, counter + 1);
-            //     areas.AddRange(areas1);
-            //     areas.AddRange(areas2);
-            //     paths.AddRange(paths1);
-            //     paths.AddRange(paths2);
-            // }
-            // else
-            // {
-            //     areas.Add(area1);
-            // }
-            // Debug.Log($"areas.Count: {areas.Count}");
-            // Debug.Log($"paths.Count: {paths.Count}");
-            // return (areas, paths);
-        }
-
-        bool CanDivideArea(Area area)
-        {
-            return area.Width >= MinAreaSize*2 || area.Height >= MinAreaSize*2;            
         }
 
         record Area(int X, int Y, int Width, int Height, Room Room);
