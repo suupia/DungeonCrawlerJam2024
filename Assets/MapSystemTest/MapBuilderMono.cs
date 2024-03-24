@@ -16,118 +16,116 @@ namespace DungeonCrawler
     public class MapBuilderMono : MonoBehaviour
     {
         [SerializeField] TileMono tilePrefab = null!;
-        [SerializeField] Button buildButton = null!;
-        [SerializeField] Button buildButton2 = null!;
-        [SerializeField] Button button3 = null!;
+        [SerializeField] Button divideButton = null!;
+        [SerializeField] Button resetButton = null!;
 
-        readonly List<GameObject> _pool = new List<GameObject>();
+        readonly List<TileMono> _pool = new List<TileMono>();
 
-        DivideAreaExecutor _divideAreaExecutor;
-        DungeonBuilder _dungeonBuilder;
+        IGridCoordinate _coordinate = null!;
+        DivideAreaExecutor _divideAreaExecutor = null!;
+        DungeonBuilder _dungeonBuilder = null!;
             
         void Awake()
         {
             // Domain
+            _coordinate = new SquareGridCoordinate(50, 50);
             _divideAreaExecutor = new DivideAreaExecutor();
-            _dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(30, 30), _divideAreaExecutor);
+            _dungeonBuilder = new DungeonBuilder(_coordinate, _divideAreaExecutor);
         }
 
         void Start()
         {
-            buildButton.onClick.AddListener(() =>
+            divideButton.onClick.AddListener(
+                CreateDungeonByStep
+            );
+
+            resetButton.onClick.AddListener(() =>
             {
-                Debug.Log("Build Dungeon");
-                
-                // Domain
-                var map = new EntityGridMap(new SquareGridCoordinate(30, 30));
-                var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(30, 30), _divideAreaExecutor);
-                var areas = CreateTestAreas(map);
-                
-                var divideCoord = _divideAreaExecutor.RandomizeCoord(true, dungeonBuilder.GetInitArea(map));
-                Debug.Log($"DivideCoord: {divideCoord}");
-                Debug.Log($"map.Width / 2 : {map.Width / 2}");
-                var path = _divideAreaExecutor.CreatePath(areas[0], areas[1],  divideCoord, true);
-                areas[0].AdjacentAreas.Add((areas[1], path));
-                areas[1].AdjacentAreas.Add((areas[0], path));
-                
-                // place paths and walls 
-                var paths = areas.SelectMany(area => area.AdjacentAreas.Select(tuple => tuple.path)).ToList();
-                map = dungeonBuilder.PlaceRooms(map, areas);
-                map = dungeonBuilder.PlacePath(map, paths);
-                map = dungeonBuilder.PlaceWall(map);  // this should be last
-                
-                // Mono
-                foreach(var tile in _pool)
+                DestroyAllTiles();
+                _dungeonBuilder.Reset();
+            });
+            
+            for(int i = 0; i<_coordinate.Length ; i++)
+            {
+                var vector = _coordinate.ToVector(i);
+                Debug.Log($"subscript:{i} x:{vector.x} y:{vector.y}");
+                var tile = Instantiate(tilePrefab, new Vector3(vector.x, 0, vector.y), Quaternion.identity);
+                _pool.Add(tile);
+            }
+        }
+
+        void CreateDungeonByStep()
+        {
+            Debug.Log("CreateDungeonByStep");
+            DestroyAllTiles();
+            var map = _dungeonBuilder.CreateDungeonByStep();
+            UpdateSprites(map);
+        }
+
+        void DestroyAllTiles()
+        {
+            foreach(var tile in _pool)
+            {
+                Destroy(tile);
+            }
+        }
+
+        void UpdateSprites(EntityGridMap map)
+        {
+            // for(int y = 0; y < map.Height; y++)
+            // {
+            //     for(int x = 0; x < map.Width; x++)
+            //     {
+            //         var tile = Instantiate(tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
+            //         _pool.Add(tile.gameObject);
+            //         if(map.GetSingleEntity<IEntity>(x,y) is {} entity)
+            //         {
+            //             tile.SetSprite(entity);
+            //         }
+            //             
+            //
+            //         if (map.GetAllTypeList(x, y).Count() != 0)
+            //         {
+            //             string result = "";
+            //             var allEntityList = map.GetAllTypeList(x, y).ToList();
+            //             foreach (var entity1 in allEntityList)
+            //             {
+            //                 int count = allEntityList.Count(e => e.ToString() == entity1.ToString());
+            //
+            //                 result += entity1.ToString() + $"({count})\n";
+            //             }
+            //
+            //             tile.SetDebugText(result);
+            //         }
+            //
+            //     }
+            // }
+            
+            for(int i = 0; i<_coordinate.Length ; i++)
+            {
+                var vector = _coordinate.ToVector(i);
+                var (x, y) = (vector.x, vector.y);
+                var tile = _pool[i];
+                if(map.GetSingleEntity<IEntity>(x,y) is {} entity)
                 {
-                    Destroy(tile);
+                    tile.SetSprite(entity);
                 }
-                for(int y = 0; y < map.Height; y++)
+                    
+                
+                if (map.GetAllTypeList(x, y).Count() != 0)
                 {
-                    for(int x = 0; x < map.Width; x++)
+                    string result = "";
+                    var allEntityList = map.GetAllTypeList(x, y).ToList();
+                    foreach (var entity1 in allEntityList)
                     {
-                        var tile = Instantiate(tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
-                        _pool.Add(tile.gameObject);
-                        if(map.GetSingleEntity<IEntity>(x,y) is {} entity)
-                        {
-                            tile.SetSprite(entity);
-                        }
-
+                        int count = allEntityList.Count(e => e.ToString() == entity1.ToString());
+                
+                        result += entity1.ToString() + $"({count})\n";
                     }
+                
+                    tile.SetDebugText(result);
                 }
-            });
-            
-
-            
-            buildButton2.onClick.AddListener(() =>
-            {
-                Debug.Log("Build Dungeon");
-                var map = _dungeonBuilder.CreateDungeonDivideByStep();
-
-                // Mono
-                foreach(var tile in _pool)
-                {
-                    Destroy(tile);
-                }
-                for(int y = 0; y < map.Height; y++)
-                {
-                    for(int x = 0; x < map.Width; x++)
-                    {
-                        var tile = Instantiate(tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
-                        _pool.Add(tile.gameObject);
-                        if(map.GetSingleEntity<IEntity>(x,y) is {} entity)
-                        {
-                            tile.SetSprite(entity);
-                        }
-                        
-
-                        if (map.GetAllTypeList(x, y).Count() != 0)
-                        {
-                            string result = "";
-                            var allEntityList = map.GetAllTypeList(x, y).ToList();
-                            foreach (var entity1 in allEntityList)
-                            {
-                                int count = allEntityList.Count(e => e.ToString() == entity1.ToString());
-
-                                result += entity1.ToString() + $"({count})\n";
-                            }
-
-                            tile.SetDebugText(result);
-                        }
-
-                    }
-                }
-            });
-            
-            button3.onClick.AddListener(() =>
-            {
-                Debug.Log($"Reset Dungeon");
-                // Mono
-                foreach(var tile in _pool)
-                {
-                    Destroy(tile);
-                }
-                _dungeonBuilder.Reset();   
-            });
+            }
         }
 
         List<Area> CreateTestAreas(EntityGridMap map)

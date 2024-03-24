@@ -30,7 +30,7 @@ namespace DungeonCrawler.MapSystem.Scripts
             _divideAreaExecutor = divideAreaExecutor;
         }
 
-        public EntityGridMap CreateDungeonDivideByStep()
+        public EntityGridMap CreateDungeonByStep()
         {
             var map = new EntityGridMap(_coordinate);
             var areas =_divideCount == 0 ? new List<Area>{GetInitArea(map)} : _divideAreaExecutor.DivideAreaOnce(_areas);

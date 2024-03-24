@@ -9,7 +9,7 @@ namespace DungeonCrawler.MapSystem.Scripts
     public class DivideAreaExecutor
     {
         public const int MinRoomMargin = 2;  // This should be 2 or greater, because the rooms are connected to each other by a path.
-        const int MinRoomSize = 3;
+        const int MinRoomSize = 5;
         const int MaxRoomSize = 25;
         const int MinAreaSize = MinRoomSize + MinRoomMargin * 2;
         public List<Area> DivideAreaOnce(List<Area> areas)
@@ -101,11 +101,11 @@ namespace DungeonCrawler.MapSystem.Scripts
         {
             var (dividedArea1, dividedArea2) = isDivideByVertical
                 ? (
-                    new Area(area.X, area.Y, divideCoord, area.Height, null, new List<(Area area, Path path)>()),
+                    new Area(area.X, area.Y, (divideCoord-area.X), area.Height, null, new List<(Area area, Path path)>()),
                     new Area(area.X + (divideCoord - area.X), area.Y, area.Width - (divideCoord - area.X), area.Height, null,new List<(Area area, Path path)>())
                 )
                 : (
-                    new Area(area.X, area.Y, area.Width, divideCoord, null,new List<(Area area, Path path)>()),
+                    new Area(area.X, area.Y, area.Width, (divideCoord-area.Y), null,new List<(Area area, Path path)>()),
                     new Area(area.X, area.Y + (divideCoord - area.Y), area.Width, area.Height - (divideCoord - area.Y), null,new List<(Area area, Path path)>())
                 );
             
@@ -114,20 +114,24 @@ namespace DungeonCrawler.MapSystem.Scripts
             Assert.IsTrue(dividedArea1.Height >= MinAreaSize);
             Assert.IsTrue(dividedArea2.Width >= MinAreaSize);
             Assert.IsTrue(dividedArea2.Height >= MinAreaSize);
+            Assert.IsTrue(dividedArea1.Width <= area.Width);
+            Assert.IsTrue(dividedArea1.Height <= area.Height);
+            Assert.IsTrue(dividedArea2.Width <= area.Width);
+            Assert.IsTrue(dividedArea2.Height <= area.Height);
             for(int x = dividedArea1.X; x < dividedArea1.X + dividedArea1.Width; x++)
             {
                 for(int y = dividedArea1.Y; y < dividedArea1.Y + dividedArea1.Height; y++)
                 {
-                    Assert.IsTrue(area.X <= x && x < area.X + area.Width, $"x: {x}, area.X: {area.X}, area.Width: {area.Width}");
-                    Assert.IsTrue(area.Y <= y && y < area.Y + area.Height, $"y: {y}, area.Y: {area.Y}, area.Height: {area.Height}");
+                    Assert.IsTrue(area.X <= x && x <= area.X + area.Width, $"x: {x}, area.X: {area.X}, area.Width: {area.Width}, dividedArea1.X: {dividedArea1.X}, dividedArea1.Width: {dividedArea1.Width}");
+                    Assert.IsTrue(area.Y <= y && y <= area.Y + area.Height, $"y: {y}, area.Y: {area.Y}, area.Height: {area.Height}, dividedArea1.Y: {dividedArea1.Y}, dividedArea1.Height: {dividedArea1.Height}");
                 }
             }
             for(int x = dividedArea2.X; x < dividedArea2.X + dividedArea2.Width; x++)
             {
                 for(int y = dividedArea2.Y; y < dividedArea2.Y + dividedArea2.Height; y++)
                 {
-                    Assert.IsTrue(area.X <= x && x < area.X + area.Width, $"x: {x}, area.X: {area.X}, area.Width: {area.Width}");
-                    Assert.IsTrue(area.Y <= y && y < area.Y + area.Height, $"y: {y}, area.Y: {area.Y}, area.Height: {area.Height}");
+                    Assert.IsTrue(area.X <= x && x <= area.X + area.Width, $"x: {x}, area.X: {area.X}, area.Width: {area.Width}, dividedArea2.X: {dividedArea2.X}, dividedArea2.Width: {dividedArea2.Width}");
+                    Assert.IsTrue(area.Y <= y && y <= area.Y + area.Height, $"y: {y}, area.Y: {area.Y}, area.Height: {area.Height}, dividedArea2.Y: {dividedArea2.Y}, dividedArea2.Height: {dividedArea2.Height}");
                 }
             }
             
