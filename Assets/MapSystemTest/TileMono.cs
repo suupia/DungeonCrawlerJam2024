@@ -2,6 +2,7 @@
 using DungeonCrawler.MapSystem.Interfaces;
 using DungeonCrawler.MapSystem.Scripts.Entity;
 using UnityEngine;
+using TMPro;
 
 namespace DungeonCrawler
 {
@@ -10,18 +11,19 @@ namespace DungeonCrawler
     {
         [SerializeField] Sprite wallSprite = null!;
         [SerializeField] Sprite pathSprite = null!;
-        [SerializeField] SpriteRenderer _floorSpriteRenderer = null!;
+        [SerializeField] SpriteRenderer floorSpriteRenderer = null!;
+        [SerializeField] TextMeshProUGUI debugText = null!;
 
         public void SetSprite(IEntity entity)
         {
             Debug.Log("SetSprite");
             if(entity is CharacterWall)
             {
-                _floorSpriteRenderer.sprite = wallSprite;
+                floorSpriteRenderer.sprite = wallSprite;
             }
             else if(entity is CharacterPath)
             {
-                _floorSpriteRenderer.sprite = pathSprite;
+                floorSpriteRenderer.sprite = pathSprite;
             }
         }
 
