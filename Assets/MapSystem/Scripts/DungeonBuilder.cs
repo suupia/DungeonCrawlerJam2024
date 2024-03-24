@@ -104,30 +104,28 @@ namespace DungeonCrawler.MapSystem.Scripts
                 );
 
             
-            // todo : temp
-            // dividedArea1.AdjacentAreas.AddRange(area.AdjacentAreas);
+
             Debug.Log($"dividedArea1: X: {dividedArea1.X}, Y: {dividedArea1.Y}, Width: {dividedArea1.Width}, Height: {dividedArea1.Height}");
             Debug.Log($"dividedArea2: X: {dividedArea2.X}, Y: {dividedArea2.Y}, Width: {dividedArea2.Width}, Height: {dividedArea2.Height}");
             var (area1, area2) = AddRoomEach(dividedArea1, dividedArea2);
-            // var path = CreatePath(area1, area2, divideX,isDivideByVertical);
-            
-            var connectPath = CreatePath(area1, area2, divideX, isDivideByVertical);
-            dividedArea1.AdjacentAreas.Add((area2, connectPath));  // This process must be done after AddRoomEach
-            dividedArea2.AdjacentAreas.Add((area1, connectPath));
+
             var path = new Path(new List<(int x, int y)>());
+            var connectPath = CreatePath(area1, area2, divideX, isDivideByVertical);
             path.Points.AddRange(connectPath.Points);
+            area1.AdjacentAreas.Add((area2, connectPath));  // This process must be done after AddRoomEach
+            area2.AdjacentAreas.Add((area1, connectPath));
             
-            Debug.Log($"adjacentArea : {string.Join(',', area.AdjacentAreas.Select(a => $"({a.area.X},{a.area.Y})"))}");
-            foreach (var (adjacentArea, prePath ) in area.AdjacentAreas)
-            {
-                if (adjacentArea == dividedArea1)
-                {
-                    Debug.Log("adjacentArea == dividedArea1");
-                    area.AdjacentAreas.Remove((adjacentArea, prePath));
-                    var rePath = CreatePath(area2, adjacentArea, divideX, isDivideByVertical);
-                    path.Points.AddRange(rePath.Points);
-                }
-            }
+            // Debug.Log($"adjacentArea : {string.Join(',', area.AdjacentAreas.Select(a => $"({a.area.X},{a.area.Y})"))}");
+            // foreach (var (adjacentArea, prePath ) in area.AdjacentAreas)
+            // {
+            //     if (adjacentArea == dividedArea1)
+            //     {
+            //         Debug.Log("adjacentArea == dividedArea1");
+            //         area.AdjacentAreas.Remove((adjacentArea, prePath));
+            //         var rePath = CreatePath(area2, adjacentArea, divideX, isDivideByVertical);
+            //         path.Points.AddRange(rePath.Points);
+            //     }
+            // }
 
             Assert.IsTrue(dividedArea1.Width >= MinAreaSize);
             Assert.IsTrue(dividedArea2.Width >= MinAreaSize);
