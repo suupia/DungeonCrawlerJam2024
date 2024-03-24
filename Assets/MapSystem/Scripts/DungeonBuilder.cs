@@ -52,15 +52,15 @@ namespace DungeonCrawler.MapSystem.Scripts
 
         void DebugAllAreasAdjacentAreas(List<Area> areas)
         {
-            foreach (var area in areas)
-            {
-                Debug.LogWarning($"Area: X: {area.X}, Y: {area.Y}, Width: {area.Width}, Height: {area.Height}");
-                foreach (var (adjacentArea, path) in area.AdjacentAreas)
-                {
-                    Debug.LogWarning($">> AdjacentArea: X: {adjacentArea.X}, Y: {adjacentArea.Y}, Width: {adjacentArea.Width}, Height: {adjacentArea.Height}");
-                    Debug.LogWarning($">> Path: {string.Join(',', path.Points.Select(p => $"({p.x},{p.y})"))}");
-                }
-            }
+            // foreach (var area in areas)
+            // {
+            //     Debug.LogWarning($"Area: X: {area.X}, Y: {area.Y}, Width: {area.Width}, Height: {area.Height}");
+            //     foreach (var (adjacentArea, path) in area.AdjacentAreas)
+            //     {
+            //         Debug.LogWarning($">> AdjacentArea: X: {adjacentArea.X}, Y: {adjacentArea.Y}, Width: {adjacentArea.Width}, Height: {adjacentArea.Height}");
+            //         Debug.LogWarning($">> Path: {string.Join(',', path.Points.Select(p => $"({p.x},{p.y})"))}");
+            //     }
+            // }
         }
         
         public Area GetInitArea(EntityGridMap map)

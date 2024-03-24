@@ -28,7 +28,7 @@ namespace DungeonCrawler.MapSystem.Scripts
         
         (Area area1, Area area2) DivideArea(Area area)
         {
-            // [Precondition]
+            // [pre-condition]
             Assert.IsTrue(CanDivideArea(area));
 
             bool isDivideByVertical = area.Width >= area.Height;  // todo : Randomize this may be more interesting
@@ -102,21 +102,27 @@ namespace DungeonCrawler.MapSystem.Scripts
             var (dividedArea1, dividedArea2) = isDivideByVertical
                 ? (
                     new Area(area.X, area.Y, divideCoord, area.Height, null, new List<(Area area, Path path)>()),
-                    new Area(area.X + divideCoord, area.Y, area.Width - divideCoord, area.Height, null,new List<(Area area, Path path)>())
+                    new Area(area.X + divideCoord, area.Y, area.Width - (divideCoord - area.X), area.Height, null,new List<(Area area, Path path)>())
                 )
                 : (
                     new Area(area.X, area.Y, area.Width, divideCoord, null,new List<(Area area, Path path)>()),
-                    new Area(area.X, area.Y + divideCoord, area.Width, area.Height - divideCoord, null,new List<(Area area, Path path)>())
+                    new Area(area.X, area.Y + divideCoord, area.Width, area.Height - (divideCoord - area.Y), null,new List<(Area area, Path path)>())
                 );
+            
+            // [post-condition]
+            Assert.IsTrue(dividedArea1.Width >= MinAreaSize);
+            Assert.IsTrue(dividedArea1.Height >= MinAreaSize);
+            Assert.IsTrue(dividedArea2.Width >= MinAreaSize);
+            Assert.IsTrue(dividedArea2.Height >= MinAreaSize);
+            
             return (AddRoom(dividedArea1), AddRoom(dividedArea2));
         }
         
         public Path CreatePath(Area area1, Area area2, int divideCoord, bool isDivideByVertical)
         {
+            // [pre-condition]
             Assert.IsNotNull(area1.Room);
             Assert.IsNotNull(area2.Room);
-            
-            // [Precondition]
             if (isDivideByVertical)
             {
                 if(area1.X > area2.X) (area1, area2) = (area2, area1);
@@ -185,7 +191,9 @@ namespace DungeonCrawler.MapSystem.Scripts
         
         bool CanDivideArea(Area area)
         {
-            return area.Width > MinAreaSize*2 || area.Height > MinAreaSize*2;            
+            if(area.Width < MinAreaSize && area.Height < MinAreaSize) return false;
+            if (area.Width <= MinAreaSize * 2 && area.Height <= MinAreaSize * 2) return false;
+            return true;
         }
 
         Area AddRoom(Area area)
@@ -195,11 +203,18 @@ namespace DungeonCrawler.MapSystem.Scripts
         }
         Room GenerateRandomRoom(Area area)
         {
-            var roomX = Random.Range(area.X + MinRoomMargin, area.X + area.Width - (MinRoomSize + MinRoomMargin * 2));
-            var roomY = Random.Range(area.Y + MinRoomMargin, area.Y + area.Height - (MinRoomSize + MinRoomMargin * 2));
-            var roomWidth = Random.Range(MinRoomSize, Mathf.Min(MaxRoomSize, area.Width - (roomX - area.X)));
-            var roomHeight = Random.Range(MinRoomSize, Mathf.Min(MaxRoomSize, area.Height - (roomY - area.Y)));
-    
+            // [pre-conditions]
+            Assert.IsTrue(area.Width >= MinRoomSize + MinRoomMargin * 2);
+            Assert.IsTrue(area.Height >= MinRoomSize + MinRoomMargin * 2);
+            
+            var roomX = Random.Range(area.X + MinRoomMargin, area.X + area.Width - (MinRoomSize + MinRoomMargin));
+            var roomY = Random.Range(area.Y + MinRoomMargin, area.Y + area.Height - (MinRoomSize + MinRoomMargin));
+            var roomWidth = Random.Range(MinRoomSize, Mathf.Min(MaxRoomSize, area.Width - ((roomX - area.X) + MinRoomMargin)));
+            var roomHeight = Random.Range(MinRoomSize, Mathf.Min(MaxRoomSize, area.Height - ((roomY - area.Y) + MinRoomMargin)));
+            
+            // [post-conditions]
+            Assert.IsTrue(roomWidth >= MinRoomSize);
+            Assert.IsTrue(roomHeight >= MinRoomSize);
             return new Room(roomX, roomY, roomWidth, roomHeight);
         }
 
