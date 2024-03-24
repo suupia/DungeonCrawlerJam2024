@@ -102,11 +102,11 @@ namespace DungeonCrawler.MapSystem.Scripts
             var (dividedArea1, dividedArea2) = isDivideByVertical
                 ? (
                     new Area(area.X, area.Y, divideCoord, area.Height, null, new List<(Area area, Path path)>()),
-                    new Area(area.X + divideCoord, area.Y, area.Width - (divideCoord - area.X), area.Height, null,new List<(Area area, Path path)>())
+                    new Area(area.X + (divideCoord - area.X), area.Y, area.Width - (divideCoord - area.X), area.Height, null,new List<(Area area, Path path)>())
                 )
                 : (
                     new Area(area.X, area.Y, area.Width, divideCoord, null,new List<(Area area, Path path)>()),
-                    new Area(area.X, area.Y + divideCoord, area.Width, area.Height - (divideCoord - area.Y), null,new List<(Area area, Path path)>())
+                    new Area(area.X, area.Y + (divideCoord - area.Y), area.Width, area.Height - (divideCoord - area.Y), null,new List<(Area area, Path path)>())
                 );
             
             // [post-condition]
@@ -114,6 +114,22 @@ namespace DungeonCrawler.MapSystem.Scripts
             Assert.IsTrue(dividedArea1.Height >= MinAreaSize);
             Assert.IsTrue(dividedArea2.Width >= MinAreaSize);
             Assert.IsTrue(dividedArea2.Height >= MinAreaSize);
+            for(int x = dividedArea1.X; x < dividedArea1.X + dividedArea1.Width; x++)
+            {
+                for(int y = dividedArea1.Y; y < dividedArea1.Y + dividedArea1.Height; y++)
+                {
+                    Assert.IsTrue(area.X <= x && x < area.X + area.Width, $"x: {x}, area.X: {area.X}, area.Width: {area.Width}");
+                    Assert.IsTrue(area.Y <= y && y < area.Y + area.Height, $"y: {y}, area.Y: {area.Y}, area.Height: {area.Height}");
+                }
+            }
+            for(int x = dividedArea2.X; x < dividedArea2.X + dividedArea2.Width; x++)
+            {
+                for(int y = dividedArea2.Y; y < dividedArea2.Y + dividedArea2.Height; y++)
+                {
+                    Assert.IsTrue(area.X <= x && x < area.X + area.Width, $"x: {x}, area.X: {area.X}, area.Width: {area.Width}");
+                    Assert.IsTrue(area.Y <= y && y < area.Y + area.Height, $"y: {y}, area.Y: {area.Y}, area.Height: {area.Height}");
+                }
+            }
             
             return (AddRoom(dividedArea1), AddRoom(dividedArea2));
         }
@@ -141,6 +157,7 @@ namespace DungeonCrawler.MapSystem.Scripts
                 var (x1, y1) = (area1.Room.X + area1.Room.Width, randY1);
                 var randY2 = Random.Range(area2.Room.Y + 1, area2.Room.Y + area2.Room.Height - 1);  // Excluding both ends
                 var (x2, y2) = (area2.Room.X-1, randY2);
+                Assert.IsTrue(x1 < x2, $"x1: {x1}, x2: {x2}");
                 while (x1 < divideCoord)
                 {
                     path.Points.Add((x1, y1));
@@ -165,6 +182,7 @@ namespace DungeonCrawler.MapSystem.Scripts
                 var (x1, y1) = (randX1, area1.Room.Y + area1.Room.Height);
                 var randX2 = Random.Range(area2.Room.X + 1, area2.Room.X + area2.Room.Width - 1);  // Excluding both ends
                 var (x2, y2) = (randX2, area2.Room.Y-1);
+                Assert.IsTrue(y1 < y2, $"y1: {y1}, y2: {y2}");
                 while (y1 < divideCoord)
                 {
                     path.Points.Add((x1, y1));
@@ -184,7 +202,7 @@ namespace DungeonCrawler.MapSystem.Scripts
                 }
             }
             Debug.Log($"CreatePath: isDivideByVertical: {isDivideByVertical}, divideCoord: {divideCoord}");
-            Debug.Log($"area1: ({area1.X}, {area1.Y}) -> area2: ({area2.X}, {area2.Y})");
+            Debug.Log($"area1: X: {area1.X}, Y: {area1.Y}, Width: {area1.Width}, Height: {area1.Height} -> area2: X: {area2.X}, Y: {area2.Y}, Width: {area2.Width}, Height: {area2.Height}");
             Debug.Log($"paths: {string.Join(',', path.Points.Select(p => $"({p.x},{p.y})"))}");
             return path;
         }
@@ -215,6 +233,10 @@ namespace DungeonCrawler.MapSystem.Scripts
             // [post-conditions]
             Assert.IsTrue(roomWidth >= MinRoomSize);
             Assert.IsTrue(roomHeight >= MinRoomSize);
+            Assert.IsTrue(roomX + roomWidth <= area.X + area.Width - MinRoomMargin);
+            Assert.IsTrue(roomY + roomHeight <= area.Y + area.Height - MinRoomMargin);
+            Assert.IsTrue(roomX <= area.X + area.Width - MinRoomSize - MinRoomMargin);
+            Assert.IsTrue(roomY <= area.Y + area.Height - MinRoomSize - MinRoomMargin);
             return new Room(roomX, roomY, roomWidth, roomHeight);
         }
 
