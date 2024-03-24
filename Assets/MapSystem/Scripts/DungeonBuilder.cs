@@ -46,8 +46,6 @@ namespace DungeonCrawler.MapSystem.Scripts
                 AdjacentAreas: new List<(Area area, Path path)>()
             );
             var areas = LoopDivideArea(initArea);
-            // var areas = areasAndPaths.Select(tuple => tuple.area).ToList();
-            // var paths = areasAndPaths.Select(tuple => tuple.path).ToList();
             var paths = areas.SelectMany(area => area.AdjacentAreas.Select(tuple => tuple.path)).ToList();
             map = PlaceRooms(map, areas);
             map = PlacePath(map, paths);

@@ -99,8 +99,8 @@ namespace DungeonCrawler
                 Debug.Log("Build Dungeon");
                 
                 // Domain
-                var map = new EntityGridMap(new SquareGridCoordinate(30, 30));
-                var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(30, 30));
+                var map = new EntityGridMap(new SquareGridCoordinate(15, 15));
+                var dungeonBuilder = new DungeonBuilder(new SquareGridCoordinate(15, 15));
                 map = dungeonBuilder.CreateDungeonDivide();
                 
                 // Mono
