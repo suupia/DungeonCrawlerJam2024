@@ -38,7 +38,6 @@ namespace DungeonCrawler.MapSystem.Scripts
             map = PlaceRooms(map, areas);
             map = PlacePath(map, paths);
             map = PlaceWall(map);  // this should be last
-            DebugAllAreasAdjacentAreas(areas);
             _divideCount++;
             _areas = areas;
             return map;
@@ -50,19 +49,6 @@ namespace DungeonCrawler.MapSystem.Scripts
             _areas = new List<Area>();
         }
 
-        void DebugAllAreasAdjacentAreas(List<Area> areas)
-        {
-            // foreach (var area in areas)
-            // {
-            //     Debug.LogWarning($"Area: X: {area.X}, Y: {area.Y}, Width: {area.Width}, Height: {area.Height}");
-            //     foreach (var (adjacentArea, path) in area.AdjacentAreas)
-            //     {
-            //         Debug.LogWarning($">> AdjacentArea: X: {adjacentArea.X}, Y: {adjacentArea.Y}, Width: {adjacentArea.Width}, Height: {adjacentArea.Height}");
-            //         Debug.LogWarning($">> Path: {string.Join(',', path.Points.Select(p => $"({p.x},{p.y})"))}");
-            //     }
-            // }
-        }
-        
         public Area GetInitArea(EntityGridMap map)
         {
             return new Area(
@@ -119,7 +105,6 @@ namespace DungeonCrawler.MapSystem.Scripts
                 foreach (var (x, y) in path.Points)
                 {
                     map.AddEntity(x, y, _path);
-                    // Debug.Log($"PlacePath: X: {x}, Y: {y}");
                 }
             }
             return map;

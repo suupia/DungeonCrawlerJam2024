@@ -28,15 +28,13 @@ namespace DungeonCrawler.MapSystem.Scripts
         
         (Area area1, Area area2) DivideArea(Area area)
         {
-            // [pre-condition]
+            // [pre-conditions]
             Assert.IsTrue(CanDivideArea(area));
 
             bool isDivideByVertical = area.Width >= area.Height;  // todo : Randomize this may be more interesting
             
             var divideCoord = RandomizeCoord(isDivideByVertical, area);
-            
             var (area1, area2) = DivideAreaByCoord(area, divideCoord, isDivideByVertical);
-
             var path = new Path(new List<(int x, int y)>(),(isDivideByVertical, divideCoord));
             var connectPath = CreatePath(area1, area2, divideCoord, isDivideByVertical);
             path.Points.AddRange(connectPath.Points);
@@ -72,7 +70,9 @@ namespace DungeonCrawler.MapSystem.Scripts
         
         int CalculateAreaDistance(Area area1, Area area2)
         {
+            // [pre-conditions]
             Assert.IsTrue(area1.X != area2.X || area1.Y != area2.Y, $"area1: ({area1.X}, {area1.Y}), area2: ({area2.X}, {area2.Y})");
+            
             if(area1.X > area2.X) (area1, area2) = (area2, area1);
             int distance = area1.Y > area2.Y
                 ? GridDistance((area1.X + area1.Width, area1.Y), (area2.X, area2.Y + area2.Height)) 
@@ -97,7 +97,7 @@ namespace DungeonCrawler.MapSystem.Scripts
             return divideCoord;
         }
 
-        public (Area area1, Area area2) DivideAreaByCoord(Area area, int divideCoord, bool isDivideByVertical)
+        (Area area1, Area area2) DivideAreaByCoord(Area area, int divideCoord, bool isDivideByVertical)
         {
             var (dividedArea1, dividedArea2) = isDivideByVertical
                 ? (
@@ -109,7 +109,7 @@ namespace DungeonCrawler.MapSystem.Scripts
                     new Area(area.X, area.Y + (divideCoord - area.Y), area.Width, area.Height - (divideCoord - area.Y), null,new List<(Area area, Path path)>())
                 );
             
-            // [post-condition]
+            // [post-conditions]
             Assert.IsTrue(dividedArea1.Width >= MinAreaSize);
             Assert.IsTrue(dividedArea1.Height >= MinAreaSize);
             Assert.IsTrue(dividedArea2.Width >= MinAreaSize);
@@ -136,7 +136,7 @@ namespace DungeonCrawler.MapSystem.Scripts
         
         public Path CreatePath(Area area1, Area area2, int divideCoord, bool isDivideByVertical)
         {
-            // [pre-condition]
+            // [pre-conditions]
             Assert.IsNotNull(area1.Room);
             Assert.IsNotNull(area2.Room);
             if (isDivideByVertical)
