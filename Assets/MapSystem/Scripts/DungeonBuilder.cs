@@ -14,15 +14,16 @@ namespace DungeonCrawler.MapSystem.Scripts
 {
     public class DungeonBuilder
     {
+        const int DivideCount = 5;
         readonly IEntity _wall;
         readonly IEntity _path;
         readonly IEntity _room;
         readonly IGridCoordinate _coordinate;
+        readonly DivideAreaExecutor _divideAreaExecutor;
 
         int _divideCount;
         List<Area> _areas = new ();
 
-        readonly DivideAreaExecutor _divideAreaExecutor;
 
         public DungeonBuilder(
             IGridCoordinate coordinate,
@@ -38,6 +39,16 @@ namespace DungeonCrawler.MapSystem.Scripts
             _room = room;
         }
 
+        
+        public EntityGridMap CreateDungeon(EntityGridMap map)
+        {
+            for(int i = 0; i < DivideCount; i++)
+            {
+                map = CreateDungeonByStep(map);
+            }
+            return map;
+        }
+        
         public EntityGridMap CreateDungeonByStep(EntityGridMap map)
         {
             var areas =_divideCount == 0 ? new List<Area>{GetInitArea(map)} : _divideAreaExecutor.DivideAreaOnce(_areas);
@@ -50,7 +61,7 @@ namespace DungeonCrawler.MapSystem.Scripts
             _areas = areas;
             return map;
         }
-        
+
         public void Reset()
         {
             _divideCount = 0;

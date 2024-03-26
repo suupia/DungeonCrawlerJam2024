@@ -18,7 +18,7 @@ namespace DungeonCrawler
         [SerializeField] TileMono tilePrefab = null!;
 
         public DungeonBuilder DungeonBuilder => _dungeonBuilder;
-        readonly List<TileMono> _pool = new List<TileMono>();
+        readonly List<TileMono> _pool = new();
 
         IGridCoordinate _coordinate = null!;
         DivideAreaExecutor _divideAreaExecutor = null!;
@@ -40,6 +40,14 @@ namespace DungeonCrawler
             );
         }
 
+        void CreateDungeon()
+        {
+            Debug.Log("CreateDungeon");
+            DestroyAllTiles();
+            _map ??= new EntityGridMap(_coordinate);
+            _map = _dungeonBuilder.CreateDungeon(_map);
+            UpdateSprites(_map);
+        }
         void CreateDungeonByStep()
         {
             Debug.Log("CreateDungeonByStep");
@@ -97,7 +105,7 @@ namespace DungeonCrawler
                 _pool.Add(tile);
             }
 
-            CreateDungeonByStep();
+            CreateDungeon();
             
             // spawn player
             var (spawnX, spawnY) = _dungeonBuilder.PlacePlayerSpawnPosition();
