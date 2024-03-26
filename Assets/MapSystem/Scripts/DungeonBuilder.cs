@@ -121,6 +121,10 @@ namespace DungeonCrawler.MapSystem.Scripts
 
         public (int x, int y) PlacePlayerSpawnPosition()
         {
+            // [pre-condition] _areas should not be empty
+            Assert.IsTrue(_areas.Count > 0);
+            Debug.Log($"ares: {string.Join(",", _areas.Select(area => area.Room))}");
+            
             var area = _areas[Random.Range(0,_areas.Count())];
             var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);

@@ -2,19 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DungeonCrawler.Core;
 using DungeonCrawler.MapSystem.Interfaces;
 using DungeonCrawler.MapSystem.Scripts;
 using DungeonCrawler.MapSystem.Scripts.Entity;
+using DungeonCrawler.Runtime.Player;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace DungeonCrawler
 {
-    public class MapBuilderMono : MonoBehaviour
+    public class MapBuilderMonoSystem : MonoBehaviour, IMapBuilderMonoSystem
     {
         [SerializeField] TileMono tilePrefab = null!;
 
+        public DungeonBuilder DungeonBuilder => _dungeonBuilder;
         readonly List<TileMono> _pool = new List<TileMono>();
 
         IGridCoordinate _coordinate = null!;
@@ -35,17 +38,6 @@ namespace DungeonCrawler
                 new CharacterPath(),
                 new CharacterRoom()
             );
-        }
-
-        void Start()
-        {
-
-            for(int i = 0; i<_coordinate.Length ; i++)
-            {
-                var vector = _coordinate.ToVector(i);
-                var tile = Instantiate(tilePrefab, new Vector3(vector.x, 0, vector.y), Quaternion.identity);
-                _pool.Add(tile);
-            }
         }
 
         void CreateDungeonByStep()
@@ -94,50 +86,25 @@ namespace DungeonCrawler
             }
         }
 
-        List<Area> CreateTestAreas(EntityGridMap map)
+        void Start()
         {
-            var area1 = new Area(
-                X: 0,
-                Y: 0,
-                Width: map.Width/2,
-                Height: map.Height,
-                Room: new Room(
-                    X: DivideAreaExecutor.MinRoomMargin,
-                    Y: DivideAreaExecutor.MinRoomMargin,
-                    Width: map.Width/2 - DivideAreaExecutor.MinRoomMargin * 2,
-                    Height: map.Height - DivideAreaExecutor.MinRoomMargin * 2
-                ),
-                AdjacentAreas: new List<(Area area, Path path)>()
-            );
-            var area2 = new Area(
-                X: map.Width/2,
-                Y: 0,
-                Width: map.Width/2,
-                Height: map.Height/2,
-                Room: new Room(
-                    X: DivideAreaExecutor.MinRoomMargin + map.Width/2,
-                    Y: DivideAreaExecutor.MinRoomMargin,
-                    Width: map.Width/2 - DivideAreaExecutor.MinRoomMargin * 2,
-                    Height: map.Height/2 - DivideAreaExecutor.MinRoomMargin * 2
-                ),
-                AdjacentAreas: new List<(Area area, Path path)>()
-            );
-            var area3 = new Area(
-                X: map.Width/2,
-                Y: map.Height/2,
-                Width: map.Width/2,
-                Height: map.Height/2,
-                Room: new Room(
-                    X: DivideAreaExecutor.MinRoomMargin + map.Width/2,
-                    Y: DivideAreaExecutor.MinRoomMargin + map.Height/2,
-                    Width: map.Width/2 - DivideAreaExecutor.MinRoomMargin * 2,
-                    Height: map.Height/2 - DivideAreaExecutor.MinRoomMargin * 2
-                ),
-                AdjacentAreas: new List<(Area area, Path path)>()
-            );
-            return new List<Area>() {area1, area2, area3};
-                
+            
+            for(int i = 0; i<_coordinate.Length ; i++)
+            {
+                var vector = _coordinate.ToVector(i);
+                var tile = Instantiate(tilePrefab, new Vector3(vector.x, 0, vector.y), Quaternion.identity);
+                _pool.Add(tile);
+            }
+
+            CreateDungeonByStep();
+            
+            // spawn player
+            var (spawnX, spawnY) = _dungeonBuilder.PlacePlayerSpawnPosition();
+            GameManager.GetMonoSystem<IPlayerSpawnerMonoSystem>().SpawnPlayer(spawnX, spawnY);
+
         }
+
+
         
     }
 }
