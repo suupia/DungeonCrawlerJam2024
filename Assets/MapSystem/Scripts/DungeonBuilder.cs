@@ -7,6 +7,7 @@ using DungeonCrawler.MapSystem.Scripts;
 using DungeonCrawler.MapSystem.Scripts.Entity;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Random = UnityEngine.Random;
 
 
 namespace DungeonCrawler.MapSystem.Scripts
@@ -16,6 +17,7 @@ namespace DungeonCrawler.MapSystem.Scripts
         readonly IEntity _wall;
         readonly IEntity _path;
         readonly IEntity _room;
+        readonly IEntity _playerSpawnPosition;
         readonly IGridCoordinate _coordinate;
 
         int _divideCount;
@@ -28,13 +30,15 @@ namespace DungeonCrawler.MapSystem.Scripts
             DivideAreaExecutor divideAreaExecutor,
             IEntity wall,
             IEntity path,
-            IEntity room)
+            IEntity room,
+            IEntity playerSpawnPosition)
         {
             _coordinate = coordinate;
             _divideAreaExecutor = divideAreaExecutor;
             _wall = wall;
             _path = path;
             _room = room;
+            _playerSpawnPosition = playerSpawnPosition;
         }
 
         public EntityGridMap CreateDungeonByStep(EntityGridMap map)
@@ -44,6 +48,7 @@ namespace DungeonCrawler.MapSystem.Scripts
             map.ClearMap();
             map = PlaceRooms(map, areas);
             map = PlacePath(map, paths);
+            map = PlacePlayerSpawnPosition(map, areas);
             map = PlaceWall(map);  // this should be last
             _divideCount++;
             _areas = areas;
@@ -114,6 +119,16 @@ namespace DungeonCrawler.MapSystem.Scripts
                     map.AddEntity(x, y, _path);
                 }
             }
+            return map;
+        }
+        
+                
+        EntityGridMap PlacePlayerSpawnPosition (EntityGridMap map, List<Area> areas)
+        {
+            var area = areas[Random.Range(0,areas.Count())];
+            var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
+            var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
+            map.AddEntity(spawnX, spawnY, _playerSpawnPosition);
             return map;
         }
 
