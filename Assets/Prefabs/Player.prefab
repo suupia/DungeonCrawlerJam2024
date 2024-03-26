@@ -429,7 +429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad0fab0557d56bc4198a14c58c260a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridSize: 10
+  _gridSize: 1
   _movementDuration: 0.4
   _turnDuration: 0.1
   _instantTransition: 0

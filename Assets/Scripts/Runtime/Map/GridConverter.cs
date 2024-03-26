@@ -5,13 +5,13 @@ namespace DungeonCrawler
 {
     public static class GridConverter
     {   
-       static readonly float LengthBetweenHorizontal = 1.2f;
-       static readonly float LengthBetweenVertical = 1.2f;
+       static readonly float LengthBetweenHorizontal = 1f;
+       static readonly float LengthBetweenVertical = 1f;
        
         public static  Vector3 GridPositionToWorldPosition(Vector2Int gridPos)
         {
-            float x = gridPos.x * LengthBetweenHorizontal + LengthBetweenHorizontal / 2;
-            float z = gridPos.y * LengthBetweenVertical + LengthBetweenVertical / 2;
+            float x = gridPos.x * LengthBetweenHorizontal;
+            float z = gridPos.y * LengthBetweenVertical;
             return new Vector3(x,0,z);
         }
 
