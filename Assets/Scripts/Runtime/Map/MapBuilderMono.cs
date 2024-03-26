@@ -11,12 +11,9 @@ using UnityEngine.UI;
 
 namespace DungeonCrawler
 {
-    // This script is for TESTING purposes only.
     public class MapBuilderMono : MonoBehaviour
     {
         [SerializeField] TileMono tilePrefab = null!;
-        [SerializeField] Button divideButton = null!;
-        [SerializeField] Button resetButton = null!;
 
         readonly List<TileMono> _pool = new List<TileMono>();
 
@@ -36,26 +33,16 @@ namespace DungeonCrawler
                 _divideAreaExecutor,
                 new CharacterWall(),
                 new CharacterPath(),
-                new CharacterRoom(),
-                new CharacterPlayerSpawnPosition());
+                new CharacterRoom()
+            );
         }
 
         void Start()
         {
-            divideButton.onClick.AddListener(
-                CreateDungeonByStep
-            );
 
-            resetButton.onClick.AddListener(() =>
-            {
-                DestroyAllTiles();
-                _dungeonBuilder.Reset();
-            });
-            
             for(int i = 0; i<_coordinate.Length ; i++)
             {
                 var vector = _coordinate.ToVector(i);
-                Debug.Log($"subscript:{i} x:{vector.x} y:{vector.y}");
                 var tile = Instantiate(tilePrefab, new Vector3(vector.x, 0, vector.y), Quaternion.identity);
                 _pool.Add(tile);
             }
@@ -80,35 +67,6 @@ namespace DungeonCrawler
 
         void UpdateSprites(EntityGridMap map)
         {
-            // for(int y = 0; y < map.Height; y++)
-            // {
-            //     for(int x = 0; x < map.Width; x++)
-            //     {
-            //         var tile = Instantiate(tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
-            //         _pool.Add(tile.gameObject);
-            //         if(map.GetSingleEntity<IEntity>(x,y) is {} entity)
-            //         {
-            //             tile.SetSprite(entity);
-            //         }
-            //             
-            //
-            //         if (map.GetAllTypeList(x, y).Count() != 0)
-            //         {
-            //             string result = "";
-            //             var allEntityList = map.GetAllTypeList(x, y).ToList();
-            //             foreach (var entity1 in allEntityList)
-            //             {
-            //                 int count = allEntityList.Count(e => e.ToString() == entity1.ToString());
-            //
-            //                 result += entity1.ToString() + $"({count})\n";
-            //             }
-            //
-            //             tile.SetDebugText(result);
-            //         }
-            //
-            //     }
-            // }
-            
             for(int i = 0; i<_coordinate.Length ; i++)
             {
                 var vector = _coordinate.ToVector(i);
