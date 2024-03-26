@@ -92,7 +92,8 @@ namespace DungeonCrawler
             for(int i = 0; i<_coordinate.Length ; i++)
             {
                 var vector = _coordinate.ToVector(i);
-                var tile = Instantiate(tilePrefab, new Vector3(vector.x, 0, vector.y), Quaternion.identity);
+                var tile = Instantiate(tilePrefab, GridConverter.GridPositionToWorldPosition(vector), Quaternion.identity);
+                tile.transform.localScale = new Vector3(GridConverter.GridSize, GridConverter.GridSize, GridConverter.GridSize);
                 _pool.Add(tile);
             }
 

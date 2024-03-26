@@ -4,9 +4,10 @@ using UnityEngine;
 namespace DungeonCrawler
 {
     public static class GridConverter
-    {   
-       static readonly float LengthBetweenHorizontal = 1f;
-       static readonly float LengthBetweenVertical = 1f;
+    {
+        public const float GridSize = 3f;
+        const float LengthBetweenHorizontal = GridSize;
+        const float LengthBetweenVertical = GridSize;
        
         public static  Vector3 GridPositionToWorldPosition(Vector2Int gridPos)
         {
