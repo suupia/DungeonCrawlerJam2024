@@ -34,12 +34,4 @@ namespace DungeonCrawler.MapSystem.Scripts.Entity
             return "A";
         }
     }
-
-    public class CharacterPlayerSpawnPosition : IEntity
-    {
-        public override string ToString()
-        {
-            return "S";
-        }
-    }
 }

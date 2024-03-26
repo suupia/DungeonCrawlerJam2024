@@ -12,13 +12,13 @@ using UnityEngine.UI;
 namespace DungeonCrawler
 {
     // This script is for TESTING purposes only.
-    public class MapBuilderMono : MonoBehaviour
+    public class MapBuilderMonoTest : MonoBehaviour
     {
-        [SerializeField] TileMono tilePrefab = null!;
+        [SerializeField] TileMonoTest tilePrefab = null!;
         [SerializeField] Button divideButton = null!;
         [SerializeField] Button resetButton = null!;
 
-        readonly List<TileMono> _pool = new List<TileMono>();
+        readonly List<TileMonoTest> _pool = new List<TileMonoTest>();
 
         IGridCoordinate _coordinate = null!;
         DivideAreaExecutor _divideAreaExecutor = null!;
@@ -36,8 +36,8 @@ namespace DungeonCrawler
                 _divideAreaExecutor,
                 new CharacterWall(),
                 new CharacterPath(),
-                new CharacterRoom(),
-                new CharacterPlayerSpawnPosition());
+                new CharacterRoom()
+                );
         }
 
         void Start()
