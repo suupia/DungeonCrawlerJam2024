@@ -14,17 +14,20 @@ namespace DungeonCrawler
         IMapBuilderMonoSystem _mapBuilderMonoSystem = null!;
         IPlayerSpawnerMonoSystem _playerSpawnerMonoSystem = null!;
         DungeonBuilder _dungeonBuilder = null!;
+        EnemySpawnerMono _enemySpawnerMono = null!;
         
         [Inject]
         public void Construct(
             IMapBuilderMonoSystem mapBuilderMonoSystem,
             IPlayerSpawnerMonoSystem playerSpawnerMonoSystem,
-            DungeonBuilder dungeonBuilder
+            DungeonBuilder dungeonBuilder,
+            EnemySpawnerMono enemySpawnerMono
             )
         {
             _mapBuilderMonoSystem = mapBuilderMonoSystem;
             _playerSpawnerMonoSystem = playerSpawnerMonoSystem;
             _dungeonBuilder = dungeonBuilder;
+            _enemySpawnerMono = enemySpawnerMono;
 
             SetUp();
         }
@@ -38,6 +41,10 @@ namespace DungeonCrawler
             // Spawn player
             var (spawnX, spawnY) = _dungeonBuilder.PlacePlayerSpawnPosition();
             _playerSpawnerMonoSystem.SpawnPlayer(3,3);  // todo : spawn player here
+            
+            // Spawn enemy
+            var (enemySpawnX, enemySpawnY) = _dungeonBuilder.PlacePlayerSpawnPosition();
+            _enemySpawnerMono.SpawnEnemy(enemySpawnX, enemySpawnY);
         }
 
     }

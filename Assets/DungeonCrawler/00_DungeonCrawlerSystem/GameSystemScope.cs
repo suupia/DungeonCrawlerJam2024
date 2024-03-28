@@ -29,6 +29,7 @@ namespace DungeonCrawler
             builder.RegisterComponentInHierarchy<MapBuilderMonoSystem>().As<IMapBuilderMonoSystem>();
             builder.RegisterComponentInHierarchy<PlayerSpawnerMonoSystem>().As<IPlayerSpawnerMonoSystem>();
             builder.RegisterComponentInHierarchy<GameSystemInitializer>();
+            builder.RegisterComponentInHierarchy<EnemySpawnerMono>();
 
         }
     }
