@@ -3,8 +3,8 @@ using DungeonCrawler.MapAssembly.Classes;
 
 namespace DungeonCrawler.MapAssembly.Interfaces
 {
-    public interface IMapBuilderMonoSystem
+    public interface IMapBuilderMono
     {
-        public void CreateDungeon();
+        public void SwitchNextDungeon();
     }
 }

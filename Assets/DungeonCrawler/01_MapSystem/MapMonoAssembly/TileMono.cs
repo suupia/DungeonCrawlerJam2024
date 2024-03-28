@@ -18,6 +18,14 @@ namespace DungeonCrawler.MapMonoAssembly
         [SerializeField] SpriteRenderer[] wallSpriteRenderers = null!;
         [SerializeField] TextMeshPro debugText = null!;
 
+        public void ResetSprites()
+        {
+            floorSpriteRenderer.sprite = null;
+            foreach(var wallSpriteRenderer in wallSpriteRenderers)
+            {
+                wallSpriteRenderer.sprite = null;
+            }
+        }
         public void SetFloorSprite(IEntity entity)
         {
             if(entity is CharacterWall)

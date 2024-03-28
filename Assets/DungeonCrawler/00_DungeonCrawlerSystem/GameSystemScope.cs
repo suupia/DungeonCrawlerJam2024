@@ -26,8 +26,10 @@ namespace DungeonCrawler
             builder.Register<DivideAreaExecutor>(Lifetime.Scoped);
             builder.Register<DungeonBuilder>(Lifetime.Scoped);
             
-            builder.RegisterComponentInHierarchy<MapBuilderMonoSystem>().As<IMapBuilderMonoSystem>();
-            builder.RegisterComponentInHierarchy<PlayerSpawnerMonoSystem>().As<IPlayerSpawnerMonoSystem>();
+            builder.Register<MapSwitcher>(Lifetime.Scoped);
+            
+            builder.RegisterComponentInHierarchy<MapBuilderMono>().As<IMapBuilderMono>();
+            builder.RegisterComponentInHierarchy<PlayerSpawnerMono>().As<IPlayerSpawnerMono>();
             builder.RegisterComponentInHierarchy<GameSystemInitializer>();
             builder.RegisterComponentInHierarchy<EnemySpawnerMono>();
             builder.RegisterComponentInHierarchy<StairsSpawnerMono>();

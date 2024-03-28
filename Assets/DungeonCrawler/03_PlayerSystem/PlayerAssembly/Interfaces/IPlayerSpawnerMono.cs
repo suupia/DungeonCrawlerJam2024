@@ -2,7 +2,7 @@
 
 namespace  DungeonCrawler.PlayerAssembly.Interfaces
 {
-    public interface IPlayerSpawnerMonoSystem
+    public interface IPlayerSpawnerMono
     {
         void SpawnPlayer(int x, int y);
     }

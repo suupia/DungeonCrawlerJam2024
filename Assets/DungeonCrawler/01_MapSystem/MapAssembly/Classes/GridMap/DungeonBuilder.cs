@@ -40,6 +40,8 @@ namespace DungeonCrawler.MapAssembly.Classes
             {
                 map = CreateDungeonByStep(map);
             }
+
+            _divideCount = 0;
             return map;
         }
         

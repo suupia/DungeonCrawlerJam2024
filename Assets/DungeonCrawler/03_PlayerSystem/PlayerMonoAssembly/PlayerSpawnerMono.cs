@@ -6,7 +6,7 @@ using UnityEngine.PlayerLoop;
 
 namespace DungeonCrawler.PlayerMonoAssembly
 {
-    public class PlayerSpawnerMonoSystem : MonoBehaviour, IPlayerSpawnerMonoSystem
+    public class PlayerSpawnerMono : MonoBehaviour, IPlayerSpawnerMono
     {
         [SerializeField] PlayerController playerPrefab = null!;
         const float PlayerSpawnHeight = 1.0f;    
