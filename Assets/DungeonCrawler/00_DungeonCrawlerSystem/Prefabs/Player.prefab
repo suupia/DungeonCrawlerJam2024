@@ -433,7 +433,7 @@ MonoBehaviour:
   _movementDuration: 0.4
   _turnDuration: 0.1
   _instantTransition: 0
-  _playerInput: {fileID: 0}
+  _playerInput: {fileID: 8567166497905326156}
   _movementView: 
 --- !u!114 &9170966440164922015
 MonoBehaviour:

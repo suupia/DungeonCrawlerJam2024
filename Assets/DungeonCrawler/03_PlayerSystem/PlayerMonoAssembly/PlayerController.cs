@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DungeonCrawler.PlayerAssembly.Classes;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 
 namespace  DungeonCrawler.PlayerMonoAssembly
@@ -28,7 +29,10 @@ namespace  DungeonCrawler.PlayerMonoAssembly
 
         InputAction _moveAction;
         InputAction _turnAction;
+        
+        AnimationMonoSystem  _animationMonoSystem;
 
+        
         void TurnStep(Quaternion startRotation, Quaternion endRotation, float progress)
         {
             Quaternion rotation = Quaternion.Lerp(startRotation, endRotation, progress);
@@ -49,6 +53,8 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         
         void MovementComplete()
         {
+            Assert.IsNotNull(_moveAction);
+            Assert.IsNotNull(_movements);
             if (
                 _moveAction.IsPressed() && 
                 !_moveAction.WasReleasedThisFrame() &&
@@ -111,7 +117,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
             )
             {
                 _inMotion = true;
-                GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
+                _animationMonoSystem.RequestAnimation(
                     this,
                     _movementDuration,
                     (float progress) => MovementStep(transform.position, newPosition, progress),
@@ -124,7 +130,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
             )
             {
                 _inMotion = true;
-                GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
+                _animationMonoSystem.RequestAnimation(
                     this,
                     _turnDuration,
                     (float progress) => TurnStep(transform.rotation, newRotation, progress),
@@ -142,10 +148,11 @@ namespace  DungeonCrawler.PlayerMonoAssembly
             }
         }
         
-        private void Awake()
+        void Awake()
         {
             if (_playerInput == null) _playerInput = GetComponent<PlayerInput>();
-        
+            _animationMonoSystem = new AnimationMonoSystem();
+
             _movements = new Queue<MovementAction>();
             _currentMovement = MovementAction.None;
         
@@ -174,6 +181,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         {
             _movementView = _movements.ToList();
             ProcessMovement();
+            _animationMonoSystem.Update();
         }
     }
 }
