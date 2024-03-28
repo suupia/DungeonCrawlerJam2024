@@ -1,0 +1,18 @@
+{
+    "name": "PlayerMonoAssembly",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6b0d6fa22eb6aa44cb6011b07eb990d5",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:c305a8046ff8f7a4ea0537002f7b7c55"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
