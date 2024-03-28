@@ -23,7 +23,11 @@ namespace DungeonCrawler.MapMonoAssembly
         DungeonBuilder _dungeonBuilder = null!;
 
         EntityGridMap? _map;
-            
+        
+        
+        // This should be changed
+        public EntityGridMap _Map() { return _map; }
+        
         // void Awake()
         // {
         //     // Domain
@@ -54,7 +58,6 @@ namespace DungeonCrawler.MapMonoAssembly
 
         public void CreateDungeon()
         {
-            Debug.Log("CreateDungeon");
             DestroyAllTiles();
             _map ??= new EntityGridMap(_coordinate);
             _map = _dungeonBuilder.CreateDungeon(_map);
