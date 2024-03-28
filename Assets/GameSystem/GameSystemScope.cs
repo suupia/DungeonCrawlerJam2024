@@ -18,8 +18,8 @@ namespace DungeonCrawler
             // builder.Register<NetworkPlayerSpawner>(Lifetime.Scoped);
             // builder.Register<CarryPlayerContainer>(Lifetime.Scoped);
 
-            builder.RegisterComponentInHierarchy<PlayerSpawnerMonoSystem>();
-            builder.RegisterComponentInHierarchy<MapBuilderMonoSystem>();
+            builder.RegisterComponentInHierarchy<MapBuilderMonoSystem>().As<IMapBuilderMonoSystem>();
+            builder.RegisterComponentInHierarchy<PlayerSpawnerMonoSystem>().As<IPlayerSpawnerMonoSystem>();
             builder.RegisterComponentInHierarchy<GameSystemInitializer>();
 
         }
