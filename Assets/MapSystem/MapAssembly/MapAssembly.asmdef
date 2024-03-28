@@ -1,5 +1,5 @@
 {
-    "name": "MapSystem",
+    "name": "MapAssembly",
     "rootNamespace": "",
     "references": [
         "GUID:b65ce22104d430b47bc31fe0668ee149"
