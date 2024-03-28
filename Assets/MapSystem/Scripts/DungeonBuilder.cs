@@ -18,7 +18,6 @@ namespace DungeonCrawler.MapSystem.Scripts
         readonly IEntity _wall;
         readonly IEntity _path;
         readonly IEntity _room;
-        readonly IGridCoordinate _coordinate;
         readonly DivideAreaExecutor _divideAreaExecutor;
 
         int _divideCount;
@@ -26,17 +25,12 @@ namespace DungeonCrawler.MapSystem.Scripts
 
 
         public DungeonBuilder(
-            IGridCoordinate coordinate,
-            DivideAreaExecutor divideAreaExecutor,
-            IEntity wall,
-            IEntity path,
-            IEntity room)
+            DivideAreaExecutor divideAreaExecutor)
         {
-            _coordinate = coordinate;
             _divideAreaExecutor = divideAreaExecutor;
-            _wall = wall;
-            _path = path;
-            _room = room;
+            _wall = new CharacterWall();
+            _path = new CharacterPath();
+            _room = new CharacterRoom();
         }
 
         

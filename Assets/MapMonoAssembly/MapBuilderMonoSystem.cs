@@ -8,6 +8,7 @@ using DungeonCrawler.MapSystem.Scripts.Entity;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using VContainer;
 
 namespace DungeonCrawler
 {
@@ -23,18 +24,32 @@ namespace DungeonCrawler
 
         EntityGridMap? _map;
             
-        void Awake()
+        // void Awake()
+        // {
+        //     // Domain
+        //     _coordinate = new SquareGridCoordinate(50, 50);
+        //     _divideAreaExecutor = new DivideAreaExecutor();
+        //     _dungeonBuilder = new DungeonBuilder(
+        //         _divideAreaExecutor
+        //     );
+        // }
+        [Inject]
+        public void Construct(
+            IGridCoordinate coordinate,
+            DivideAreaExecutor divideAreaExecutor,
+            DungeonBuilder dungeonBuilder)
         {
-            // Domain
-            _coordinate = new SquareGridCoordinate(50, 50);
-            _divideAreaExecutor = new DivideAreaExecutor();
-            _dungeonBuilder = new DungeonBuilder(
-                _coordinate,
-                _divideAreaExecutor,
-                new CharacterWall(),
-                new CharacterPath(),
-                new CharacterRoom()
-            );
+            _coordinate = coordinate;
+            _divideAreaExecutor = divideAreaExecutor;
+            _dungeonBuilder = dungeonBuilder;
+            
+            for(int i = 0; i<_coordinate.Length ; i++)
+            {
+                var vector = _coordinate.ToVector(i);
+                var tile = Instantiate(tilePrefab, GridConverter.GridPositionToWorldPosition(vector), Quaternion.identity);
+                tile.transform.localScale = new Vector3(GridConverter.GridSize, GridConverter.GridSize, GridConverter.GridSize);
+                _pool.Add(tile);
+            }
         }
 
         public void CreateDungeon()
@@ -64,6 +79,7 @@ namespace DungeonCrawler
 
         void UpdateSprites(EntityGridMap map)
         {
+            Debug.Log($"Length:{_coordinate.Length}");
             for(int i = 0; i<_coordinate.Length ; i++)
             {
                 var vector = _coordinate.ToVector(i);

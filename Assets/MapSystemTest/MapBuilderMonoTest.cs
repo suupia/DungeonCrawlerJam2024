@@ -32,12 +32,8 @@ namespace DungeonCrawler
             _coordinate = new SquareGridCoordinate(50, 50);
             _divideAreaExecutor = new DivideAreaExecutor();
             _dungeonBuilder = new DungeonBuilder(
-                _coordinate,
-                _divideAreaExecutor,
-                new CharacterWall(),
-                new CharacterPath(),
-                new CharacterRoom()
-                );
+                _divideAreaExecutor
+            );
         }
 
         void Start()
