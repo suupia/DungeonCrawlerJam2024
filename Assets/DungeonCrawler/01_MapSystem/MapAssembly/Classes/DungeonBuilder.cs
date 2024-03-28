@@ -123,8 +123,8 @@ namespace DungeonCrawler.MapAssembly.Classes
             return map;
         }
 
-
-        public (int x, int y) PlacePlayerSpawnPosition()
+        // Following functions should be written in other class.
+        public (int x, int y) CalculatePlayerSpawnPosition()
         {
             // [pre-condition] _areas should not be empty
             Assert.IsTrue(_areas.Count > 0);
@@ -135,7 +135,17 @@ namespace DungeonCrawler.MapAssembly.Classes
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
             return (spawnX, spawnY);
         }
-
+        public (int x, int y) CalculateEnemySpawnPosition()
+        {
+            // [pre-condition] _areas should not be empty
+            Assert.IsTrue(_areas.Count > 0);
+            Debug.Log($"ares: {string.Join(",", _areas.Select(area => area.Room))}");
+            
+            var area = _areas[Random.Range(0,_areas.Count())];
+            var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
+            var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
+            return (spawnX, spawnY);
+        }
 
     }
     public record Area(int X, int Y, int Width, int Height, Room Room, List<(Area area, Path path)> AdjacentAreas);
