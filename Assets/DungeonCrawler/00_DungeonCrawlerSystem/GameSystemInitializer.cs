@@ -39,13 +39,12 @@ namespace DungeonCrawler
             _mapBuilderMonoSystem.CreateDungeon();  // todo : build map here 
             
             // Spawn player
-            var (spawnX, spawnY) = _dungeonBuilder.PlacePlayerSpawnPosition();
+            var (spawnX, spawnY) = _dungeonBuilder.CalculatePlayerSpawnPosition();
             _playerSpawnerMonoSystem.SpawnPlayer(3,3);  // todo : spawn player here
             
             // Spawn enemy
-            var (enemySpawnX, enemySpawnY) = _dungeonBuilder.PlacePlayerSpawnPosition();
+            var (enemySpawnX, enemySpawnY) = _dungeonBuilder.CalculateEnemySpawnPosition();
             _enemySpawnerMono.SpawnEnemy(enemySpawnX, enemySpawnY);
         }
-
     }
 }
