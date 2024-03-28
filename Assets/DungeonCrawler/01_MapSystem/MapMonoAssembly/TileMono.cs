@@ -6,16 +6,17 @@ using TMPro;
 
 namespace DungeonCrawler.MapMonoAssembly
 {
-    // This script is for TESTING purposes only.
     public class TileMono : MonoBehaviour
     {
         [SerializeField] Sprite wallSprite = null!;
         [SerializeField] Sprite pathSprite = null!;
         [SerializeField] Sprite roomSprite = null!;
+        
         [SerializeField] SpriteRenderer floorSpriteRenderer = null!;
+        [SerializeField] SpriteRenderer[] wallSpriteRenderers = null!;
         [SerializeField] TextMeshPro debugText = null!;
 
-        public void SetSprite(IEntity entity)
+        public void SetFloorSprite(IEntity entity)
         {
             if(entity is CharacterWall)
             {
@@ -32,6 +33,15 @@ namespace DungeonCrawler.MapMonoAssembly
             else
             {
                 Debug.LogError("Unknown entity");
+            }
+            
+        }
+        
+        public void SetWallSpite()
+        {
+            foreach (var wallSpriteRenderer in wallSpriteRenderers)
+            {
+                wallSpriteRenderer.sprite = wallSprite;
             }
         }
         

@@ -87,7 +87,7 @@ namespace DungeonCrawler.MapMonoAssembly
                 var tile = _pool[i];
                 if(map.GetSingleEntity<IEntity>(x,y) is {} entity)
                 {
-                    tile.SetSprite(entity);
+                    tile.SetFloorSprite(entity);
                 }
                     
                 
