@@ -36,11 +36,11 @@ namespace DungeonCrawler
             Debug.Log("GameSystemInitializer.SetUp()");
             
             // Create map
-            _mapBuilderMonoSystem.CreateDungeon();  // todo : build map here 
+            _mapBuilderMonoSystem.CreateDungeon();
             
             // Spawn player
             var (spawnX, spawnY) = _dungeonBuilder.CalculatePlayerSpawnPosition();
-            _playerSpawnerMonoSystem.SpawnPlayer(3,3);  // todo : spawn player here
+            _playerSpawnerMonoSystem.SpawnPlayer(spawnX, spawnY);
             
             // Spawn enemy
             var (enemySpawnX, enemySpawnY) = _dungeonBuilder.CalculateEnemySpawnPosition();
