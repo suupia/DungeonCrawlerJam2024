@@ -27,11 +27,11 @@ namespace DungeonCrawler.MapAssembly.Classes.Entity
         }
     }
     
-    public class CharacterArea: IEntity
+    public class CharacterStairs: IEntity
     {
         public override string ToString()
         {
-            return "A";
+            return "S";
         }
     }
 }

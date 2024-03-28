@@ -125,6 +125,10 @@ namespace  DungeonCrawler.PlayerMonoAssembly
                 // Debug.Log("Move is cancelled because new position is wall");
                 return;
             }
+            else if (_mapSwitcher.CurrentMap.GetSingleEntity<CharacterStairs>(newGridPosition) != null)
+            {
+                Debug.Log("Player is on stairs");
+            }
             
             if (instantTransition)
             {
