@@ -24,13 +24,7 @@ namespace DungeonCrawler.MapMonoAssembly
             
         DivideAreaExecutor _divideAreaExecutor = null!;
         DungeonBuilder _dungeonBuilder = null!;
-
-        EntityGridMap? _map;
         
-        
-        // This should be changed
-        public EntityGridMap _Map() { return _map; }
-
         [Inject]
         public void Construct(
             IGridCoordinate coordinate,

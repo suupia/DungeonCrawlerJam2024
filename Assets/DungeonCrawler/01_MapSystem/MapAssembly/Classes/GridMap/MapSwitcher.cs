@@ -8,9 +8,9 @@ namespace DungeonCrawler.MapAssembly.Classes
     {
         public EntityGridMap CurrentMap => _currentMap;
         EntityGridMap _currentMap;
-        IGridCoordinate _coordinate = null!;
-        DivideAreaExecutor _divideAreaExecutor = null!;
+        readonly IGridCoordinate _coordinate;
         readonly DungeonBuilder _dungeonBuilder;
+        readonly DivideAreaExecutor _divideAreaExecutor;
         
         public MapSwitcher(
             IGridCoordinate coordinate,
