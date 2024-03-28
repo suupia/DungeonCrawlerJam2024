@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using DungeonCrawler.MapSystem.Interfaces;
+using DungeonCrawler.MapAssembly.Interfaces;
 using UnityEngine;
 
 
 
-namespace DungeonCrawler.MapSystem.Scripts
+namespace DungeonCrawler.MapAssembly.Classes
 {
     public class EntityGridMap : IGridCoordinate, IGridMap
     {

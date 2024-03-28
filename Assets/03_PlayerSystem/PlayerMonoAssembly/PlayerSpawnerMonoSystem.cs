@@ -1,8 +1,10 @@
 ﻿#nullable enable
+using DungeonCrawler.MapAssembly.Classes;
+using DungeonCrawler.PlayerAssembly.Interfaces;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
-namespace DungeonCrawler.Runtime.Player
+namespace DungeonCrawler.PlayerMonoAssembly
 {
     public class PlayerSpawnerMonoSystem : MonoBehaviour, IPlayerSpawnerMonoSystem
     {

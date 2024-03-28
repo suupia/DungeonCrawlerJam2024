@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using UnityEngine;
 
-namespace DungeonCrawler
+namespace  DungeonCrawler.MapAssembly.Classes
 {
     public static class GridConverter
     {

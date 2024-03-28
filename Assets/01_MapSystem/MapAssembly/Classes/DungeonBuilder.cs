@@ -2,15 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DungeonCrawler.MapSystem.Interfaces;
-using DungeonCrawler.MapSystem.Scripts;
-using DungeonCrawler.MapSystem.Scripts.Entity;
+using DungeonCrawler.MapAssembly.Classes.Entity;
+using DungeonCrawler.MapAssembly.Interfaces;
+using DungeonCrawler.MapAssembly.Classes;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Random = UnityEngine.Random;
 
 
-namespace DungeonCrawler.MapSystem.Scripts
+namespace DungeonCrawler.MapAssembly.Classes
 {
     public class DungeonBuilder
     {

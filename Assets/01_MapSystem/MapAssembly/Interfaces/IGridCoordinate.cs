@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace DungeonCrawler.MapSystem.Interfaces
+namespace DungeonCrawler.MapAssembly.Interfaces
 {
     public interface IGridCoordinate
     {

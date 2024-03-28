@@ -1,7 +1,7 @@
 ﻿#nullable enable
-using DungeonCrawler.MapSystem.Scripts;
+using DungeonCrawler.MapAssembly.Classes;
 
-namespace DungeonCrawler
+namespace DungeonCrawler.MapAssembly.Interfaces
 {
     public interface IMapBuilderMonoSystem
     {

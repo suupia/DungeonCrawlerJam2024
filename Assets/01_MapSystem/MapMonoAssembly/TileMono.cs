@@ -1,10 +1,10 @@
 ﻿#nullable enable
-using DungeonCrawler.MapSystem.Interfaces;
-using DungeonCrawler.MapSystem.Scripts.Entity;
+using DungeonCrawler.MapAssembly.Interfaces;
+using DungeonCrawler.MapAssembly.Classes.Entity;
 using UnityEngine;
 using TMPro;
 
-namespace DungeonCrawler
+namespace DungeonCrawler.MapMonoAssembly
 {
     // This script is for TESTING purposes only.
     public class TileMono : MonoBehaviour

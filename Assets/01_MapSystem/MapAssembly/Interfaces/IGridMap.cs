@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DungeonCrawler.MapSystem.Interfaces
+namespace DungeonCrawler.MapAssembly.Interfaces
 {
     // This interface is used to treat EntityGridMap and NumericGridMap as the same thing for WaveletSearchExecutor.
     public interface IGridMap

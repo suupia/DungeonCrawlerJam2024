@@ -2,10 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DungeonCrawler.PlayerAssembly.Classes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace DungeonCrawler.Runtime.Player
+namespace  DungeonCrawler.PlayerMonoAssembly
 {
     [RequireComponent(typeof(PlayerInput))]
     internal class PlayerController : MonoBehaviour

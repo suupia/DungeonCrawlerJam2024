@@ -1,4 +1,5 @@
-namespace DungeonCrawler.Runtime.Player
+#nullable enable
+namespace  DungeonCrawler.PlayerAssembly.Classes
 {
     public enum MovementAction
     {

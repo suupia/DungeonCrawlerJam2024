@@ -1,10 +1,10 @@
-using DungeonCrawler.Runtime.Interactable;
+#nullable enable
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace DungeonCrawler
+namespace  DungeonCrawler.PlayerAssembly.Classes
 {
     [RequireComponent(typeof(PlayerInput))]
     internal sealed class Interactor : MonoBehaviour

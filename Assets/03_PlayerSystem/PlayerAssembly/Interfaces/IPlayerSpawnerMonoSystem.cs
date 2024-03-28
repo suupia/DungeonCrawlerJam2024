@@ -1,7 +1,6 @@
 ﻿#nullable enable
-using UnityEngine;
 
-namespace DungeonCrawler.Runtime.Player
+namespace  DungeonCrawler.PlayerAssembly.Interfaces
 {
     public interface IPlayerSpawnerMonoSystem
     {

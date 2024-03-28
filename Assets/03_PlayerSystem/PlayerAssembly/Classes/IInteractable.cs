@@ -1,7 +1,7 @@
+#nullable enable
 using UnityEngine.Events;
-using DungeonCrawler.Runtime.Player;
 
-namespace DungeonCrawler.Runtime.Interactable
+namespace DungeonCrawler.PlayerAssembly.Classes
 {
     internal interface IInteractable
     {

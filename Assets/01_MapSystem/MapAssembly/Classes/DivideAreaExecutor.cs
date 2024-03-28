@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace DungeonCrawler.MapSystem.Scripts
+namespace DungeonCrawler.MapAssembly.Classes
 {
     public class DivideAreaExecutor
     {

@@ -2,15 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using DungeonCrawler.MapSystem.Interfaces;
-using DungeonCrawler.MapSystem.Scripts;
-using DungeonCrawler.MapSystem.Scripts.Entity;
+using DungeonCrawler.MapAssembly.Interfaces;
+using DungeonCrawler.MapAssembly.Classes;
+using DungeonCrawler.MapAssembly.Classes.Entity;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using VContainer;
 
-namespace DungeonCrawler
+namespace DungeonCrawler.MapMonoAssembly
 {
     public class MapBuilderMonoSystem : MonoBehaviour, IMapBuilderMonoSystem
     {

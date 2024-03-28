@@ -1,8 +1,9 @@
 #nullable enable
 using System.Collections;
 using System.Collections.Generic;
-using DungeonCrawler.MapSystem.Scripts;
-using DungeonCrawler.Runtime.Player;
+using DungeonCrawler.MapAssembly.Classes;
+using DungeonCrawler.MapAssembly.Interfaces;
+using DungeonCrawler.PlayerAssembly.Interfaces;
 using UnityEngine;
 using VContainer;
 

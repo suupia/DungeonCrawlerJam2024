@@ -1,6 +1,6 @@
 ﻿#nullable enable
-using DungeonCrawler.MapSystem.Interfaces;
-using DungeonCrawler.MapSystem.Scripts.Entity;
+using DungeonCrawler.MapAssembly.Interfaces;
+using DungeonCrawler.MapAssembly.Classes.Entity;
 using UnityEngine;
 using TMPro;
 
