@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections;
 using System.Collections.Generic;
+using DungeonCrawler.KeyMonoAssenbly;
 using DungeonCrawler.MapAssembly.Interfaces;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapMonoAssembly;
@@ -30,6 +31,7 @@ namespace DungeonCrawler
             builder.RegisterComponentInHierarchy<PlayerSpawnerMonoSystem>().As<IPlayerSpawnerMonoSystem>();
             builder.RegisterComponentInHierarchy<GameSystemInitializer>();
             builder.RegisterComponentInHierarchy<EnemySpawnerMono>();
+            builder.RegisterComponentInHierarchy<KeySpawnerMono>();
 
         }
     }
