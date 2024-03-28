@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DungeonCrawler.Core
 {
-    internal abstract class GameManager : MonoBehaviour
+    public abstract class GameManager : MonoBehaviour
     {
         private const string PrefabPath = "GameManager";
         protected static GameManager _instance;

@@ -6,6 +6,6 @@ namespace DungeonCrawler
 {
     public interface IMapBuilderMonoSystem : IMonoSystem
     {
-        DungeonBuilder DungeonBuilder { get; }
+        public void CreateDungeon();
     }
 }

@@ -17,7 +17,6 @@ namespace DungeonCrawler
     {
         [SerializeField] TileMono tilePrefab = null!;
 
-        public DungeonBuilder DungeonBuilder => _dungeonBuilder;
         readonly List<TileMono> _pool = new();
 
         IGridCoordinate _coordinate = null!;
@@ -40,7 +39,7 @@ namespace DungeonCrawler
             );
         }
 
-        void CreateDungeon()
+        public void CreateDungeon()
         {
             Debug.Log("CreateDungeon");
             DestroyAllTiles();
