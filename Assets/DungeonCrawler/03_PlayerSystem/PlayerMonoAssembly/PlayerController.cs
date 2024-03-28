@@ -3,10 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DungeonCrawler.PlayerAssembly.Classes;
+using DungeonCrawler.MapAssembly.Classes;
+using DungeonCrawler.MapAssembly.Classes.Entity;
+using DungeonCrawler.MapAssembly.Interfaces;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using VContainer;
 
 namespace  DungeonCrawler.PlayerMonoAssembly
 {
@@ -32,6 +36,17 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         InputAction _turnAction;
         
         AnimationMonoSystem  _animationMonoSystem;
+
+        MapSwitcher _mapSwitcher;
+
+        [Inject]
+        public void Construct(
+            MapSwitcher mapSwitcher
+        )
+        {
+            _mapSwitcher = mapSwitcher;
+        }
+        
 
         
         void TurnStep(Quaternion startRotation, Quaternion endRotation, float progress)
@@ -103,7 +118,14 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         {
             Vector3 newPosition = GetNextPosition(action);
             Quaternion newRotation = GetNextRotation(action);
-        
+
+            Vector2Int newGridPosition = GridConverter.WorldPositionToGridPosition(newPosition);
+            if (_mapSwitcher.CurrentMap.GetSingleEntity<CharacterWall>(newGridPosition) != null)
+            {
+                // Debug.Log("Move is cancelled because new position is wall");
+                return;
+            }
+            
             if (instantTransition)
             {
                 transform.position = newPosition;
