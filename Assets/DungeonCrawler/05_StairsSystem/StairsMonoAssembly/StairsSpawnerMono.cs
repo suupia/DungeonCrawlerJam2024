@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace  DungeonCrawler.KeyMonoAssenbly
+namespace  DungeonCrawler
 {
     public class StairsSpawnerMono : MonoBehaviour
     {
