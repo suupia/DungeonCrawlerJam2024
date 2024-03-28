@@ -341,26 +341,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41b1dec4c282e1449b05bc210eada215, type: 3}
---- !u!1 &574600470 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8392950273551915344, guid: 3b7ec20f5e531044d8ff779eff022581,
-    type: 3}
-  m_PrefabInstance: {fileID: 1659606543}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &574600471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 574600470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 543fe01ff0a32514399947babbaae077, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keyPrefab: {fileID: 3590086402667670353, guid: 01a257ed6b3674c4b918a35a9dc8289d,
-    type: 3}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,16 +591,12 @@ PrefabInstance:
     - target: {fileID: 8392950273551915344, guid: 3b7ec20f5e531044d8ff779eff022581,
         type: 3}
       propertyPath: m_Name
-      value: KeySpawnerMono
+      value: StairsSpawnerMono
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8392950273551915344, guid: 3b7ec20f5e531044d8ff779eff022581,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 574600471}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b7ec20f5e531044d8ff779eff022581, type: 3}
 --- !u!1001 &1665534557
 PrefabInstance:
