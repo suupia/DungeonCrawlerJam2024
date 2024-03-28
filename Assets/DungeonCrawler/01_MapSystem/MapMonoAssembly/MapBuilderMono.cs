@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,40 +13,25 @@ using VContainer;
 
 namespace DungeonCrawler.MapMonoAssembly
 {
-    public class MapBuilderMonoSystem : MonoBehaviour, IMapBuilderMonoSystem
+    public class MapBuilderMono : MonoBehaviour, IMapBuilderMono
     {
         [SerializeField] TileMono tilePrefab = null!;
 
         readonly List<TileMono> _pool = new();
 
         IGridCoordinate _coordinate = null!;
+        MapSwitcher _mapSwitcher = null!;
+            
         DivideAreaExecutor _divideAreaExecutor = null!;
         DungeonBuilder _dungeonBuilder = null!;
-
-        EntityGridMap? _map;
         
-        
-        // This should be changed
-        public EntityGridMap _Map() { return _map; }
-        
-        // void Awake()
-        // {
-        //     // Domain
-        //     _coordinate = new SquareGridCoordinate(50, 50);
-        //     _divideAreaExecutor = new DivideAreaExecutor();
-        //     _dungeonBuilder = new DungeonBuilder(
-        //         _divideAreaExecutor
-        //     );
-        // }
         [Inject]
         public void Construct(
             IGridCoordinate coordinate,
-            DivideAreaExecutor divideAreaExecutor,
-            DungeonBuilder dungeonBuilder)
+            MapSwitcher mapSwitcher)
         {
             _coordinate = coordinate;
-            _divideAreaExecutor = divideAreaExecutor;
-            _dungeonBuilder = dungeonBuilder;
+            _mapSwitcher = mapSwitcher;
             
             for(int i = 0; i<_coordinate.Length ; i++)
             {
@@ -56,27 +42,18 @@ namespace DungeonCrawler.MapMonoAssembly
             }
         }
 
-        public void CreateDungeon()
+        public void SwitchNextDungeon()
         {
-            DestroyAllTiles();
-            _map ??= new EntityGridMap(_coordinate);
-            _map = _dungeonBuilder.CreateDungeon(_map);
-            UpdateSprites(_map);
+            Debug.Log("SwitchNextDungeon");
+            ResetAllTiles();
+            var nextMap = _mapSwitcher.SwitchNextDungeon();
+            UpdateSprites(nextMap);
         }
-        void CreateDungeonByStep()
-        {
-            Debug.Log("CreateDungeonByStep");
-            DestroyAllTiles();
-            _map ??= new EntityGridMap(_coordinate);
-            _map = _dungeonBuilder.CreateDungeonByStep(_map);
-            UpdateSprites(_map);
-        }
-
-        void DestroyAllTiles()
+        void ResetAllTiles()
         {
             foreach(var tile in _pool)
             {
-                Destroy(tile);
+                tile.ResetSprites();
             }
         }
 
@@ -122,26 +99,24 @@ namespace DungeonCrawler.MapMonoAssembly
             }
         }
 
-        // void Start()
-        // {
-        //     
-        //     for(int i = 0; i<_coordinate.Length ; i++)
-        //     {
-        //         var vector = _coordinate.ToVector(i);
-        //         var tile = Instantiate(tilePrefab, GridConverter.GridPositionToWorldPosition(vector), Quaternion.identity);
-        //         tile.transform.localScale = new Vector3(GridConverter.GridSize, GridConverter.GridSize, GridConverter.GridSize);
-        //         _pool.Add(tile);
-        //     }
-        //
-        //     CreateDungeon();
-        //     
-        //     // spawn player
-        //     var (spawnX, spawnY) = _dungeonBuilder.PlacePlayerSpawnPosition();
-        //     GameManager.GetMonoSystem<IPlayerSpawnerMonoSystem>().SpawnPlayer(spawnX, spawnY);
-        //
-        // }
-        //
+        void Update()
+        {
+            UnityEditorDebugProcess();
+            
+        }
 
-        
+        void UnityEditorDebugProcess()
+        {
+#if UNITY_EDITOR
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                Debug.Log("Debug SwitchNextDungeon()");
+                SwitchNextDungeon();
+            }
+#endif
+        }
+
+
+
     }
 }

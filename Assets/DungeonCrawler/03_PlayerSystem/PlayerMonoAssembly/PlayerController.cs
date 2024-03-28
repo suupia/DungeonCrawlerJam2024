@@ -37,14 +37,14 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         
         AnimationMonoSystem  _animationMonoSystem;
 
-        IMapBuilderMonoSystem _mapBuilderMonoSystem = null!;
+        MapSwitcher _mapSwitcher;
 
         [Inject]
         public void Construct(
-            IMapBuilderMonoSystem mapBuilderMonoSystem
+            MapSwitcher mapSwitcher
         )
         {
-            _mapBuilderMonoSystem = mapBuilderMonoSystem;
+            _mapSwitcher = mapSwitcher;
         }
         
 
@@ -120,10 +120,14 @@ namespace  DungeonCrawler.PlayerMonoAssembly
             Quaternion newRotation = GetNextRotation(action);
 
             Vector2Int newGridPosition = GridConverter.WorldPositionToGridPosition(newPosition);
-            if (_mapBuilderMonoSystem._Map().GetSingleEntity<CharacterWall>(newGridPosition) != null)
+            if (_mapSwitcher.CurrentMap.GetSingleEntity<CharacterWall>(newGridPosition) != null)
             {
                 // Debug.Log("Move is cancelled because new position is wall");
                 return;
+            }
+            else if (_mapSwitcher.CurrentMap.GetSingleEntity<CharacterStairs>(newGridPosition) != null)
+            {
+                Debug.Log("Player is on stairs");
             }
             
             if (instantTransition)
