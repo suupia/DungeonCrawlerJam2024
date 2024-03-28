@@ -9,10 +9,10 @@ namespace DungeonCrawler.MapAssembly.Classes
 {
     public class DirectionEnum : IComparable
     {
-        public static readonly DirectionEnum North = new DirectionEnum(0);
-        public static readonly DirectionEnum East = new DirectionEnum(1);
-        public static readonly DirectionEnum South = new DirectionEnum(2);
-        public static readonly DirectionEnum West = new DirectionEnum(3);
+        public static readonly DirectionEnum North = new (0);
+        public static readonly DirectionEnum East = new (1);
+        public static readonly DirectionEnum South = new (2);
+        public static readonly DirectionEnum West = new (3);
         public int Id { get;}
         public (int x, int y) Vector { get; private set; }
         public static IEnumerable<DirectionEnum> GetAll() => Values;
@@ -21,7 +21,7 @@ namespace DungeonCrawler.MapAssembly.Classes
             North,
             East,
             South,
-            East,
+            West,
         };
 
         DirectionEnum(int id)

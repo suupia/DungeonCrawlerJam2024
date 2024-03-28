@@ -41,8 +41,22 @@ namespace DungeonCrawler.MapMonoAssembly
         
         public void SetWallSprite(IEntity entity, DirectionEnum direction)
         {
-            var directionId = direction.Id;
-            wallSpriteRenderers[directionId].sprite = wallSprite;
+            if(entity is CharacterWall)
+            {
+                wallSpriteRenderers[direction.Id].sprite = wallSprite;
+            }
+            else if(entity is CharacterPath)
+            {
+                wallSpriteRenderers[direction.Id].sprite = null;
+            }
+            else if(entity is CharacterRoom)
+            {
+                wallSpriteRenderers[direction.Id].sprite = null;
+            }
+            else
+            {
+                wallSpriteRenderers[direction.Id].sprite = null;
+            }
         }
         
         public void SetDebugText(string text)
