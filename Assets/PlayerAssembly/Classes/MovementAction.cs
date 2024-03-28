@@ -1,6 +1,6 @@
 namespace DungeonCrawler.Runtime.Player
 {
-    internal enum MovementAction
+    public enum MovementAction
     {
         Right,
         Left,

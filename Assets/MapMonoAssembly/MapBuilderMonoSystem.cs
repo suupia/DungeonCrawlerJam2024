@@ -2,11 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using DungeonCrawler.Core;
 using DungeonCrawler.MapSystem.Interfaces;
 using DungeonCrawler.MapSystem.Scripts;
 using DungeonCrawler.MapSystem.Scripts.Entity;
-using DungeonCrawler.Runtime.Player;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -93,25 +91,25 @@ namespace DungeonCrawler
             }
         }
 
-        void Start()
-        {
-            
-            for(int i = 0; i<_coordinate.Length ; i++)
-            {
-                var vector = _coordinate.ToVector(i);
-                var tile = Instantiate(tilePrefab, GridConverter.GridPositionToWorldPosition(vector), Quaternion.identity);
-                tile.transform.localScale = new Vector3(GridConverter.GridSize, GridConverter.GridSize, GridConverter.GridSize);
-                _pool.Add(tile);
-            }
-
-            CreateDungeon();
-            
-            // spawn player
-            var (spawnX, spawnY) = _dungeonBuilder.PlacePlayerSpawnPosition();
-            GameManager.GetMonoSystem<IPlayerSpawnerMonoSystem>().SpawnPlayer(spawnX, spawnY);
-
-        }
-
+        // void Start()
+        // {
+        //     
+        //     for(int i = 0; i<_coordinate.Length ; i++)
+        //     {
+        //         var vector = _coordinate.ToVector(i);
+        //         var tile = Instantiate(tilePrefab, GridConverter.GridPositionToWorldPosition(vector), Quaternion.identity);
+        //         tile.transform.localScale = new Vector3(GridConverter.GridSize, GridConverter.GridSize, GridConverter.GridSize);
+        //         _pool.Add(tile);
+        //     }
+        //
+        //     CreateDungeon();
+        //     
+        //     // spawn player
+        //     var (spawnX, spawnY) = _dungeonBuilder.PlacePlayerSpawnPosition();
+        //     GameManager.GetMonoSystem<IPlayerSpawnerMonoSystem>().SpawnPlayer(spawnX, spawnY);
+        //
+        // }
+        //
 
         
     }

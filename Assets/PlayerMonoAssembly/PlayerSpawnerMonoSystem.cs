@@ -1,6 +1,4 @@
 ﻿#nullable enable
-using DungeonCrawler.Core;
-using DungeonCrawler.MapSystem.Scripts;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 

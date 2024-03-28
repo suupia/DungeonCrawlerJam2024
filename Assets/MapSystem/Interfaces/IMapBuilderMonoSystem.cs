@@ -1,10 +1,9 @@
 ﻿#nullable enable
-using DungeonCrawler.Core;
 using DungeonCrawler.MapSystem.Scripts;
 
 namespace DungeonCrawler
 {
-    public interface IMapBuilderMonoSystem : IMonoSystem
+    public interface IMapBuilderMonoSystem
     {
         public void CreateDungeon();
     }

@@ -29,6 +29,8 @@ namespace DungeonCrawler
         }
         void SetUp()
         {
+            Debug.Log("GameSystemInitializer.SetUp()");
+            
             // Create map
             _mapBuilderMonoSystem.CreateDungeon();  // todo : build map here 
             

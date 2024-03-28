@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using DungeonCrawler.Core;
 using DungeonCrawler.Runtime.MonoSystems.Animation;
-using DungeonCrawler.Runtime.Player;
 using UnityEngine.Serialization;
 
 namespace DungeonCrawler.Runtime
@@ -16,8 +15,7 @@ namespace DungeonCrawler.Runtime
         [Header("MonoSystems")]
         [SerializeField] private AnimationMonoSystem _animationMonoSystem;
         
-        [SerializeField] PlayerSpawnerMonoSystem playerSpawnerMonoSystem;
-        [SerializeField] MapBuilderMonoSystem mapBuilderMonoSystem;
+        // [SerializeField] PlayerSpawnerMonoSystem playerSpawnerMonoSystem;
         
         /// <summary>
         /// Adds all events listeners
@@ -42,8 +40,7 @@ namespace DungeonCrawler.Runtime
         {
             AddMonoSystem<AnimationMonoSystem, IAnimationMonoSystem>(_animationMonoSystem);
             
-            AddMonoSystem<MapBuilderMonoSystem, IMapBuilderMonoSystem>(mapBuilderMonoSystem);
-            AddMonoSystem<PlayerSpawnerMonoSystem , IPlayerSpawnerMonoSystem>(playerSpawnerMonoSystem);
+            // AddMonoSystem<PlayerSpawnerMonoSystem , IPlayerSpawnerMonoSystem>(playerSpawnerMonoSystem);
         }
 
         protected override string GetApplicationName()
