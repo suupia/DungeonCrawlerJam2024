@@ -89,6 +89,18 @@ namespace DungeonCrawler.MapMonoAssembly
                 {
                     tile.SetFloorSprite(entity);
                 }
+
+                foreach (var direction in DirectionEnum.GetAll())
+                {
+                    var aroundVector = new Vector2Int(x + direction.Vector.x, y + direction.Vector.y);
+                    if(_coordinate.IsInDataArea(aroundVector.x, aroundVector.y))
+                    {
+                        if(map.GetSingleEntity<IEntity>(aroundVector.x, aroundVector.y) is {} aroundEntity)
+                        {
+                            tile.SetWallSprite(aroundEntity, direction);
+                        }
+                    }
+                }
                     
                 
                 if (map.GetAllTypeList(x, y).Count() != 0)

@@ -1,4 +1,6 @@
 ﻿#nullable enable
+using System.Collections.Generic;
+using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Interfaces;
 using DungeonCrawler.MapAssembly.Classes.Entity;
 using UnityEngine;
@@ -37,12 +39,10 @@ namespace DungeonCrawler.MapMonoAssembly
             
         }
         
-        public void SetWallSpite()
+        public void SetWallSprite(IEntity entity, DirectionEnum direction)
         {
-            foreach (var wallSpriteRenderer in wallSpriteRenderers)
-            {
-                wallSpriteRenderer.sprite = wallSprite;
-            }
+            var directionId = direction.Id;
+            wallSpriteRenderers[directionId].sprite = wallSprite;
         }
         
         public void SetDebugText(string text)
