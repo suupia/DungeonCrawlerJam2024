@@ -6,6 +6,7 @@ using DungeonCrawler.PlayerAssembly.Classes;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace  DungeonCrawler.PlayerMonoAssembly
 {
@@ -13,19 +14,19 @@ namespace  DungeonCrawler.PlayerMonoAssembly
     internal class PlayerController : MonoBehaviour
     {
         [Header("Movement Settings")]
-        [SerializeField] float _gridSize = 10;
-        [SerializeField] float _movementDuration = 0.1f;
-        [SerializeField] float _turnDuration = 0.1f;
-        [SerializeField] bool _instantTransition = false;
-
+        [SerializeField] float gridSize = 10;
+        [SerializeField] float movementDuration = 0.1f;
+        [SerializeField] float turnDuration = 0.1f;
+        [SerializeField] bool instantTransition = false;
+        
         [Header("References")]
-        [SerializeField] PlayerInput _playerInput;
+        [SerializeField] PlayerInput playerInput;
 
-        Queue<MovementAction> _movements;
-        [SerializeField] List<MovementAction> _movementView;
+        readonly Queue<MovementAction> _movements = new();
+        [SerializeField] List<MovementAction> movementView;
         MovementAction _currentMovement;
 
-        bool _inMotion = false;
+        bool _inMotion;
 
         InputAction _moveAction;
         InputAction _turnAction;
@@ -80,10 +81,10 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         {
             return action switch
             {
-                MovementAction.Left => transform.position + Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up) * new Vector3(0, 0, _gridSize),
-                MovementAction.Right => transform.position + Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up) * new Vector3(0, 0, -_gridSize),
-                MovementAction.Up => transform.position + Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up) * new Vector3(_gridSize, 0, 0),
-                MovementAction.Down => transform.position + Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up) * new Vector3(-_gridSize, 0, 0),
+                MovementAction.Left => transform.position + Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up) * new Vector3(0, 0, gridSize),
+                MovementAction.Right => transform.position + Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up) * new Vector3(0, 0, -gridSize),
+                MovementAction.Up => transform.position + Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up) * new Vector3(gridSize, 0, 0),
+                MovementAction.Down => transform.position + Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up) * new Vector3(-gridSize, 0, 0),
                 _ => transform.position,
             };
         }
@@ -103,7 +104,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
             Vector3 newPosition = GetNextPosition(action);
             Quaternion newRotation = GetNextRotation(action);
         
-            if (_instantTransition)
+            if (instantTransition)
             {
                 transform.position = newPosition;
                 transform.rotation = newRotation;
@@ -119,7 +120,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
                 _inMotion = true;
                 _animationMonoSystem.RequestAnimation(
                     this,
-                    _movementDuration,
+                    movementDuration,
                     (float progress) => MovementStep(transform.position, newPosition, progress),
                     () => MovementComplete()
                 );
@@ -132,14 +133,14 @@ namespace  DungeonCrawler.PlayerMonoAssembly
                 _inMotion = true;
                 _animationMonoSystem.RequestAnimation(
                     this,
-                    _turnDuration,
+                    turnDuration,
                     (float progress) => TurnStep(transform.rotation, newRotation, progress),
                     () => TurnComplete()
                 );
             }
         }
         
-        private void ProcessMovement()
+        void ProcessMovement()
         {
             if (_movements.Count > 0 && !_inMotion)
             {
@@ -150,14 +151,13 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         
         void Awake()
         {
-            if (_playerInput == null) _playerInput = GetComponent<PlayerInput>();
+            if (playerInput == null) playerInput = GetComponent<PlayerInput>();
             _animationMonoSystem = new AnimationMonoSystem();
 
-            _movements = new Queue<MovementAction>();
             _currentMovement = MovementAction.None;
         
-            _moveAction = _playerInput.actions["Movement"];
-            _turnAction = _playerInput.actions["Turn"];
+            _moveAction = playerInput.actions["Movement"];
+            _turnAction = playerInput.actions["Turn"];
         
             _moveAction.performed += e =>
             {
@@ -177,9 +177,9 @@ namespace  DungeonCrawler.PlayerMonoAssembly
             };
         }
         
-        private void FixedUpdate()
+        void FixedUpdate()
         {
-            _movementView = _movements.ToList();
+            movementView = _movements.ToList();
             ProcessMovement();
             _animationMonoSystem.Update();
         }
