@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections;
 using System.Collections.Generic;
+using DungeonCrawler.KeyMonoAssenbly;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Interfaces;
 using DungeonCrawler.PlayerAssembly.Interfaces;
@@ -15,19 +16,22 @@ namespace DungeonCrawler
         IPlayerSpawnerMonoSystem _playerSpawnerMonoSystem = null!;
         DungeonBuilder _dungeonBuilder = null!;
         EnemySpawnerMono _enemySpawnerMono = null!;
+        KeySpawnerMono _keySpawnerMono = null!;
         
         [Inject]
         public void Construct(
             IMapBuilderMonoSystem mapBuilderMonoSystem,
             IPlayerSpawnerMonoSystem playerSpawnerMonoSystem,
             DungeonBuilder dungeonBuilder,
-            EnemySpawnerMono enemySpawnerMono
+            EnemySpawnerMono enemySpawnerMono,
+            KeySpawnerMono keySpawnerMono
             )
         {
             _mapBuilderMonoSystem = mapBuilderMonoSystem;
             _playerSpawnerMonoSystem = playerSpawnerMonoSystem;
             _dungeonBuilder = dungeonBuilder;
             _enemySpawnerMono = enemySpawnerMono;
+            _keySpawnerMono = keySpawnerMono;
 
             SetUp();
         }
@@ -45,6 +49,10 @@ namespace DungeonCrawler
             // Spawn enemy
             var (enemySpawnX, enemySpawnY) = _dungeonBuilder.CalculateEnemySpawnPosition();
             _enemySpawnerMono.SpawnEnemy(enemySpawnX, enemySpawnY);
+            
+            // Spawn key
+            var (keySpawnX, keySpawnY) = _dungeonBuilder.CalculateKeySpawnPosition();
+            _keySpawnerMono.SpawnKey(keySpawnX, keySpawnY);
         }
     }
 }
