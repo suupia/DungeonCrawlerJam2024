@@ -38,6 +38,7 @@ namespace DungeonCrawler
             builder.Register<GridTilePlacer>(Lifetime.Scoped);
             builder.Register<DungeonSwitcher>(Lifetime.Scoped);
 
+            // Mono
             builder.RegisterComponentInHierarchy<MapBuilderMono>();
             builder.RegisterComponentInHierarchy<PlayerSpawnerMono>();
             builder.RegisterComponentInHierarchy<GameSystemInitializer>();
@@ -45,6 +46,9 @@ namespace DungeonCrawler
             builder.RegisterComponentInHierarchy<StairsSpawnerMono>();
             builder.RegisterComponentInHierarchy<StairsSpawnerMono>();
             builder.RegisterComponentInHierarchy<TorchSpawnerMono>();
+            
+            // UI Mono
+            builder.RegisterComponentInHierarchy<FloorUIMono>();
         }
     }
 }
