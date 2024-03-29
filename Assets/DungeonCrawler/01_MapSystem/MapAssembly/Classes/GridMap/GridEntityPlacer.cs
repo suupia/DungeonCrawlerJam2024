@@ -1,17 +1,21 @@
 ﻿#nullable enable
+using System.Linq;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes.Entity;
 using DungeonCrawler.MapAssembly.Interfaces;
+using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
 {
 
     public class GridEntityPlacer
     {
-        readonly IGridEntity _wall;
-        readonly IGridEntity _path;
-        readonly IGridEntity _room;
-        
+        readonly IGridTile _wall;
+        readonly IGridTile _path;
+        readonly IGridTile _room;
+        readonly IGridEntity _stairs;
+
         public GridEntityPlacer()
         {
             _wall = new CharacterWall();
@@ -19,17 +23,22 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             _room = new CharacterRoom();
         }
         
-        public DungeonGridMap PlaceEntities(DungeonGridMap dungeon)
+        public PlainDungeonGridMap PlaceEntities(PlainDungeonGridMap plainDungeon)
         {
-            dungeon = PlaceRooms(dungeon);
-            dungeon = PlacePath(dungeon);
-            dungeon = PlaceWall(dungeon);  // this should be last
-            return dungeon;
+            // Tiles
+            plainDungeon = PlaceRooms(plainDungeon);
+            plainDungeon = PlacePath(plainDungeon);
+            plainDungeon = PlaceWall(plainDungeon);  // this should be last
+            
+            // Entities
+            plainDungeon = PlaceStairs(plainDungeon);
+            
+            return plainDungeon;
         }
         
-        public DungeonGridMap PlaceRooms(DungeonGridMap dungeon)
+        PlainDungeonGridMap PlaceRooms(PlainDungeonGridMap plainDungeon)
         {
-            var areas = dungeon.Areas;  
+            var areas = plainDungeon.Areas;  
             foreach (var area in areas)
             {
                 var room = area.Room;
@@ -37,41 +46,55 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
                 {
                     for (int x = room.X; x < room.X + room.Width; x++)
                     {
-                        dungeon.Map.AddEntity(x, y, _room);
+                        plainDungeon.Map.AddEntity(x, y, _room);
                     }
                 }
             }
 
-            return dungeon;
+            return plainDungeon;
         }
         
-        public DungeonGridMap PlaceWall(DungeonGridMap dungeon)
+        PlainDungeonGridMap PlaceWall(PlainDungeonGridMap plainDungeon)
         {
-            for (int y = 0; y < dungeon.Map.Height; y++)
+            for (int y = 0; y < plainDungeon.Map.Height; y++)
             {
-                for (int x = 0; x < dungeon.Map.Width; x++)
+                for (int x = 0; x < plainDungeon.Map.Width; x++)
                 {
-                    if (dungeon.Map.GetSingleTypeList<IGridEntity>(x, y).Count == 0)
+                    if (plainDungeon.Map.GetSingleTypeList<IGridTile>(x, y).Count == 0)
                     {
-                        dungeon.Map.AddEntity(x,y, _wall);
+                        plainDungeon.Map.AddEntity(x,y, _wall);
                     }
                 }
             }
-            return dungeon;
+            return plainDungeon;
         }
         
-        public DungeonGridMap PlacePath(DungeonGridMap dungeon)
+        PlainDungeonGridMap PlacePath(PlainDungeonGridMap plainDungeon)
         {
-            var paths = dungeon.Paths;
+            var paths = plainDungeon.Paths;
             foreach (var path in paths)
             {
                 foreach (var (x, y) in path.Points)
                 {
-                    dungeon.Map.AddEntity(x, y, _path);
+                    plainDungeon.Map.AddEntity(x, y, _path);
                 }
             }
-            return dungeon;
+            return plainDungeon;
         }
+
+        PlainDungeonGridMap PlaceStairs(PlainDungeonGridMap plainDungeon)
+        {
+            var areas = plainDungeon.Areas;
+            Assert.IsTrue(areas.Count > 0);
+            Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
+            
+            var area = areas[Random.Range(0,areas.Count())];
+            var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
+            var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
+            plainDungeon.Map.AddEntity(spawnX, spawnY, _stairs);
+            return plainDungeon;
+        }
+        
 
     }
 }

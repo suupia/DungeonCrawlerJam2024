@@ -62,7 +62,7 @@ namespace DungeonCrawler.MapTestAssembly
             Debug.Log("CreateDungeonByStep");
             DestroyAllTiles();
             _map ??= new EntityGridMap(_coordinate);
-            var dungeon = new DungeonGridMap(_map, new List<Area>(), new List<Path>());
+            var dungeon = new PlainDungeonGridMap(_map, new List<Area>(), new List<Path>());
             _map = _dungeonBuilder.CreateDungeonByStep(dungeon).Map;
             UpdateSprites(_map);
         }
@@ -83,7 +83,7 @@ namespace DungeonCrawler.MapTestAssembly
                 var vector = _coordinate.ToVector(i);
                 var (x, y) = (vector.x, vector.y);
                 var tile = _pool[i];
-                if(map.GetSingleEntity<IGridEntity>(x,y) is {} entity)
+                if(map.GetSingleEntity<IGridTile>(x,y) is {} entity)
                 {
                     tile.SetSprite(entity);
                 }

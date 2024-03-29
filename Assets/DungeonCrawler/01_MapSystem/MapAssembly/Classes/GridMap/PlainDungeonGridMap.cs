@@ -4,7 +4,7 @@ using DungeonCrawler.MapAssembly.Interfaces;
 
 namespace DungeonCrawler.MapAssembly.Classes
 {
-    public class DungeonGridMap
+    public class PlainDungeonGridMap
     {
         public EntityGridMap Map => _map; // Aggregating and publishing in PUBLIC is a compromise.
         public IReadOnlyList<Area> Areas => _areas;
@@ -13,7 +13,7 @@ namespace DungeonCrawler.MapAssembly.Classes
         readonly List<Area> _areas;
         readonly List<Path> _paths;
 
-        public DungeonGridMap(
+        public PlainDungeonGridMap(
             EntityGridMap map,
             List<Area> areas,
             List<Path> paths)

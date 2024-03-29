@@ -6,8 +6,9 @@ namespace DungeonCrawler.MapAssembly.Classes
 {
     public class DungeonSwitcher
     {
-        public DungeonGridMap CurrentDungeon => _currentDungeon;
-        DungeonGridMap _currentDungeon;
+        public int Floor { get; private set; }
+        public PlainDungeonGridMap CurrentPlainDungeon => _currentPlainDungeon;
+        PlainDungeonGridMap _currentPlainDungeon;
         readonly DungeonBuilder _dungeonBuilder;
         
         public DungeonSwitcher(
@@ -17,11 +18,12 @@ namespace DungeonCrawler.MapAssembly.Classes
             _dungeonBuilder = dungeonBuilder;
         }
 
-        public DungeonGridMap SwitchNextDungeon()
+        public PlainDungeonGridMap SwitchNextDungeon()
         {
             Debug.Log("SwitchNextDungeon");
-            _currentDungeon = _dungeonBuilder.CreateDungeon();
-            return _currentDungeon;
+            _currentPlainDungeon = _dungeonBuilder.CreateDungeon();
+            Floor++;
+            return _currentPlainDungeon;
         }
     }
 }
