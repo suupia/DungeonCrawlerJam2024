@@ -8,6 +8,7 @@ using R3;
 using UnityEditor.Experimental.Licensing;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 using VContainer;
 
 namespace DungeonCrawler
