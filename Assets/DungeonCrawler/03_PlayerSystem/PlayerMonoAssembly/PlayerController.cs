@@ -39,7 +39,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         InputAction _turnAction;
         
         AnimationMonoSystem  _animationMonoSystem;
-
+        Player _player;
         DungeonSwitcher _dungeonSwitcher;
         
         public void Construct(
@@ -47,6 +47,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
             DungeonSwitcher dungeonSwitcher
         )
         {
+            _player = player;
             _dungeonSwitcher = dungeonSwitcher;
         }
         
@@ -153,29 +154,38 @@ namespace  DungeonCrawler.PlayerMonoAssembly
             });
         }
         
+        bool CanMove(MovementAction action)
+        {
+            Vector3 newPosition = GetNextPosition(action);
+            var(x,y) = GridConverter.WorldPositionToGridPosition(newPosition);
+            return _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<CharacterWall>(x,y) == null;
+        }
+        
         void Move(MovementAction action)
         {
             Vector3 newPosition = GetNextPosition(action);
             Quaternion newRotation = GetNextRotation(action);
 
-            var(x,y) = GridConverter.WorldPositionToGridPosition(newPosition);
-            if (_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<CharacterWall>(x,y) != null)
-            {
-                // Debug.Log("Move is cancelled because new position is wall");
-                return;
-            }
-            else if (_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<Stairs>(x,y) != null)
-            {
-                Debug.Log("Player is on stairs");
-            }
+            if (!CanMove(action)) return;
             
-            if (instantTransition)
-            {
-                transform.position = newPosition;
-                transform.rotation = newRotation;
-                _currentMovement = MovementAction.None;
-            }
-            else if (
+            var prePos = GridPosition;
+            var newPos = GridConverter.WorldPositionToGridPosition(newPosition);
+            MovePlayerEntity(prePos, newPos);
+            
+            MoveTransform(action, newPosition, newRotation);
+        }
+        
+        void MovePlayerEntity((int x, int y) prePos, (int x, int y) newPos)
+        {
+            var player = _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<Player>(prePos.x, prePos.y);
+            Assert.IsNotNull(player);
+            _dungeonSwitcher.CurrentDungeon.Map.RemoveEntity<Player>(prePos.x, prePos.y , player);
+            _dungeonSwitcher.CurrentDungeon.Map.AddEntity(newPos.x, newPos.y, player);
+        }
+        
+        void MoveTransform(MovementAction action, Vector3 newPosition, Quaternion newRotation)
+        {
+            if (
                 action == MovementAction.Right ||
                 action == MovementAction.Left ||
                 action == MovementAction.Up ||
@@ -204,6 +214,8 @@ namespace  DungeonCrawler.PlayerMonoAssembly
                 );
             }
         }
+
+
         
         void ProcessMovement()
         {
