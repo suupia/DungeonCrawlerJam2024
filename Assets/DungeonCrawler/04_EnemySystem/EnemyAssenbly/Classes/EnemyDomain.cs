@@ -7,18 +7,24 @@ namespace DungeonCrawler
 {
     public class EnemyDomain
     {
-        public int Hp;
+        public int MaxHp { get; private set; }
+        public int CurrentHp => MaxHp - DamagedReceived;
+        public int DamagedReceived { get; private set; }
+        public bool IsDead => DamagedReceived >= MaxHp;
         int _attack;
 
-        public EnemyDomain(int hp, int attack)
+        public EnemyDomain(int maxHp, int attack)
         {
-            Hp = hp;
+            MaxHp = maxHp;
             _attack = attack;
         }
-
+        public void OnAttacked(int damage)
+        {
+            DamagedReceived += damage;
+        }
         public void Attack(PlayerDomain target)
         {
-            // target.Hp -= _attack;
+            target.OnAttacked(_attack);
         }
     }
 }

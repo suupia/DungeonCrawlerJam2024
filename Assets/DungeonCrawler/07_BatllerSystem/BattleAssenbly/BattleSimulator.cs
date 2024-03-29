@@ -22,7 +22,7 @@ namespace DungeonCrawler
             // How should I do about SacredAttack()
             playerAttack.Attack(Enemy);
 
-            if (Enemy.Hp <= 0)
+            if (Enemy.IsDead)
             {
                 FinishBattle();
             }
@@ -36,7 +36,7 @@ namespace DungeonCrawler
                 FinishBattle();
             }
             
-            Debug.Log($"In Battle player._hp = {Player.CurrentHp}, enemy._hp = {Enemy.Hp}");
+            Debug.Log($"In Battle player._hp = {Player.CurrentHp}, enemy._hp = {Enemy.CurrentHp}");
         }
 
         void FinishBattle()

@@ -11,6 +11,9 @@ public class BattleUIOutputMono : MonoBehaviour
    [SerializeField] TextMeshProUGUI playerHpText = null!;
    [SerializeField] TextMeshProUGUI enemyHpText = null!;
    [SerializeField] TextMeshProUGUI enemyNameText = null!;
+   
+   [SerializeField] HpGaugeMono playerHpGauge = null!;
+   [SerializeField] HpGaugeMono enemyHpGauge = null!;
 
    BattleSimulator _battleSimulator;
    [Inject]
@@ -26,12 +29,14 @@ public class BattleUIOutputMono : MonoBehaviour
          .Subscribe(_ =>
          {
             playerHpText.text = $"Player HP: {_battleSimulator.Player.CurrentHp}";
+            playerHpGauge.FillRate((float)_battleSimulator.Player.CurrentHp/_battleSimulator.Player.MaxHp);
          });
 
-      Observable.EveryValueChanged(this, _ => _battleSimulator.Enemy.Hp)
+      Observable.EveryValueChanged(this, _ => _battleSimulator.Enemy.CurrentHp)
          .Subscribe(_ =>
          {
-            enemyHpText.text = $"Enemy HP: {_battleSimulator.Enemy.Hp}";
+            enemyHpText.text = $"Enemy HP: {_battleSimulator.Enemy.CurrentHp}";
+            enemyHpGauge.FillRate((float)_battleSimulator.Enemy.CurrentHp/_battleSimulator.Enemy.MaxHp);
             // enemyNameText.text = $"Enemy Name: {_battleSimulator.Enemy.Name}";
          });
    }

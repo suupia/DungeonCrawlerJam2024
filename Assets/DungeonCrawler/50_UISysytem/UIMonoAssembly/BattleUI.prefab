@@ -69,6 +69,8 @@ MonoBehaviour:
   playerHpText: {fileID: 7050468361961156608}
   enemyHpText: {fileID: 2970608072983636123}
   enemyNameText: {fileID: 9146860798161686020}
+  playerHpGauge: {fileID: 7034547019250159671}
+  enemyHpGauge: {fileID: 469557008418954421}
 --- !u!1 &1881198501905960610
 GameObject:
   m_ObjectHideFlags: 0
@@ -1589,6 +1591,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 759df5ddd9ec25e49808a6567b0204d5, type: 3}
+--- !u!114 &469557008418954421 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1215457854349100494, guid: 759df5ddd9ec25e49808a6567b0204d5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1610634889700612475}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7057ea241fa4347ab74d3dfae3eb14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1439825583671849009 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 405700392063805770, guid: 759df5ddd9ec25e49808a6567b0204d5,
@@ -1713,6 +1727,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 759df5ddd9ec25e49808a6567b0204d5, type: 3}
+--- !u!114 &7034547019250159671 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1215457854349100494, guid: 759df5ddd9ec25e49808a6567b0204d5,
+    type: 3}
+  m_PrefabInstance: {fileID: 8160970321338275321}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7057ea241fa4347ab74d3dfae3eb14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8421943644955393203 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 405700392063805770, guid: 759df5ddd9ec25e49808a6567b0204d5,

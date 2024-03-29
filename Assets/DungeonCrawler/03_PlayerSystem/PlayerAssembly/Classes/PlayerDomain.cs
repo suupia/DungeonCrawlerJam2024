@@ -17,7 +17,7 @@ namespace DungeonCrawler
             MaxHp = maxHp;
         }
         
-        public void ReceivedDamage(int damage)
+        public void OnAttacked(int damage)
         {
             DamagedReceived += damage;
         }
