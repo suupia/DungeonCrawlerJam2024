@@ -1,20 +1,23 @@
 ﻿#nullable enable
 using DungeonCrawler.MapAssembly.Classes;
+using DungeonCrawler.MapAssembly.Interfaces;
+using UnityEngine;
 
 namespace DungeonCrawler
 {
-    public class Stairs
+    public class Stairs: IGridEntity
     {
-        readonly MapSwitcher _mapSwitcher;
+        readonly DungeonSwitcher _dungeonSwitcher;
 
-        public Stairs(MapSwitcher mapSwitcher)
+        public Stairs(DungeonSwitcher dungeonSwitcher)
         {
-            _mapSwitcher = mapSwitcher;
+            _dungeonSwitcher = dungeonSwitcher;
         }
         
         public void StairsDown()
         {
-            _mapSwitcher.SwitchNextDungeon();
+            Debug.Log($"Stairs.StairsDown()");
+            _dungeonSwitcher.SwitchNextDungeon();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace DungeonCrawler.MapMonoAssembly
         readonly List<TileMono> _pool = new();
 
         IGridCoordinate _coordinate = null!;
-        MapSwitcher _mapSwitcher = null!;
+        DungeonSwitcher _dungeonSwitcher = null!;
             
         DivideAreaExecutor _divideAreaExecutor = null!;
         DungeonBuilder _dungeonBuilder = null!;
@@ -28,10 +28,10 @@ namespace DungeonCrawler.MapMonoAssembly
         [Inject]
         public void Construct(
             IGridCoordinate coordinate,
-            MapSwitcher mapSwitcher)
+            DungeonSwitcher dungeonSwitcher)
         {
             _coordinate = coordinate;
-            _mapSwitcher = mapSwitcher;
+            _dungeonSwitcher = dungeonSwitcher;
             
             for(int i = 0; i<_coordinate.Length ; i++)
             {
@@ -46,7 +46,7 @@ namespace DungeonCrawler.MapMonoAssembly
         {
             Debug.Log("SwitchNextDungeon");
             ResetAllTiles();
-            var nextMap = _mapSwitcher.SwitchNextDungeon();
+            var nextMap = _dungeonSwitcher.SwitchNextDungeon();
             UpdateSprites(nextMap);
         }
         void ResetAllTiles()
@@ -57,7 +57,7 @@ namespace DungeonCrawler.MapMonoAssembly
             }
         }
 
-        void UpdateSprites(EntityGridMap map)
+        void UpdateSprites(DungeonGridMap dungeon)
         {
             Debug.Log($"Length:{_coordinate.Length}");
             for(int i = 0; i<_coordinate.Length ; i++)
@@ -65,7 +65,7 @@ namespace DungeonCrawler.MapMonoAssembly
                 var vector = _coordinate.ToVector(i);
                 var (x, y) = (vector.x, vector.y);
                 var tile = _pool[i];
-                if(map.GetSingleEntity<IEntity>(x,y) is {} entity)
+                if(dungeon.Map.GetSingleEntity<IGridEntity>(x,y) is {} entity)
                 {
                     tile.SetFloorSprite(entity);
                 }
@@ -75,7 +75,7 @@ namespace DungeonCrawler.MapMonoAssembly
                     var aroundVector = new Vector2Int(x + direction.Vector.x, y + direction.Vector.y);
                     if(_coordinate.IsInDataArea(aroundVector.x, aroundVector.y))
                     {
-                        if(map.GetSingleEntity<IEntity>(aroundVector.x, aroundVector.y) is {} aroundEntity)
+                        if(dungeon.Map.GetSingleEntity<IGridEntity>(aroundVector.x, aroundVector.y) is {} aroundEntity)
                         {
                             tile.SetWallSprite(aroundEntity, direction);
                         }
@@ -83,10 +83,10 @@ namespace DungeonCrawler.MapMonoAssembly
                 }
                     
                 
-                if (map.GetAllTypeList(x, y).Count() != 0)
+                if (dungeon.Map.GetAllTypeList(x, y).Count() != 0)
                 {
                     string result = "";
-                    var allEntityList = map.GetAllTypeList(x, y).ToList();
+                    var allEntityList = dungeon.Map.GetAllTypeList(x, y).ToList();
                     foreach (var entity1 in allEntityList)
                     {
                         int count = allEntityList.Count(e => e.ToString() == entity1.ToString());

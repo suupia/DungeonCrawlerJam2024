@@ -17,6 +17,7 @@ namespace DungeonCrawler
         EnemySpawnerMono _enemySpawnerMono = null!;
         StairsSpawnerMono _stairsSpawnerMono = null!;
         TorchSpawnerMono _torchSpawnerMono = null!;
+        DungeonSwitcher _dungeonSwitcher = null!;
         
         [Inject]
         public void Construct(
@@ -25,7 +26,8 @@ namespace DungeonCrawler
             DungeonBuilder dungeonBuilder,
             EnemySpawnerMono enemySpawnerMono,
             StairsSpawnerMono stairsSpawnerMono,
-            TorchSpawnerMono torchSpawnerMono
+            TorchSpawnerMono torchSpawnerMono,
+            DungeonSwitcher dungeonSwitcher
             )
         {
             _mapBuilderMono = mapBuilderMono;
@@ -34,6 +36,7 @@ namespace DungeonCrawler
             _enemySpawnerMono = enemySpawnerMono;
             _stairsSpawnerMono = stairsSpawnerMono;
             _torchSpawnerMono = torchSpawnerMono;
+            _dungeonSwitcher = dungeonSwitcher;
 
             SetUp();
         }
@@ -45,19 +48,19 @@ namespace DungeonCrawler
             _mapBuilderMono.SwitchNextDungeon();
             
             // Spawn player
-            var (spawnX, spawnY) = _dungeonBuilder.CalculatePlayerSpawnPosition();
+            var (spawnX, spawnY) = _dungeonBuilder.CalculatePlayerSpawnPosition(_dungeonSwitcher.CurrentDungeon);
             _playerSpawnerMono.SpawnPlayer(spawnX, spawnY);
             
             // Spawn enemy
-            var (enemySpawnX, enemySpawnY) = _dungeonBuilder.CalculateEnemySpawnPosition();
+            var (enemySpawnX, enemySpawnY) = _dungeonBuilder.CalculateEnemySpawnPosition(_dungeonSwitcher.CurrentDungeon);
             _enemySpawnerMono.SpawnEnemy(enemySpawnX, enemySpawnY);
             
             // Spawn key
-            var (keySpawnX, keySpawnY) = _dungeonBuilder.CalculateKeySpawnPosition();
+            var (keySpawnX, keySpawnY) = _dungeonBuilder.CalculateKeySpawnPosition(_dungeonSwitcher.CurrentDungeon);
             _stairsSpawnerMono.SpawnStairs(keySpawnX, keySpawnY);
             
             // Spawn Torch
-            var (torchSpawnX, torchSpawnY) = _dungeonBuilder.CalculateTorchSpawnPosition();
+            var (torchSpawnX, torchSpawnY) = _dungeonBuilder.CalculateTorchSpawnPosition(_dungeonSwitcher.CurrentDungeon);
             _torchSpawnerMono.SpawnTorch(torchSpawnX, torchSpawnY);
         }
     }
