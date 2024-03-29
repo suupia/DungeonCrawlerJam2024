@@ -6,8 +6,8 @@ namespace DungeonCrawler.MapAssembly.Classes
 {
     public class MapSwitcher
     {
-        public EntityGridMap CurrentMap => _currentMap;
-        EntityGridMap _currentMap;
+        public DungeonGridMap CurrentDungeon => _currentDungeon;
+        DungeonGridMap _currentDungeon;
         readonly IGridCoordinate _coordinate;
         readonly DungeonBuilder _dungeonBuilder;
         readonly DivideAreaExecutor _divideAreaExecutor;
@@ -22,12 +22,12 @@ namespace DungeonCrawler.MapAssembly.Classes
             _dungeonBuilder = dungeonBuilder;
         }
 
-        public EntityGridMap SwitchNextDungeon()
+        public DungeonGridMap SwitchNextDungeon()
         {
             Debug.Log("SwitchNextDungeon");
             var nextMap = new EntityGridMap(_coordinate);
-            _currentMap = _dungeonBuilder.CreateDungeon(nextMap);
-            return _currentMap;
+            _currentDungeon = _dungeonBuilder.CreateDungeon(nextMap);
+            return _currentDungeon;
         }
     }
 }

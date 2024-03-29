@@ -34,15 +34,14 @@ namespace DungeonCrawler.MapAssembly.Classes
         }
 
         
-        public EntityGridMap CreateDungeon(EntityGridMap map)
+        public DungeonGridMap CreateDungeon(EntityGridMap map)
         {
             for(int i = 0; i < DivideCount; i++)
             {
                 map = CreateDungeonByStep(map);
             }
-
             _divideCount = 0;
-            return map;
+            return new DungeonGridMap(map, _areas, new List<Path>());
         }
         
         public EntityGridMap CreateDungeonByStep(EntityGridMap map)

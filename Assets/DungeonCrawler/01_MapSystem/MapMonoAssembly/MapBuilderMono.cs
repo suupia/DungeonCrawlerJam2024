@@ -57,7 +57,7 @@ namespace DungeonCrawler.MapMonoAssembly
             }
         }
 
-        void UpdateSprites(EntityGridMap map)
+        void UpdateSprites(DungeonGridMap dungeon)
         {
             Debug.Log($"Length:{_coordinate.Length}");
             for(int i = 0; i<_coordinate.Length ; i++)
@@ -65,7 +65,7 @@ namespace DungeonCrawler.MapMonoAssembly
                 var vector = _coordinate.ToVector(i);
                 var (x, y) = (vector.x, vector.y);
                 var tile = _pool[i];
-                if(map.GetSingleEntity<IGridEntity>(x,y) is {} entity)
+                if(dungeon.GridMap.GetSingleEntity<IGridEntity>(x,y) is {} entity)
                 {
                     tile.SetFloorSprite(entity);
                 }
@@ -75,7 +75,7 @@ namespace DungeonCrawler.MapMonoAssembly
                     var aroundVector = new Vector2Int(x + direction.Vector.x, y + direction.Vector.y);
                     if(_coordinate.IsInDataArea(aroundVector.x, aroundVector.y))
                     {
-                        if(map.GetSingleEntity<IGridEntity>(aroundVector.x, aroundVector.y) is {} aroundEntity)
+                        if(dungeon.GridMap.GetSingleEntity<IGridEntity>(aroundVector.x, aroundVector.y) is {} aroundEntity)
                         {
                             tile.SetWallSprite(aroundEntity, direction);
                         }
@@ -83,10 +83,10 @@ namespace DungeonCrawler.MapMonoAssembly
                 }
                     
                 
-                if (map.GetAllTypeList(x, y).Count() != 0)
+                if (dungeon.GridMap.GetAllTypeList(x, y).Count() != 0)
                 {
                     string result = "";
-                    var allEntityList = map.GetAllTypeList(x, y).ToList();
+                    var allEntityList = dungeon.GridMap.GetAllTypeList(x, y).ToList();
                     foreach (var entity1 in allEntityList)
                     {
                         int count = allEntityList.Count(e => e.ToString() == entity1.ToString());
