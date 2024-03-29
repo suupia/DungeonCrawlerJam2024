@@ -29,6 +29,11 @@ namespace DungeonCrawler
             { GameStateEnum.Battling, new() { GameStateEnum.Exploring, GameStateEnum.InSettings}},
             { GameStateEnum.InSettings, new() {GameStateEnum.AtTitle, GameStateEnum.Exploring, GameStateEnum.Battling}},
         };
+        
+        public void EnterExploring()
+        {
+            ChangeState(GameStateEnum.Exploring);
+        }
 
         public bool IsInBattle()
         {
@@ -39,7 +44,7 @@ namespace DungeonCrawler
         {
             Debug.Log($"gameState = {_gameState}    ");
 
-            if(_gameState != GameStateEnum.Exploring) return;
+            if(_gameState == GameStateEnum.Battling) return;
             ChangeState(GameStateEnum.Battling);
         }
         
