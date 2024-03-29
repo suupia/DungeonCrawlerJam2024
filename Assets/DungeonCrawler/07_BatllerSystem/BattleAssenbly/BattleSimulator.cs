@@ -19,7 +19,6 @@ namespace DungeonCrawler
         
         public void UpdateTurn(IPlayerAttack playerAttack)
         {
-            // How should I do about SacredAttack()
             playerAttack.Attack(Enemy);
 
             if (Enemy.IsDead)

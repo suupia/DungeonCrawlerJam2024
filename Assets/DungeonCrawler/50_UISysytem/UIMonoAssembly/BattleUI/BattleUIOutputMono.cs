@@ -8,7 +8,10 @@ using VContainer;
 
 public class BattleUIOutputMono : MonoBehaviour
 {
+   // Player
    [SerializeField] TextMeshProUGUI playerHpText = null!;
+   [SerializeField] TextMeshProUGUI playerAttackText = null!;
+   // Enemy
    [SerializeField] TextMeshProUGUI enemyHpText = null!;
    [SerializeField] TextMeshProUGUI enemyNameText = null!;
    

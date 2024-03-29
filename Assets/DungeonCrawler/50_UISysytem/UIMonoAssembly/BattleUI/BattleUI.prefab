@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHpText: {fileID: 7050468361961156608}
+  playerAttackText: {fileID: 0}
   enemyHpText: {fileID: 2970608072983636123}
   enemyNameText: {fileID: 9146860798161686020}
   playerHpGauge: {fileID: 7034547019250159671}
@@ -552,7 +553,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5641930016151372369
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1028,9 +1029,9 @@ RectTransform:
   - {fileID: 6992178756498754992}
   m_Father: {fileID: 5207548200409468587}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 123.897156, y: -39.04825}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4215240624210077059
@@ -1162,9 +1163,9 @@ RectTransform:
   - {fileID: 4917413212091044166}
   m_Father: {fileID: 5207548200409468587}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 123.897156, y: -117.144745}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6670460600470600411
