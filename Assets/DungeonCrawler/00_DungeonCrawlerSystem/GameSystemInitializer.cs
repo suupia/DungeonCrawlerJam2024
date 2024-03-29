@@ -16,6 +16,7 @@ namespace DungeonCrawler
         DungeonBuilder _dungeonBuilder = null!;
         EnemySpawnerMono _enemySpawnerMono = null!;
         StairsSpawnerMono _stairsSpawnerMono = null!;
+        TorchSpawnerMono _torchSpawnerMono = null!;
         
         [Inject]
         public void Construct(
@@ -23,7 +24,8 @@ namespace DungeonCrawler
             IPlayerSpawnerMono playerSpawnerMono,
             DungeonBuilder dungeonBuilder,
             EnemySpawnerMono enemySpawnerMono,
-            StairsSpawnerMono stairsSpawnerMono
+            StairsSpawnerMono stairsSpawnerMono,
+            TorchSpawnerMono torchSpawnerMono
             )
         {
             _mapBuilderMono = mapBuilderMono;
@@ -31,6 +33,7 @@ namespace DungeonCrawler
             _dungeonBuilder = dungeonBuilder;
             _enemySpawnerMono = enemySpawnerMono;
             _stairsSpawnerMono = stairsSpawnerMono;
+            _torchSpawnerMono = torchSpawnerMono;
 
             SetUp();
         }
@@ -52,6 +55,10 @@ namespace DungeonCrawler
             // Spawn key
             var (keySpawnX, keySpawnY) = _dungeonBuilder.CalculateKeySpawnPosition();
             _stairsSpawnerMono.SpawnStairs(keySpawnX, keySpawnY);
+            
+            // Spawn Torch
+            var (torchSpawnX, torchSpawnY) = _dungeonBuilder.CalculateTorchSpawnPosition();
+            _torchSpawnerMono.SpawnTorch(torchSpawnX, torchSpawnY);
         }
     }
 }

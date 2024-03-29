@@ -35,6 +35,7 @@ namespace DungeonCrawler
             builder.RegisterComponentInHierarchy<StairsSpawnerMono>();
             builder.RegisterComponentInHierarchy<PlayerController>();
             builder.RegisterComponentInHierarchy<StairsSpawnerMono>();
+            builder.RegisterComponentInHierarchy<TorchSpawnerMono>();
         }
     }
 }
