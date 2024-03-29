@@ -8,10 +8,12 @@ public class BattleUI : MonoBehaviour
     
     public void Show()
     {
+        Debug.Log("BattleUI.Show()");
         view.SetActive(true);
     }
     public void Hide()
     {
+        Debug.Log("BattleUI.Hide()");
         view.SetActive(false);
     }
 }

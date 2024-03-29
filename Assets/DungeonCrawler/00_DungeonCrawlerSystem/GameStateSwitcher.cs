@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace DungeonCrawler
@@ -22,7 +23,7 @@ namespace DungeonCrawler
         
         Dictionary<GameStateEnum, List<GameStateEnum>> _stateTransitionMap = new() // (Current State) -> (List of Possible Transition States)
         {
-            { GameStateEnum.None, new() { GameStateEnum.AtTitle}},
+            { GameStateEnum.None, new() { GameStateEnum.None, GameStateEnum.AtTitle,GameStateEnum.Exploring, GameStateEnum.Battling, GameStateEnum.InSettings}}, 
             { GameStateEnum.AtTitle, new() { GameStateEnum.Exploring, GameStateEnum.InSettings}},
             { GameStateEnum.Exploring, new() { GameStateEnum.Battling, GameStateEnum.InSettings}},
             { GameStateEnum.Battling, new() { GameStateEnum.Exploring, GameStateEnum.InSettings}},
@@ -36,6 +37,9 @@ namespace DungeonCrawler
         
         public void EnterBattling()
         {
+            Debug.Log($"gameState = {_gameState}    ");
+
+            if(_gameState != GameStateEnum.Exploring) return;
             ChangeState(GameStateEnum.Battling);
         }
         
