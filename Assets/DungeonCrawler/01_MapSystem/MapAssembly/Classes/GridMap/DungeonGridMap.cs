@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using Codice.Client.BaseCommands.BranchExplorer.ExplorerData;
 using DungeonCrawler.MapAssembly.Classes;
 
 namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap
@@ -13,7 +14,8 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap
         
         public (int x, int y) StairsPosition { get; set; }
         public (int x, int y) EnemyPosition { get; set; }
-        
+        public IReadOnlyList<(int x, int y)> TorchPositions { get; set; }
+
         public DungeonGridMap(PlainDungeonGridMap plainDungeon)
         {
             _plainDungeon = plainDungeon;
