@@ -4,5 +4,10 @@ using UnityEngine;
 
 public class UISwitcherMono : MonoBehaviour
 {
-    // [SerializeField] BattleUI
+    [SerializeField] BattleUI battleUI;
+    
+    void Start()
+    {
+        battleUI.Hide();
+    }
 }

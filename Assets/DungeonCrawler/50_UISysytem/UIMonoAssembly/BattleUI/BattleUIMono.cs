@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class BattleUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] GameObject view;
+    
+    public void Show()
     {
-        
+        view.SetActive(true);
     }
-
-    // Update is called once per frame
-    void Update()
+    public void Hide()
     {
-        
+        view.SetActive(false);
     }
 }

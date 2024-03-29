@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5559803249997081984}
   - component: {fileID: 8276186429999226951}
   - component: {fileID: 6616254387313292952}
+  - component: {fileID: 7409177395498525559}
   m_Layer: 5
   m_Name: BattleUI
   m_TagString: Untagged
@@ -72,6 +73,19 @@ MonoBehaviour:
   enemyNameText: {fileID: 9146860798161686020}
   playerHpGauge: {fileID: 7034547019250159671}
   enemyHpGauge: {fileID: 469557008418954421}
+--- !u!114 &7409177395498525559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442015705190446963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c9428a6292984408e9573eaa64b68f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  view: {fileID: 4981503667429883465}
 --- !u!1 &1881198501905960610
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,7 +567,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5641930016151372369
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1029,9 +1043,9 @@ RectTransform:
   - {fileID: 6992178756498754992}
   m_Father: {fileID: 5207548200409468587}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 123.897156, y: -39.04825}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4215240624210077059
@@ -1163,9 +1177,9 @@ RectTransform:
   - {fileID: 4917413212091044166}
   m_Father: {fileID: 5207548200409468587}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 123.897156, y: -117.144745}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6670460600470600411
