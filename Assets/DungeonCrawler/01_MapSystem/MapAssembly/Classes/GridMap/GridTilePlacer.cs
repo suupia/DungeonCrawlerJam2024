@@ -23,20 +23,17 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
         
         [Inject]
         public GridTilePlacer(
-            CharacterWall wall,
-            CharacterPath path,
-            CharacterRoom room,
             GridEntityFactory entityFactory
             
         )
         {
-            _wall = wall;
-            _path = path;
-            _room = room;
+            _wall = new CharacterWall();
+            _path = new CharacterPath();
+            _room = new CharacterRoom();
             _entityFactory = entityFactory;
         }
 
-        public DungeonGridMap PlaceEntities(PlainDungeonGridMap plainDungeon)
+        public DungeonGridMap PlaceEntities(PlainDungeonGridMap plainDungeon , DungeonSwitcher dungeonSwitcher)
         {
             var dungeon = new DungeonGridMap(plainDungeon);
             // Tiles
@@ -45,8 +42,8 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             dungeon = PlaceWall(dungeon); // this should be last
 
             // Entities
-            dungeon = PlaceStairs(dungeon);
-            dungeon = PlaceEnemies(dungeon);
+            dungeon = PlaceStairs(dungeon, dungeonSwitcher);
+            dungeon = PlaceEnemies(dungeon, dungeonSwitcher);
             dungeon = PlaceTorches(dungeon);
 
             return dungeon;
@@ -100,7 +97,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             return dungeon;
         }
 
-        DungeonGridMap PlaceStairs(DungeonGridMap dungeon)
+        DungeonGridMap PlaceStairs(DungeonGridMap dungeon, DungeonSwitcher dungeonSwitcher)
         {
             var areas = dungeon.Areas;
             Assert.IsTrue(areas.Count > 0);
@@ -109,12 +106,12 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             var area = areas[Random.Range(0, areas.Count())];
             var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
-            dungeon.Map.AddEntity(spawnX, spawnY, _entityFactory.CreateEntity<Stairs>());
+            dungeon.Map.AddEntity(spawnX, spawnY, _entityFactory.CreateEntity<Stairs>(dungeonSwitcher));
             dungeon.StairsPosition = (spawnX, spawnY);
             return dungeon;
         }
 
-        DungeonGridMap PlaceEnemies(DungeonGridMap dungeon)
+        DungeonGridMap PlaceEnemies(DungeonGridMap dungeon, DungeonSwitcher dungeonSwitcher)
         {
             // [pre-condition] _areas should not be empty
             var areas = dungeon.Areas;
@@ -124,7 +121,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             var area = areas[Random.Range(0, areas.Count())];
             var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
-            dungeon.Map.AddEntity(spawnX, spawnY, _entityFactory.CreateEntity<Enemy>());
+            dungeon.Map.AddEntity(spawnX, spawnY, _entityFactory.CreateEntity<Enemy>(dungeonSwitcher));
             dungeon.EnemyPosition = (spawnX, spawnY);
             return dungeon;
         }

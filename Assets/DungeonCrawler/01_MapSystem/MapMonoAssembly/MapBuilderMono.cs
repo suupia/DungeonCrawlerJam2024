@@ -7,6 +7,7 @@ using DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap;
 using DungeonCrawler.MapAssembly.Interfaces;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes.Entity;
+using R3;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -14,7 +15,7 @@ using VContainer;
 
 namespace DungeonCrawler.MapMonoAssembly
 {
-    public class MapBuilderMono : MonoBehaviour, IMapBuilderMono
+    public class MapBuilderMono : MonoBehaviour
     {
         [SerializeField] TileMono tilePrefab = null!;
 
@@ -43,7 +44,16 @@ namespace DungeonCrawler.MapMonoAssembly
             }
         }
 
-        public void SwitchNextDungeon()
+        void SetUp()
+        {
+            Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
+                .Subscribe(_ =>
+                {
+                    SwitchNextDungeon();
+                }); 
+        }
+
+        void SwitchNextDungeon()
         {
             Debug.Log("SwitchNextDungeon");
             ResetAllTiles();

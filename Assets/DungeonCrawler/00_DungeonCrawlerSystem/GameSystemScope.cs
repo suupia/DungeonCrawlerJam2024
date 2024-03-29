@@ -37,8 +37,8 @@ namespace DungeonCrawler
             builder.Register<DefaultDungeonGridMap>(Lifetime.Scoped);
             builder.Register<GridTilePlacer>(Lifetime.Scoped);
             builder.Register<DungeonSwitcher>(Lifetime.Scoped);
-            
-            builder.RegisterComponentInHierarchy<MapBuilderMono>().As<IMapBuilderMono>();
+
+            builder.RegisterComponentInHierarchy<MapBuilderMono>();
             builder.RegisterComponentInHierarchy<PlayerSpawnerMono>().As<IPlayerSpawnerMono>();
             builder.RegisterComponentInHierarchy<GameSystemInitializer>();
             builder.RegisterComponentInHierarchy<EnemySpawnerMono>();

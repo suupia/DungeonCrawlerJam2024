@@ -9,18 +9,11 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap
 {
     public class GridEntityFactory
     {
-        readonly DungeonSwitcher _dungeonSwitcher;
-        [Inject]
-        public GridEntityFactory(DungeonSwitcher dungeonSwitcher)
-        {
-            _dungeonSwitcher = dungeonSwitcher;
-        }
-        
-        public IGridEntity CreateEntity<TEntity> () where  TEntity : IGridEntity
+        public IGridEntity CreateEntity<TEntity> (DungeonSwitcher dungeonSwitcher) where  TEntity : IGridEntity
         {
             if (typeof(TEntity) == typeof(Stairs))
             {
-                return new Stairs(_dungeonSwitcher);
+                return new Stairs(dungeonSwitcher);
             }
             if (typeof(TEntity) == typeof(Enemy))
             {

@@ -7,6 +7,7 @@ using DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap;
 using DungeonCrawler.MapAssembly.Classes.Entity;
 using DungeonCrawler.MapAssembly.Interfaces;
 using DungeonCrawler.MapAssembly.Classes;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Random = UnityEngine.Random;
@@ -32,7 +33,7 @@ namespace DungeonCrawler.MapAssembly.Classes
         }
 
         
-        public DungeonGridMap CreateDungeon()
+        public PlainDungeonGridMap CreateDungeon()
         {
             var map = new EntityGridMap(_coordinate);
             var plainDungeon = new PlainDungeonGridMap(map,new List<Area>(), new List<Path>());
@@ -40,8 +41,7 @@ namespace DungeonCrawler.MapAssembly.Classes
             {
                 plainDungeon = CreateDungeonByStep(plainDungeon);
             }
-            var dungeon = _gridTilePlacer.PlaceEntities(plainDungeon);
-            return dungeon;
+            return plainDungeon;
         }
         
         public PlainDungeonGridMap CreateDungeonByStep(PlainDungeonGridMap plainDungeon)

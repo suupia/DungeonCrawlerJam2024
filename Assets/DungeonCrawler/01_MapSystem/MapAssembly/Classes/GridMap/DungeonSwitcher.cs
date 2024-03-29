@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using DungeonCrawler._01_MapSystem.MapAssembly.Classes;
 using DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap;
 using DungeonCrawler.MapAssembly.Interfaces;
@@ -12,21 +13,25 @@ namespace DungeonCrawler.MapAssembly.Classes
         public DungeonGridMap CurrentDungeon => _currentDungeon ?? _defaultDungeonGridMap;
         DungeonGridMap? _currentDungeon;
         readonly DungeonBuilder _dungeonBuilder;
+        readonly GridTilePlacer _gridTilePlacer;
         readonly DefaultDungeonGridMap _defaultDungeonGridMap;
         
         public DungeonSwitcher(
             DungeonBuilder dungeonBuilder,
-            DefaultDungeonGridMap defaultDungeonGridMap
+            DefaultDungeonGridMap defaultDungeonGridMap,
+            GridTilePlacer gridTilePlacer
             )
         {
             _dungeonBuilder = dungeonBuilder;
             _defaultDungeonGridMap = defaultDungeonGridMap;
+            _gridTilePlacer = gridTilePlacer;
         }
 
         public DungeonGridMap SwitchNextDungeon()
         {
             Debug.Log("SwitchNextDungeon");
-            _currentDungeon = _dungeonBuilder.CreateDungeon();
+            var nextPlainDungeon = _dungeonBuilder.CreateDungeon();
+            _currentDungeon = _gridTilePlacer.PlaceEntities(nextPlainDungeon, this);
             Floor++;
             return _currentDungeon;
         }
