@@ -18,7 +18,6 @@ namespace DungeonCrawler.MapMonoAssembly
     public class MapBuilderMono : MonoBehaviour
     {
         [SerializeField] TileMono tilePrefab = null!;
-        [SerializeField] MiniMapManagerMono _miniMapManagerMono;
         readonly List<TileMono> _pool = new();
 
         IGridCoordinate _coordinate = null!;
@@ -56,8 +55,6 @@ namespace DungeonCrawler.MapMonoAssembly
             Debug.Log("SwitchNextDungeon");
             var nextMap = _dungeonSwitcher.SwitchNextDungeon();
             UpdateSprites(nextMap);
-            
-            _miniMapManagerMono.InitMiniMap(nextMap.Map);
         }
         void ResetAllTiles()
         {

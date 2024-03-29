@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Interfaces;
+using R3;
 using UnityEditor.Experimental.Licensing;
 using UnityEngine;
+using VContainer;
 
 namespace DungeonCrawler
 {
@@ -18,10 +20,26 @@ namespace DungeonCrawler
         Vector3 _offset = new Vector3(100, 100, 100);
         Quaternion _rotateOffset = Quaternion.AngleAxis(90, new Vector3(1, 0, 0));
 
+        DungeonSwitcher _dungeonSwitcher;
+        
+        [Inject]
+        public void Construct(
+            DungeonSwitcher dungeonSwitcher)
+        {
+            _dungeonSwitcher = dungeonSwitcher;
+            
+            SetUp();
+        }
 
-        void Start()
+        void SetUp()
         {
             Instantiate(cameraPrefab, _offset, Quaternion.identity);
+            
+            Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
+                .Subscribe(_ =>
+                {
+                    InitMiniMap(_dungeonSwitcher.CurrentDungeon.Map);
+                });
         }
 
         void InstantiateShortageTiles(EntityGridMap entityGridMap)

@@ -51,6 +51,7 @@ namespace DungeonCrawler
             builder.RegisterComponentInHierarchy<StairsSpawnerMono>();
             builder.RegisterComponentInHierarchy<StairsSpawnerMono>();
             builder.RegisterComponentInHierarchy<TorchSpawnerMono>();
+            builder.RegisterComponentInHierarchy<MiniMapManagerMono>();
             
             // UI Mono
             builder.RegisterComponentInHierarchy<FloorUIMono>();
