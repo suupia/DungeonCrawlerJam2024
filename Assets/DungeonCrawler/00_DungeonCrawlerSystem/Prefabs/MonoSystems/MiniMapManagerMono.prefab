@@ -44,3 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84cf753b3f88bf04496dd93373573020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _miniMapTileMono: {fileID: 7819288447702455465, guid: 2824d1071f9ac1f47b95706d378708bb,
+    type: 3}
+  cameraPrefab: {fileID: -3842098117955406027, guid: f3cf5f94e9e937244b8c669c1340dd6f,
+    type: 3}

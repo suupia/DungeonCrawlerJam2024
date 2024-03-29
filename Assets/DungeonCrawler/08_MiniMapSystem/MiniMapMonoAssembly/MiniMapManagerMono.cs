@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DungeonCrawler.MapAssembly.Classes;
@@ -10,17 +11,60 @@ namespace DungeonCrawler
     public class MiniMapManagerMono : MonoBehaviour
     {
         [SerializeField] MiniMapTileMono _miniMapTileMono;
-        List<MiniMapTileMono> _miniMapTileMonos;
+        [SerializeField] Camera cameraPrefab;
+        
+        List<MiniMapTileMono> _backgroundTiles;
+
+        Vector3 _offset = new Vector3(100, 100, 100);
+        Quaternion _rotateOffset = Quaternion.AngleAxis(90, new Vector3(1, 0, 0));
+
+
+        void Start()
+        {
+            Instantiate(cameraPrefab, _offset, Quaternion.identity);
+        }
+
+        void InstantiateShortageTiles(EntityGridMap entityGridMap)
+        {
+            var shortage = entityGridMap.Length - _backgroundTiles.Count;
+            for(int i = 0; i<shortage; i++)
+            {
+                var vector = entityGridMap.ToVector(i);
+                // 座標は適切に変換する
+                var tile = Instantiate(_miniMapTileMono, GridConverter.GridPositionToWorldPosition(vector) + _offset, _rotateOffset);
+                // こっちも？
+                tile.transform.localScale = new Vector3(GridConverter.GridSize, GridConverter.GridSize, GridConverter.GridSize);
+                
+                _backgroundTiles.Add(tile);
+            }
+        }
+
+        void ResetAllTIiles()
+        {
+            foreach (var tile in _backgroundTiles)
+            {
+                tile.ResetSprite();
+            }
+        }
 
         public void InitMiniMap(EntityGridMap entityGridMap)
         {
-            for (int index = 0; i < entityGridMap.Length; i++)
+            ResetAllTIiles();
+            InstantiateShortageTiles(entityGridMap);
+            Debug.Log($"Mini map background tiles num = {_backgroundTiles.Count}");
+            for (int i = 0; i < entityGridMap.Length; i++)
             {
-                var entities = entityGridMap.GetAllTypeList(index);
+                var gridObjects = entityGridMap.GetAllTypeList(i);
 
-                foreach (var entity in entities)
+                foreach (var obj in gridObjects)
                 {
-                    
+                    if (obj is IGridEntity)
+                    {
+                    }
+                    else
+                    {
+                        _backgroundTiles[i].SetTileSprite(obj);
+                    }
                 }
             }
         }
