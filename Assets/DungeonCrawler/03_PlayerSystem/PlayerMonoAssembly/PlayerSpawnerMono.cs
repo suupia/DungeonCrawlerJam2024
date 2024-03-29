@@ -28,7 +28,7 @@ namespace DungeonCrawler.PlayerMonoAssembly
                 .Subscribe(_ =>
                 {
                     if(_playerController != null) Destroy(_playerController.gameObject);
-                    var(x,y) = _dungeonSwitcher.CurrentDungeon.EnemyPosition;
+                    var(x,y) = _dungeonSwitcher.CurrentDungeon.PlayerPosition;
                     SpawnPlayer(x,y);
                 }); 
         }
