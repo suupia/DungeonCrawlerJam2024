@@ -62,7 +62,8 @@ namespace DungeonCrawler.MapTestAssembly
             Debug.Log("CreateDungeonByStep");
             DestroyAllTiles();
             _map ??= new EntityGridMap(_coordinate);
-            _map = _dungeonBuilder.CreateDungeonByStep(_map);
+            var dungeon = new DungeonGridMap(_map, new List<Area>(), new List<Path>());
+            _map = _dungeonBuilder.CreateDungeonByStep(dungeon).Map;
             UpdateSprites(_map);
         }
 

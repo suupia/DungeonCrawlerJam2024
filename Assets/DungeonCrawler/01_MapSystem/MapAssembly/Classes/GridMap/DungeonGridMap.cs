@@ -6,7 +6,7 @@ namespace DungeonCrawler.MapAssembly.Classes
 {
     public class DungeonGridMap
     {
-        public EntityGridMap GridMap => _map; // Aggregating and publishing in PUBLIC is a compromise.
+        public EntityGridMap Map => _map; // Aggregating and publishing in PUBLIC is a compromise.
         public IReadOnlyList<Area> Areas => _areas;
         public IReadOnlyList<Path> Paths => _paths;
         readonly EntityGridMap _map;

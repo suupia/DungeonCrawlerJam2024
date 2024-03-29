@@ -65,7 +65,7 @@ namespace DungeonCrawler.MapMonoAssembly
                 var vector = _coordinate.ToVector(i);
                 var (x, y) = (vector.x, vector.y);
                 var tile = _pool[i];
-                if(dungeon.GridMap.GetSingleEntity<IGridEntity>(x,y) is {} entity)
+                if(dungeon.Map.GetSingleEntity<IGridEntity>(x,y) is {} entity)
                 {
                     tile.SetFloorSprite(entity);
                 }
@@ -75,7 +75,7 @@ namespace DungeonCrawler.MapMonoAssembly
                     var aroundVector = new Vector2Int(x + direction.Vector.x, y + direction.Vector.y);
                     if(_coordinate.IsInDataArea(aroundVector.x, aroundVector.y))
                     {
-                        if(dungeon.GridMap.GetSingleEntity<IGridEntity>(aroundVector.x, aroundVector.y) is {} aroundEntity)
+                        if(dungeon.Map.GetSingleEntity<IGridEntity>(aroundVector.x, aroundVector.y) is {} aroundEntity)
                         {
                             tile.SetWallSprite(aroundEntity, direction);
                         }
@@ -83,10 +83,10 @@ namespace DungeonCrawler.MapMonoAssembly
                 }
                     
                 
-                if (dungeon.GridMap.GetAllTypeList(x, y).Count() != 0)
+                if (dungeon.Map.GetAllTypeList(x, y).Count() != 0)
                 {
                     string result = "";
-                    var allEntityList = dungeon.GridMap.GetAllTypeList(x, y).ToList();
+                    var allEntityList = dungeon.Map.GetAllTypeList(x, y).ToList();
                     foreach (var entity1 in allEntityList)
                     {
                         int count = allEntityList.Count(e => e.ToString() == entity1.ToString());
