@@ -15,17 +15,17 @@ namespace DungeonCrawler
         [SerializeField] SpriteRenderer floorSpriteRenderer = null!;
         [SerializeField] TextMeshPro debugText = null!;
 
-        public void SetSprite(IEntity entity)
+        public void SetSprite(IGridEntity gridEntity)
         {
-            if(entity is CharacterWall)
+            if(gridEntity is CharacterWall)
             {
                 floorSpriteRenderer.sprite = wallSprite;
             }
-            else if(entity is CharacterPath)
+            else if(gridEntity is CharacterPath)
             {
                 floorSpriteRenderer.sprite = pathSprite;
             }
-            else if(entity is CharacterRoom)
+            else if(gridEntity is CharacterRoom)
             {
                 floorSpriteRenderer.sprite = roomSprite;
             }

@@ -110,7 +110,7 @@ namespace DungeonCrawler.MapTestAssembly
                 var vector = _coordinate.ToVector(i);
                 var (x, y) = (vector.x, vector.y);
                 var tile = _pool[i];
-                if(map.GetSingleEntity<IEntity>(x,y) is {} entity)
+                if(map.GetSingleEntity<IGridEntity>(x,y) is {} entity)
                 {
                     tile.SetSprite(entity);
                 }

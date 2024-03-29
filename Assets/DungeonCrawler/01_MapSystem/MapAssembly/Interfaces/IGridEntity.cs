@@ -2,7 +2,7 @@
 
 namespace DungeonCrawler.MapAssembly.Interfaces
 {
-    public interface  IEntity
+    public interface  IGridEntity
     {
 
     }

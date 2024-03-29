@@ -1,9 +1,11 @@
 ﻿#nullable enable
 using DungeonCrawler.MapAssembly.Classes;
+using DungeonCrawler.MapAssembly.Interfaces;
+using UnityEngine;
 
 namespace DungeonCrawler
 {
-    public class Stairs
+    public class Stairs: IGridEntity
     {
         readonly MapSwitcher _mapSwitcher;
 
@@ -14,6 +16,7 @@ namespace DungeonCrawler
         
         public void StairsDown()
         {
+            Debug.Log($"Stairs.StairsDown()");
             _mapSwitcher.SwitchNextDungeon();
         }
     }

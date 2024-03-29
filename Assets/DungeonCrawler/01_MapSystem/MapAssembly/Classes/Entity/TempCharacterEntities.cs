@@ -3,7 +3,7 @@ using DungeonCrawler.MapAssembly.Interfaces;
 
 namespace DungeonCrawler.MapAssembly.Classes.Entity
 {
-    public class CharacterWall: IEntity
+    public class CharacterWall: IGridEntity
     {
         public override string ToString()
         {
@@ -11,7 +11,7 @@ namespace DungeonCrawler.MapAssembly.Classes.Entity
         }
     }
     
-    public class CharacterPath: IEntity
+    public class CharacterPath: IGridEntity
     {
         public override string ToString()
         {
@@ -19,7 +19,7 @@ namespace DungeonCrawler.MapAssembly.Classes.Entity
         }
     }
     
-    public class CharacterRoom: IEntity
+    public class CharacterRoom: IGridEntity
     {
         public override string ToString()
         {
@@ -27,7 +27,7 @@ namespace DungeonCrawler.MapAssembly.Classes.Entity
         }
     }
     
-    public class CharacterStairs: IEntity
+    public class CharacterStairs: IGridEntity
     {
         public override string ToString()
         {

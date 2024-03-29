@@ -15,9 +15,9 @@ namespace DungeonCrawler.MapAssembly.Classes
     public class DungeonBuilder
     {
         const int DivideCount = 5;
-        readonly IEntity _wall;
-        readonly IEntity _path;
-        readonly IEntity _room;
+        readonly IGridEntity _wall;
+        readonly IGridEntity _path;
+        readonly IGridEntity _room;
         readonly DivideAreaExecutor _divideAreaExecutor;
 
         int _divideCount;
@@ -104,7 +104,7 @@ namespace DungeonCrawler.MapAssembly.Classes
             {
                 for (int x = 0; x < map.Width; x++)
                 {
-                    if (map.GetSingleTypeList<IEntity>(x, y).Count == 0)
+                    if (map.GetSingleTypeList<IGridEntity>(x, y).Count == 0)
                     {
                         map.AddEntity(x,y, _wall);
                     }

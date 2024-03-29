@@ -65,7 +65,7 @@ namespace DungeonCrawler.MapMonoAssembly
                 var vector = _coordinate.ToVector(i);
                 var (x, y) = (vector.x, vector.y);
                 var tile = _pool[i];
-                if(map.GetSingleEntity<IEntity>(x,y) is {} entity)
+                if(map.GetSingleEntity<IGridEntity>(x,y) is {} entity)
                 {
                     tile.SetFloorSprite(entity);
                 }
@@ -75,7 +75,7 @@ namespace DungeonCrawler.MapMonoAssembly
                     var aroundVector = new Vector2Int(x + direction.Vector.x, y + direction.Vector.y);
                     if(_coordinate.IsInDataArea(aroundVector.x, aroundVector.y))
                     {
-                        if(map.GetSingleEntity<IEntity>(aroundVector.x, aroundVector.y) is {} aroundEntity)
+                        if(map.GetSingleEntity<IGridEntity>(aroundVector.x, aroundVector.y) is {} aroundEntity)
                         {
                             tile.SetWallSprite(aroundEntity, direction);
                         }
