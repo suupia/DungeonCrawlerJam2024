@@ -29,14 +29,14 @@ namespace DungeonCrawler
             
             Enemy.Attack(Player);
 
-            if (Player.Hp <= 0)
+            if (Player.IsDead)
             {
                 // Game Over
                 Debug.Log("player was defeated by enemy");
                 FinishBattle();
             }
             
-            Debug.Log($"In Battle player._hp = {Player.Hp}, enemy._hp = {Enemy.Hp}");
+            Debug.Log($"In Battle player._hp = {Player.CurrentHp}, enemy._hp = {Enemy.Hp}");
         }
 
         void FinishBattle()

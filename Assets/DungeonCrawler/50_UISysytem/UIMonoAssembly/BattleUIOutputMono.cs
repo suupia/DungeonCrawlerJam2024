@@ -22,10 +22,10 @@ public class BattleUIOutputMono : MonoBehaviour
 
    void SetUp()
    {
-      Observable.EveryValueChanged(this, _ => _battleSimulator.Player.Hp)
+      Observable.EveryValueChanged(this, _ => _battleSimulator.Player.CurrentHp)
          .Subscribe(_ =>
          {
-            playerHpText.text = $"Player HP: {_battleSimulator.Player.Hp}";
+            playerHpText.text = $"Player HP: {_battleSimulator.Player.CurrentHp}";
          });
 
       Observable.EveryValueChanged(this, _ => _battleSimulator.Enemy.Hp)

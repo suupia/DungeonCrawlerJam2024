@@ -7,11 +7,19 @@ namespace DungeonCrawler
 {
     public class PlayerDomain
     {
-        public int Hp { get; private set; }
+        public int MaxHp { get; private set; }
+        public int CurrentHp => MaxHp - DamagedReceived;
+        public int DamagedReceived { get; private set; }
+        public bool IsDead => DamagedReceived >= MaxHp;
 
-        public PlayerDomain(int hp)
+        public PlayerDomain(int maxHp)
         {
-            Hp = hp;
+            MaxHp = maxHp;
+        }
+        
+        public void ReceivedDamage(int damage)
+        {
+            DamagedReceived += damage;
         }
     }
 }
