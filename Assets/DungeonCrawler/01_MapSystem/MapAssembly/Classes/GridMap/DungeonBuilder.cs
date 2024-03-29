@@ -15,56 +15,55 @@ namespace DungeonCrawler.MapAssembly.Classes
     public class DungeonBuilder
     {
         const int DivideCount = 5;
-        readonly IEntity _wall;
-        readonly IEntity _path;
-        readonly IEntity _room;
+        readonly IGridEntity _wall;
+        readonly IGridEntity _path;
+        readonly IGridEntity _room;
         readonly DivideAreaExecutor _divideAreaExecutor;
 
-        int _divideCount;
-        List<Area> _areas = new ();
-
+        readonly IGridCoordinate _coordinate;
 
         public DungeonBuilder(
-            DivideAreaExecutor divideAreaExecutor)
+            DivideAreaExecutor divideAreaExecutor,
+            IGridCoordinate coordinate)
         {
             _divideAreaExecutor = divideAreaExecutor;
+            _coordinate = coordinate;
             _wall = new CharacterWall();
             _path = new CharacterPath();
             _room = new CharacterRoom();
         }
 
         
-        public EntityGridMap CreateDungeon(EntityGridMap map)
+        public DungeonGridMap CreateDungeon()
         {
+            var map = new EntityGridMap(_coordinate);
+            var dungeon = new DungeonGridMap(map,new List<Area>(), new List<Path>());
             for(int i = 0; i < DivideCount; i++)
             {
-                map = CreateDungeonByStep(map);
+                dungeon = CreateDungeonByStep(dungeon);
             }
-
-            _divideCount = 0;
-            return map;
+            return dungeon;
         }
         
-        public EntityGridMap CreateDungeonByStep(EntityGridMap map)
+        public DungeonGridMap CreateDungeonByStep(DungeonGridMap dungeon)
         {
-            var areas =_divideCount == 0 ? new List<Area>{GetInitArea(map)} : _divideAreaExecutor.DivideAreaOnce(_areas);
+            var areas = !dungeon.Areas.Any()
+                ? new List<Area> { GetInitArea(dungeon.Map) }
+                : _divideAreaExecutor.DivideAreaOnce(new List<Area>(dungeon.Areas));
             var paths = areas.SelectMany(area => area.AdjacentAreas.Select(tuple => tuple.path)).ToList();
-            map.ClearMap();
-            map = PlaceRooms(map, areas);
-            map = PlacePath(map, paths);
-            map = PlaceWall(map);  // this should be last
-            _divideCount++;
-            _areas = areas;
-            return map;
+            dungeon.Map.ClearMap();
+            var nextDungeon = new DungeonGridMap(dungeon.Map, areas, paths);
+            var dungeon1 = PlaceRooms(nextDungeon);
+            var dungeon2 = PlacePath(dungeon1);
+            var dungeon3 = PlaceWall(dungeon2);  // this should be last
+            return dungeon3;
         }
 
         public void Reset()
         {
-            _divideCount = 0;
-            _areas = new List<Area>();
         }
 
-        public Area GetInitArea(EntityGridMap map)
+        Area GetInitArea(EntityGridMap map)
         {
             return new Area(
                 X: 0,
@@ -81,8 +80,9 @@ namespace DungeonCrawler.MapAssembly.Classes
             );
         }
 
-        public EntityGridMap PlaceRooms(EntityGridMap map, List<Area> areas)
+        public DungeonGridMap PlaceRooms(DungeonGridMap dungeon)
         {
+            var areas = dungeon.Areas;  
             foreach (var area in areas)
             {
                 var room = area.Room;
@@ -90,83 +90,88 @@ namespace DungeonCrawler.MapAssembly.Classes
                 {
                     for (int x = room.X; x < room.X + room.Width; x++)
                     {
-                        map.AddEntity(x, y, _room);
+                        dungeon.Map.AddEntity(x, y, _room);
                     }
                 }
             }
 
-            return map;
+            return dungeon;
         }
         
-        public EntityGridMap PlaceWall(EntityGridMap map)
+        public DungeonGridMap PlaceWall(DungeonGridMap dungeon)
         {
-            for (int y = 0; y < map.Height; y++)
+            for (int y = 0; y < dungeon.Map.Height; y++)
             {
-                for (int x = 0; x < map.Width; x++)
+                for (int x = 0; x < dungeon.Map.Width; x++)
                 {
-                    if (map.GetSingleTypeList<IEntity>(x, y).Count == 0)
+                    if (dungeon.Map.GetSingleTypeList<IGridEntity>(x, y).Count == 0)
                     {
-                        map.AddEntity(x,y, _wall);
+                        dungeon.Map.AddEntity(x,y, _wall);
                     }
                 }
             }
-            return map;
+            return dungeon;
         }
         
-        public EntityGridMap PlacePath(EntityGridMap map, List<Path> paths)
+        public DungeonGridMap PlacePath(DungeonGridMap dungeon)
         {
+            var paths = dungeon.Paths;
             foreach (var path in paths)
             {
                 foreach (var (x, y) in path.Points)
                 {
-                    map.AddEntity(x, y, _path);
+                    dungeon.Map.AddEntity(x, y, _path);
                 }
             }
-            return map;
+            return dungeon;
         }
 
         // Following functions should be written in other class.
-        public (int x, int y) CalculatePlayerSpawnPosition()
+        public (int x, int y) CalculatePlayerSpawnPosition(DungeonGridMap dungeon)
         {
             // [pre-condition] _areas should not be empty
-            Assert.IsTrue(_areas.Count > 0);
-            Debug.Log($"ares: {string.Join(",", _areas.Select(area => area.Room))}");
+            var areas = dungeon.Areas;
+            Assert.IsTrue(areas.Count > 0);
+            Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
             
-            var area = _areas[Random.Range(0,_areas.Count())];
+            var area = areas[Random.Range(0,areas.Count())];
             var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
             return (spawnX, spawnY);
         }
-        public (int x, int y) CalculateEnemySpawnPosition()
+        public (int x, int y) CalculateEnemySpawnPosition(DungeonGridMap dungeon)
         {
             // [pre-condition] _areas should not be empty
-            Assert.IsTrue(_areas.Count > 0);
-            Debug.Log($"ares: {string.Join(",", _areas.Select(area => area.Room))}");
+            var areas = dungeon.Areas;
+            Assert.IsTrue(areas.Count > 0);
+            Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
             
-            var area = _areas[Random.Range(0,_areas.Count())];
+            var area = areas[Random.Range(0,areas.Count())];
             var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
             return (spawnX, spawnY);
         }
 
-        public (int x, int y) CalculateKeySpawnPosition()
+        public (int x, int y) CalculateKeySpawnPosition(DungeonGridMap dungeon)
         {
             // [pre-condition] _areas should not be empty
-            Assert.IsTrue(_areas.Count > 0);
-            Debug.Log($"ares: {string.Join(",", _areas.Select(area => area.Room))}");
+            var areas = dungeon.Areas;
+            Assert.IsTrue(areas.Count > 0);
+            Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
             
-            var area = _areas[Random.Range(0,_areas.Count())];
+            var area = areas[Random.Range(0,areas.Count())];
             var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
             return (spawnX, spawnY);
         }
-        public (int x, int y) CalculateTorchSpawnPosition()
+        public (int x, int y) CalculateTorchSpawnPosition(DungeonGridMap dungeon)
         {
             // [pre-condition] _areas should not be empty
-            Assert.IsTrue(_areas.Count > 0);
-            Debug.Log($"ares: {string.Join(",", _areas.Select(area => area.Room))}");
+            var areas = dungeon.Areas;
+            Assert.IsTrue(areas.Count > 0);
+            Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
             
-            var area = _areas[Random.Range(0,_areas.Count())];
+            var area = areas[Random.Range(0,areas.Count())];
             var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
             return (spawnX, spawnY);

@@ -26,7 +26,7 @@ namespace DungeonCrawler
             builder.Register<DivideAreaExecutor>(Lifetime.Scoped);
             builder.Register<DungeonBuilder>(Lifetime.Scoped);
             
-            builder.Register<MapSwitcher>(Lifetime.Scoped);
+            builder.Register<DungeonSwitcher>(Lifetime.Scoped);
             
             builder.RegisterComponentInHierarchy<MapBuilderMono>().As<IMapBuilderMono>();
             builder.RegisterComponentInHierarchy<PlayerSpawnerMono>().As<IPlayerSpawnerMono>();
