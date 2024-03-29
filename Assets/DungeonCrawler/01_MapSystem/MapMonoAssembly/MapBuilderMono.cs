@@ -20,7 +20,7 @@ namespace DungeonCrawler.MapMonoAssembly
         readonly List<TileMono> _pool = new();
 
         IGridCoordinate _coordinate = null!;
-        MapSwitcher _mapSwitcher = null!;
+        DungeonSwitcher _dungeonSwitcher = null!;
             
         DivideAreaExecutor _divideAreaExecutor = null!;
         DungeonBuilder _dungeonBuilder = null!;
@@ -28,10 +28,10 @@ namespace DungeonCrawler.MapMonoAssembly
         [Inject]
         public void Construct(
             IGridCoordinate coordinate,
-            MapSwitcher mapSwitcher)
+            DungeonSwitcher dungeonSwitcher)
         {
             _coordinate = coordinate;
-            _mapSwitcher = mapSwitcher;
+            _dungeonSwitcher = dungeonSwitcher;
             
             for(int i = 0; i<_coordinate.Length ; i++)
             {
@@ -46,7 +46,7 @@ namespace DungeonCrawler.MapMonoAssembly
         {
             Debug.Log("SwitchNextDungeon");
             ResetAllTiles();
-            var nextMap = _mapSwitcher.SwitchNextDungeon();
+            var nextMap = _dungeonSwitcher.SwitchNextDungeon();
             UpdateSprites(nextMap);
         }
         void ResetAllTiles()

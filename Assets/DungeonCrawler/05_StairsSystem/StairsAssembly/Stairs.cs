@@ -7,17 +7,17 @@ namespace DungeonCrawler
 {
     public class Stairs: IGridEntity
     {
-        readonly MapSwitcher _mapSwitcher;
+        readonly DungeonSwitcher _dungeonSwitcher;
 
-        public Stairs(MapSwitcher mapSwitcher)
+        public Stairs(DungeonSwitcher dungeonSwitcher)
         {
-            _mapSwitcher = mapSwitcher;
+            _dungeonSwitcher = dungeonSwitcher;
         }
         
         public void StairsDown()
         {
             Debug.Log($"Stairs.StairsDown()");
-            _mapSwitcher.SwitchNextDungeon();
+            _dungeonSwitcher.SwitchNextDungeon();
         }
     }
 }

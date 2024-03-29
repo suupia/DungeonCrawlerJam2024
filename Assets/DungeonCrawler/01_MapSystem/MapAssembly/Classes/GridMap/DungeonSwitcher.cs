@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace DungeonCrawler.MapAssembly.Classes
 {
-    public class MapSwitcher
+    public class DungeonSwitcher
     {
         public DungeonGridMap CurrentDungeon => _currentDungeon;
         DungeonGridMap _currentDungeon;
         readonly DungeonBuilder _dungeonBuilder;
         
-        public MapSwitcher(
+        public DungeonSwitcher(
             DungeonBuilder dungeonBuilder
             )
         {

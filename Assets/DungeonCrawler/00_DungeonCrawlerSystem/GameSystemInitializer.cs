@@ -16,7 +16,7 @@ namespace DungeonCrawler
         DungeonBuilder _dungeonBuilder = null!;
         EnemySpawnerMono _enemySpawnerMono = null!;
         StairsSpawnerMono _stairsSpawnerMono = null!;
-        MapSwitcher _mapSwitcher = null!;
+        DungeonSwitcher _dungeonSwitcher = null!;
         
         [Inject]
         public void Construct(
@@ -25,7 +25,7 @@ namespace DungeonCrawler
             DungeonBuilder dungeonBuilder,
             EnemySpawnerMono enemySpawnerMono,
             StairsSpawnerMono stairsSpawnerMono,
-            MapSwitcher mapSwitcher
+            DungeonSwitcher dungeonSwitcher
             )
         {
             _mapBuilderMono = mapBuilderMono;
@@ -33,7 +33,7 @@ namespace DungeonCrawler
             _dungeonBuilder = dungeonBuilder;
             _enemySpawnerMono = enemySpawnerMono;
             _stairsSpawnerMono = stairsSpawnerMono;
-            _mapSwitcher = mapSwitcher;
+            _dungeonSwitcher = dungeonSwitcher;
 
             SetUp();
         }
@@ -45,15 +45,15 @@ namespace DungeonCrawler
             _mapBuilderMono.SwitchNextDungeon();
             
             // Spawn player
-            var (spawnX, spawnY) = _dungeonBuilder.CalculatePlayerSpawnPosition(_mapSwitcher.CurrentDungeon);
+            var (spawnX, spawnY) = _dungeonBuilder.CalculatePlayerSpawnPosition(_dungeonSwitcher.CurrentDungeon);
             _playerSpawnerMono.SpawnPlayer(spawnX, spawnY);
             
             // Spawn enemy
-            var (enemySpawnX, enemySpawnY) = _dungeonBuilder.CalculateEnemySpawnPosition(_mapSwitcher.CurrentDungeon);
+            var (enemySpawnX, enemySpawnY) = _dungeonBuilder.CalculateEnemySpawnPosition(_dungeonSwitcher.CurrentDungeon);
             _enemySpawnerMono.SpawnEnemy(enemySpawnX, enemySpawnY);
             
             // Spawn key
-            var (keySpawnX, keySpawnY) = _dungeonBuilder.CalculateKeySpawnPosition(_mapSwitcher.CurrentDungeon);
+            var (keySpawnX, keySpawnY) = _dungeonBuilder.CalculateKeySpawnPosition(_dungeonSwitcher.CurrentDungeon);
             _stairsSpawnerMono.SpawnStairs(keySpawnX, keySpawnY);
         }
     }
