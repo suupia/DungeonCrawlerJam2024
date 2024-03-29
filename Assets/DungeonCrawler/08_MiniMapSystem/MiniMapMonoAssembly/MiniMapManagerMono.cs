@@ -1,0 +1,118 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes;
+using DungeonCrawler.MapAssembly.Classes;
+using DungeonCrawler.MapAssembly.Interfaces;
+using R3;
+using UnityEditor.Experimental.Licensing;
+using UnityEngine;
+using UnityEngine.Serialization;
+using VContainer;
+
+namespace DungeonCrawler
+{
+    public class MiniMapManagerMono : MonoBehaviour
+    {
+        [FormerlySerializedAs("_miniMapTileMono")] [SerializeField] MiniMapTileMono _miniMapTilePrefab;
+        [SerializeField] Camera cameraPrefab;
+
+        List<MiniMapTileMono> _miniMapTiles;
+        MiniMapTileMono _playerTile;
+        Camera _camera;
+
+        Vector3 _offset = new Vector3(300, 0, 300);
+        Quaternion _rotateOffset = Quaternion.AngleAxis(90, new Vector3(1, 0, 0));
+        Vector3 _cameraOffset;
+
+        DungeonSwitcher _dungeonSwitcher;
+        
+        [Inject]
+        public void Construct(
+            DungeonSwitcher dungeonSwitcher)
+        {
+            _dungeonSwitcher = dungeonSwitcher;
+            
+            SetUp();
+        }
+
+        void SetUp()
+        {
+            _cameraOffset = _offset + Vector3.up * 20;
+            _camera = Instantiate(cameraPrefab, _cameraOffset, _rotateOffset);
+            
+            _playerTile = Instantiate(_miniMapTilePrefab, _offset, _rotateOffset);
+
+            Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
+                .Subscribe(_ =>
+                {
+                    InitMiniMap(_dungeonSwitcher.CurrentDungeon.Map);
+                });
+        }
+
+        MiniMapTileMono InstantiateTile(EntityGridMap entityGridMap, int index)
+        {
+            var vector = entityGridMap.ToVector(index);
+            var tile = Instantiate(_miniMapTilePrefab, GridConverter.GridPositionToWorldPosition(vector) + _offset, _rotateOffset);
+            tile.transform.localScale = new Vector3(GridConverter.GridSize, GridConverter.GridSize, GridConverter.GridSize);
+            
+            return tile;
+
+        }
+
+        void SetTilePosition(MiniMapTileMono tile, int index)
+        {
+            var vector = _dungeonSwitcher.CurrentDungeon.Map.ToVector(index);
+            tile.transform.position = GridConverter.GridPositionToWorldPosition(vector) + _offset;
+        }
+
+        void ResetAllTIiles()
+        {
+            foreach (var tile in _miniMapTiles)
+            {
+                tile.ResetSprite();
+            }
+        }
+
+        void InitMiniMap(EntityGridMap entityGridMap)
+        {
+            ResetAllTIiles();
+
+            int nonPlayerCount = 0;
+            for (int i = 0; i < entityGridMap.Length; i++)
+            {
+                var gridObjects = entityGridMap.GetAllTypeList(i);
+
+                foreach (var obj in gridObjects)
+                {
+                    if (obj is Player)
+                    {
+                        Debug.Log("find player and set playerTile");
+                        _playerTile.SetTileSprite(obj);
+                        SetTilePosition(_playerTile, i);
+                    }
+                    else
+                    {
+                        if (nonPlayerCount >= _miniMapTiles.Count)
+                        {
+                            _miniMapTiles.Add(InstantiateTile(entityGridMap, i));
+                        }
+                        
+                        _miniMapTiles[nonPlayerCount].SetTileSprite(obj);
+                        SetTilePosition(_miniMapTiles[nonPlayerCount], i);
+                        nonPlayerCount++;
+                    }
+                }
+            }
+            Debug.Log($"Mini map tiles num = {_miniMapTiles.Count}");
+        }
+
+        void ChasePlayer()
+        {
+            // can use R3?
+            var playerPosition = new Vector3(10, 1, 10);
+
+            _camera.transform.position = playerPosition + _cameraOffset;
+        }
+    }
+}

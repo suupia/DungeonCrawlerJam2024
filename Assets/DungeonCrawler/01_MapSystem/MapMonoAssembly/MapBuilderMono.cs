@@ -18,7 +18,6 @@ namespace DungeonCrawler.MapMonoAssembly
     public class MapBuilderMono : MonoBehaviour
     {
         [SerializeField] TileMono tilePrefab = null!;
-
         readonly List<TileMono> _pool = new();
 
         IGridCoordinate _coordinate = null!;
