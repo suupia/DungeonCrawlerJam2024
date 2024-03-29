@@ -18,7 +18,7 @@ namespace DungeonCrawler.EnemyAssenbly.Classes
 
         public void Attack(PlayerDomain target)
         {
-            
+            target._hp -= _attack;
         }
     }
 }

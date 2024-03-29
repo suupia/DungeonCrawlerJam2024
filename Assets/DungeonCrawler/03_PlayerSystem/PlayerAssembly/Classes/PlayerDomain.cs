@@ -19,6 +19,7 @@ namespace DungeonCrawler.PlayerAssembly.Classes
 
         public void Attack(EnemyDomain target)
         {
+            target._hp -= _attack;
         }
 
         public void SacredAttack(EnemyDomain target)
