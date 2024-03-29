@@ -26,17 +26,17 @@ namespace DungeonCrawler.MapMonoAssembly
                 wallSpriteRenderer.sprite = null;
             }
         }
-        public void SetFloorSprite(IEntity entity)
+        public void SetFloorSprite(IGridEntity gridEntity)
         {
-            if(entity is CharacterWall)
+            if(gridEntity is CharacterWall)
             {
                 floorSpriteRenderer.sprite = wallSprite;
             }
-            else if(entity is CharacterPath)
+            else if(gridEntity is CharacterPath)
             {
                 floorSpriteRenderer.sprite = pathSprite;
             }
-            else if(entity is CharacterRoom)
+            else if(gridEntity is CharacterRoom)
             {
                 floorSpriteRenderer.sprite = roomSprite;
             }
@@ -47,17 +47,17 @@ namespace DungeonCrawler.MapMonoAssembly
             
         }
         
-        public void SetWallSprite(IEntity entity, DirectionEnum direction)
+        public void SetWallSprite(IGridEntity gridEntity, DirectionEnum direction)
         {
-            if(entity is CharacterWall)
+            if(gridEntity is CharacterWall)
             {
                 wallSpriteRenderers[direction.Id].sprite = wallSprite;
             }
-            else if(entity is CharacterPath)
+            else if(gridEntity is CharacterPath)
             {
                 wallSpriteRenderers[direction.Id].sprite = null;
             }
-            else if(entity is CharacterRoom)
+            else if(gridEntity is CharacterRoom)
             {
                 wallSpriteRenderers[direction.Id].sprite = null;
             }
