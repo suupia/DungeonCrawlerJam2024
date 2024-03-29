@@ -6,13 +6,13 @@ using UnityEngine.Assertions;
 
 namespace DungeonCrawler
 {
-    public class BattleManager
+    public class BattleSimulator
     {
         PlayerDomain _player;
         EnemyDomain _enemy;
         bool inBattle = false;
 
-        public BattleManager(PlayerDomain player, EnemyDomain enemy)
+        public BattleSimulator(PlayerDomain player, EnemyDomain enemy)
         {
             _player = player;
             _enemy = enemy;

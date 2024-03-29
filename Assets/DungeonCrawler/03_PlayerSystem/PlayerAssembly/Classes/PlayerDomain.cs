@@ -7,7 +7,7 @@ namespace DungeonCrawler
 {
     public class PlayerDomain
     {
-        public int Hp;
+        public int Hp { get; private set; }
 
         public PlayerDomain(int hp)
         {

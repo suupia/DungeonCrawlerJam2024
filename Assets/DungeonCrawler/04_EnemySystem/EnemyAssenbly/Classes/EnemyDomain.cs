@@ -18,7 +18,7 @@ namespace DungeonCrawler
 
         public void Attack(PlayerDomain target)
         {
-            target.Hp -= _attack;
+            // target.Hp -= _attack;
         }
     }
 }

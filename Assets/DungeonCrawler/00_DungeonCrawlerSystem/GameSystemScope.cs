@@ -37,6 +37,10 @@ namespace DungeonCrawler
             builder.Register<DefaultDungeonGridMap>(Lifetime.Scoped);
             builder.Register<GridTilePlacer>(Lifetime.Scoped);
             builder.Register<DungeonSwitcher>(Lifetime.Scoped);
+            
+            // Battle
+            builder.Register<PlayerDomain>(Lifetime.Scoped).WithParameter("hp", 100);
+            builder.Register<BattleSimulator>(Lifetime.Scoped);
 
             // Mono
             builder.RegisterComponentInHierarchy<MapBuilderMono>();
