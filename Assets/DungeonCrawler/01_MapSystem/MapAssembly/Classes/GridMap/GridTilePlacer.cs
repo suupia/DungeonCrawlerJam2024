@@ -13,28 +13,27 @@ using VContainer;
 
 namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
 {
-    public class GridEntityPlacer
+    public class GridTilePlacer
     {
         readonly CharacterWall _wall;
         readonly CharacterPath _path;
         readonly CharacterRoom _room;
-        readonly Stairs _stairs;
-        readonly Enemy _enemy;
 
+        readonly GridEntityFactory _entityFactory; 
+        
         [Inject]
-        public GridEntityPlacer(
+        public GridTilePlacer(
             CharacterWall wall,
             CharacterPath path,
             CharacterRoom room,
-            Stairs stairs,
-            Enemy enemy
-            )
+            GridEntityFactory entityFactory
+            
+        )
         {
             _wall = wall;
             _path = path;
             _room = room;
-            _stairs = stairs;
-            _enemy = enemy;
+            _entityFactory = entityFactory;
         }
 
         public DungeonGridMap PlaceEntities(PlainDungeonGridMap plainDungeon)
@@ -110,7 +109,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             var area = areas[Random.Range(0, areas.Count())];
             var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
-            dungeon.Map.AddEntity(spawnX, spawnY, _stairs);
+            dungeon.Map.AddEntity(spawnX, spawnY, _entityFactory.CreateEntity<Stairs>());
             dungeon.StairsPosition = (spawnX, spawnY);
             return dungeon;
         }
@@ -125,7 +124,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             var area = areas[Random.Range(0, areas.Count())];
             var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
-            dungeon.Map.AddEntity(spawnX, spawnY, _enemy);
+            dungeon.Map.AddEntity(spawnX, spawnY, _entityFactory.CreateEntity<Enemy>());
             dungeon.EnemyPosition = (spawnX, spawnY);
             return dungeon;
         }

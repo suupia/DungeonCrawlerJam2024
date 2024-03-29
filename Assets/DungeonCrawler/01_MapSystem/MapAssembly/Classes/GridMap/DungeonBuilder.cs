@@ -19,16 +19,16 @@ namespace DungeonCrawler.MapAssembly.Classes
         const int DivideCount = 5;
         readonly DivideAreaExecutor _divideAreaExecutor;
         readonly IGridCoordinate _coordinate;
-        readonly GridEntityPlacer _gridEntityPlacer;
+        readonly GridTilePlacer _gridTilePlacer;
         public DungeonBuilder(
             DivideAreaExecutor divideAreaExecutor,
             IGridCoordinate coordinate,
-            GridEntityPlacer gridEntityPlacer
+            GridTilePlacer gridTilePlacer
             )
         {
             _divideAreaExecutor = divideAreaExecutor;
             _coordinate = coordinate;
-            _gridEntityPlacer = gridEntityPlacer;
+            _gridTilePlacer = gridTilePlacer;
         }
 
         
@@ -40,7 +40,7 @@ namespace DungeonCrawler.MapAssembly.Classes
             {
                 plainDungeon = CreateDungeonByStep(plainDungeon);
             }
-            var dungeon = _gridEntityPlacer.PlaceEntities(plainDungeon);
+            var dungeon = _gridTilePlacer.PlaceEntities(plainDungeon);
             return dungeon;
         }
         
