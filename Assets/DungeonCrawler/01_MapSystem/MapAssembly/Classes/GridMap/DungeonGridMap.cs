@@ -11,6 +11,8 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap
         public IReadOnlyList<Path> Paths => _plainDungeon.Paths;
         readonly PlainDungeonGridMap _plainDungeon;
         
+        public (int x, int y) StairsPosition { get; set; }
+        
         public DungeonGridMap(PlainDungeonGridMap plainDungeon)
         {
             _plainDungeon = plainDungeon;

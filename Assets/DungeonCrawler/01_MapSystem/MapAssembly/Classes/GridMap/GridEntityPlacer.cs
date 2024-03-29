@@ -95,6 +95,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
             dungeon.Map.AddEntity(spawnX, spawnY, _stairs);
+            dungeon.StairsPosition = (spawnX, spawnY);
             return dungeon;
         }
         

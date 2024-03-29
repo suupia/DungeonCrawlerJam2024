@@ -16,6 +16,7 @@ namespace  DungeonCrawler
         const float KeySpawnHeight = 1.0f;
         
         DungeonSwitcher _dungeonSwitcher = null!;
+        StairsControllerMono? _stairsController;
         
         [Inject]
         public void Construct(DungeonSwitcher dungeonSwitcher)
@@ -29,17 +30,18 @@ namespace  DungeonCrawler
             Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
                 .Subscribe(_ =>
                 {
-                    var dungeon = _dungeonSwitcher.CurrentDungeon;
-                    SpawnStairs(8, 8); // todo
+                    if(_stairsController != null) Destroy(_stairsController.gameObject);
+                    var(x,y) = _dungeonSwitcher.CurrentDungeon.StairsPosition;
+                    SpawnStairs(x,y);
                 }); 
         }
 
-        public void SpawnStairs(int x, int y)
+        void SpawnStairs(int x, int y)
         {
             Debug.Log($"Key spawn position: {x}, {y}");
             var spawnGridPosition = GridConverter.GridPositionToWorldPosition(new Vector2Int(x, y));
             var spawnPosition = new Vector3(spawnGridPosition.x, KeySpawnHeight, spawnGridPosition.z);
-            Instantiate(stairsPrefab, spawnPosition, Quaternion.identity);
+            _stairsController = Instantiate(stairsPrefab, spawnPosition, Quaternion.identity);
         }
     }   
 }
