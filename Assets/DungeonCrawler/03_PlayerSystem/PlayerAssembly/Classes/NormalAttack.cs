@@ -12,7 +12,7 @@ namespace DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes
         }
         public void Attack(EnemyDomain enemy)
         {
-            enemy.Hp -= _amount;
+            enemy.OnAttacked(_amount);
         }
     }
 }
