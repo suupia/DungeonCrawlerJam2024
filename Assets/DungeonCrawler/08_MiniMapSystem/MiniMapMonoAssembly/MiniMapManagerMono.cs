@@ -42,23 +42,27 @@ namespace DungeonCrawler
             _cameraOffset = _offset + Vector3.up * 20;
             _camera = Instantiate(cameraPrefab, _cameraOffset, _rotateOffset);
             
-            _playerTile = Instantiate(_miniMapTilePrefab, _offset, _rotateOffset);
+            _playerTile = InstantiateTile();
 
             Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
                 .Subscribe(_ =>
                 {
-                    InitMiniMap(_dungeonSwitcher.CurrentDungeon.Map);
+                    InitMiniMap();
+                });
+            Observable.EveryValueChanged(this, _ => _player.GridPosition())
+                .Subscribe(_ =>
+                {
+                    ChasePlayer();
                 });
         }
 
-        MiniMapTileMono InstantiateTile(EntityGridMap entityGridMap, int index)
+        MiniMapTileMono InstantiateTile(int index = 0)
         {
-            var vector = entityGridMap.ToVector(index);
+            var vector = _dungeonSwitcher.CurrentDungeon.Map.ToVector(index);
             var tile = Instantiate(_miniMapTilePrefab, GridConverter.GridPositionToWorldPosition(vector) + _offset, _rotateOffset);
             tile.transform.localScale = new Vector3(GridConverter.GridSize, GridConverter.GridSize, GridConverter.GridSize);
             
             return tile;
-
         }
 
         void SetTilePosition(MiniMapTileMono tile, int index)
@@ -75,9 +79,11 @@ namespace DungeonCrawler
             }
         }
 
-        void InitMiniMap(EntityGridMap entityGridMap)
+        void InitMiniMap()
         {
             ResetAllTIiles();
+
+            EntityGridMap entityGridMap = _dungeonSwitcher.CurrentDungeon.Map;
 
             int nonPlayerCount = 0;
             for (int i = 0; i < entityGridMap.Length; i++)
@@ -97,7 +103,7 @@ namespace DungeonCrawler
                     {
                         if (nonPlayerCount >= _miniMapTiles.Count)
                         {
-                            _miniMapTiles.Add(InstantiateTile(entityGridMap, i));
+                            _miniMapTiles.Add(InstantiateTile(i));
                         }
                         
                         _miniMapTiles[nonPlayerCount].SetTileSprite(obj);
@@ -111,10 +117,11 @@ namespace DungeonCrawler
 
         void ChasePlayer()
         {
-            // can use R3?
-            var playerPosition = new Vector3(10, 1, 10);
+            var (x, y) = _player.GridPosition();
+            SetTilePosition(_playerTile, _dungeonSwitcher.CurrentDungeon.Map.ToSubscript(x, y));
 
-            _camera.transform.position = playerPosition + _cameraOffset;
+            _camera.transform.position =
+                _cameraOffset + GridConverter.GridPositionToWorldPosition(new Vector2Int(x, y));
         }
 
         [CanBeNull] Player _player;
