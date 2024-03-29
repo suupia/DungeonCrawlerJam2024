@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap;
+using DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes;
 using DungeonCrawler._04_EnemySystem.EnemyAssembly;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes.Entity;
 using DungeonCrawler.MapAssembly.Interfaces;
+using DungeonCrawler.PlayerMonoAssembly;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Sprites;
@@ -150,6 +152,23 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
                 dungeon.Map.AddEntity(x, y, new Torch());
             }
             dungeon.TorchPositions = result;
+            return dungeon;
+        }
+        
+              
+
+        public DungeonGridMap PlacePlayer(DungeonGridMap dungeon, DungeonSwitcher dungeonSwitcher)
+        {
+            // [pre-condition] _areas should not be empty
+            var areas = dungeon.Areas;
+            Assert.IsTrue(areas.Count > 0);
+            Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
+            
+            var area = areas[Random.Range(0,areas.Count())];
+            var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
+            var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
+            dungeon.Map.AddEntity(spawnX, spawnY, _entityFactory.CreateEntity<Player>(dungeonSwitcher));
+            dungeon.EnemyPosition = (spawnX, spawnY);
             return dungeon;
         }
     }

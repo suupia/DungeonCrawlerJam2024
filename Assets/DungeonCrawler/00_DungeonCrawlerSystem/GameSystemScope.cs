@@ -39,11 +39,10 @@ namespace DungeonCrawler
             builder.Register<DungeonSwitcher>(Lifetime.Scoped);
 
             builder.RegisterComponentInHierarchy<MapBuilderMono>();
-            builder.RegisterComponentInHierarchy<PlayerSpawnerMono>().As<IPlayerSpawnerMono>();
+            builder.RegisterComponentInHierarchy<PlayerSpawnerMono>();
             builder.RegisterComponentInHierarchy<GameSystemInitializer>();
             builder.RegisterComponentInHierarchy<EnemySpawnerMono>();
             builder.RegisterComponentInHierarchy<StairsSpawnerMono>();
-            builder.RegisterComponentInHierarchy<PlayerController>();
             builder.RegisterComponentInHierarchy<StairsSpawnerMono>();
             builder.RegisterComponentInHierarchy<TorchSpawnerMono>();
         }

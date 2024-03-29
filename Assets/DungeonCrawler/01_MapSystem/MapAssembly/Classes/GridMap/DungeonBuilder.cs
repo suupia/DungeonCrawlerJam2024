@@ -73,33 +73,7 @@ namespace DungeonCrawler.MapAssembly.Classes
             );
         }
 
-      
 
-        // Following functions should be written in other class.
-        public (int x, int y) CalculatePlayerSpawnPosition(DungeonGridMap dungeon)
-        {
-            // [pre-condition] _areas should not be empty
-            var areas = dungeon.Areas;
-            Assert.IsTrue(areas.Count > 0);
-            Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
-            
-            var area = areas[Random.Range(0,areas.Count())];
-            var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
-            var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
-            return (spawnX, spawnY);
-        }
-        public (int x, int y) CalculateEnemySpawnPosition(DungeonGridMap dungeon)
-        {
-            // [pre-condition] _areas should not be empty
-            var areas = dungeon.Areas;
-            Assert.IsTrue(areas.Count > 0);
-            Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
-            
-            var area = areas[Random.Range(0,areas.Count())];
-            var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
-            var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
-            return (spawnX, spawnY);
-        }
 
     }
     public record Area(int X, int Y, int Width, int Height, Room Room, List<(Area area, Path path)> AdjacentAreas);

@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes;
 using DungeonCrawler._04_EnemySystem.EnemyAssembly;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes.Entity;
@@ -19,6 +20,16 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap
             {
                 return new Enemy();
             }
+            if (typeof(TEntity) == typeof(Torch))
+            {
+                return new Torch();
+            }
+            if (typeof(TEntity) == typeof(Player))
+            {
+                return new Player();
+            }
+
+            
             return new DefaultEntity();
         }
     }
