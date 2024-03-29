@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using Codice.Client.BaseCommands;
 using DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap;
 using DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes;
 using DungeonCrawler._04_EnemySystem.EnemyAssembly;
@@ -44,6 +45,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             dungeon = PlaceWall(dungeon); // this should be last
 
             // Entities
+            dungeon = PlacePlayer(dungeon, dungeonSwitcher);
             dungeon = PlaceStairs(dungeon, dungeonSwitcher);
             dungeon = PlaceEnemies(dungeon, dungeonSwitcher);
             dungeon = PlaceTorches(dungeon);
@@ -169,7 +171,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
             dungeon.Map.AddEntity(spawnX, spawnY, _entityFactory.CreateEntity<Player>(dungeonSwitcher));
-            dungeon.EnemyPosition = (spawnX, spawnY);
+            dungeon.PlayerPosition = (spawnX, spawnY);
             return dungeon;
         }
     }
