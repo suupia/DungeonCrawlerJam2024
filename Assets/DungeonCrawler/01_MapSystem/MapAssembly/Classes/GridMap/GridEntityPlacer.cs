@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System.Linq;
 using DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap;
+using DungeonCrawler._04_EnemySystem.EnemyAssembly;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes.Entity;
 using DungeonCrawler.MapAssembly.Interfaces;
@@ -16,6 +17,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
         readonly IGridTile _path;
         readonly IGridTile _room;
         readonly IGridEntity _stairs;
+        readonly IGridEntity _enemy;
 
         public GridEntityPlacer()
         {
@@ -23,6 +25,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             _path = new CharacterPath();
             _room = new CharacterRoom();
             _stairs = new CharacterStairs();
+            _enemy = new Enemy();
         }
         
         public DungeonGridMap PlaceEntities(PlainDungeonGridMap plainDungeon)
@@ -35,6 +38,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             
             // Entities
             dungeon = PlaceStairs(dungeon);
+            dungeon = PlaceEnemies(dungeon);
             
             return dungeon;
         }
@@ -96,6 +100,21 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
             dungeon.Map.AddEntity(spawnX, spawnY, _stairs);
             dungeon.StairsPosition = (spawnX, spawnY);
+            return dungeon;
+        }
+        
+        DungeonGridMap PlaceEnemies(DungeonGridMap dungeon)
+        {
+            // [pre-condition] _areas should not be empty
+            var areas = dungeon.Areas;
+            Assert.IsTrue(areas.Count > 0);
+            Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
+            
+            var area = areas[Random.Range(0,areas.Count())];
+            var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
+            var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
+            dungeon.Map.AddEntity(spawnX,spawnY, _enemy);
+            dungeon.EnemyPosition = (spawnX, spawnY);
             return dungeon;
         }
         

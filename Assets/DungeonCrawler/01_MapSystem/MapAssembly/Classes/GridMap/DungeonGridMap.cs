@@ -12,6 +12,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap
         readonly PlainDungeonGridMap _plainDungeon;
         
         public (int x, int y) StairsPosition { get; set; }
+        public (int x, int y) EnemyPosition { get; set; }
         
         public DungeonGridMap(PlainDungeonGridMap plainDungeon)
         {

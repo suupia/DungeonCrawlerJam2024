@@ -101,18 +101,6 @@ namespace DungeonCrawler.MapAssembly.Classes
             return (spawnX, spawnY);
         }
 
-        public (int x, int y) CalculateStairsSpawnPosition(DungeonGridMap dungeon)
-        {
-            // [pre-condition] _areas should not be empty
-            var areas = dungeon.Areas;
-            Assert.IsTrue(areas.Count > 0);
-            Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
-            
-            var area = areas[Random.Range(0,areas.Count())];
-            var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
-            var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
-            return (spawnX, spawnY);
-        }
         public (int x, int y) CalculateTorchSpawnPosition(DungeonGridMap dungeon)
         {
             // [pre-condition] _areas should not be empty
