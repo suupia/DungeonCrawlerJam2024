@@ -8,35 +8,35 @@ namespace DungeonCrawler
 {
     public class BattleSimulator
     {
-        PlayerDomain _player;
-        EnemyDomain _enemy;
+        public PlayerDomain Player { get; }
+        public EnemyDomain Enemy { get; }
 
         public BattleSimulator(PlayerDomain player, EnemyDomain enemy)
         {
-            _player = player;
-            _enemy = enemy;
+            Player = player;
+            Enemy = enemy;
         }
         
         public void UpdateTurn(IPlayerAttack playerAttack)
         {
             // How should I do about SacredAttack()
-            playerAttack.Attack(_enemy);
+            playerAttack.Attack(Enemy);
 
-            if (_enemy.Hp <= 0)
+            if (Enemy.Hp <= 0)
             {
                 FinishBattle();
             }
             
-            _enemy.Attack(_player);
+            Enemy.Attack(Player);
 
-            if (_player.Hp <= 0)
+            if (Player.Hp <= 0)
             {
                 // Game Over
                 Debug.Log("player was defeated by enemy");
                 FinishBattle();
             }
             
-            Debug.Log($"In Battle player._hp = {_player.Hp}, enemy._hp = {_enemy.Hp}");
+            Debug.Log($"In Battle player._hp = {Player.Hp}, enemy._hp = {Enemy.Hp}");
         }
 
         void FinishBattle()
