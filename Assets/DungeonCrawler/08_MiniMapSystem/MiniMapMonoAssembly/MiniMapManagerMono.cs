@@ -14,11 +14,15 @@ namespace DungeonCrawler
     {
         [SerializeField] MiniMapTileMono _miniMapTileMono;
         [SerializeField] Camera cameraPrefab;
-        
-        List<MiniMapTileMono> _backgroundTiles;
 
-        Vector3 _offset = new Vector3(100, 100, 100);
+        List<MiniMapTileMono> _backgroundTiles;
+        List<MiniMapTileMono> _immovableEntityTiles;
+        MiniMapTileMono _playerTile;
+        Camera _camera;
+
+        Vector3 _offset = new Vector3(300, 0, 300);
         Quaternion _rotateOffset = Quaternion.AngleAxis(90, new Vector3(1, 0, 0));
+        Vector3 _cameraOffset;
 
         DungeonSwitcher _dungeonSwitcher;
         
@@ -33,7 +37,8 @@ namespace DungeonCrawler
 
         void SetUp()
         {
-            Instantiate(cameraPrefab, _offset, Quaternion.identity);
+            _cameraOffset = _offset + Vector3.up * 20;
+            _camera = Instantiate(cameraPrefab, _cameraOffset, _rotateOffset);
             
             Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
                 .Subscribe(_ =>
@@ -48,9 +53,7 @@ namespace DungeonCrawler
             for(int i = 0; i<shortage; i++)
             {
                 var vector = entityGridMap.ToVector(i);
-                // 座標は適切に変換する
                 var tile = Instantiate(_miniMapTileMono, GridConverter.GridPositionToWorldPosition(vector) + _offset, _rotateOffset);
-                // こっちも？
                 tile.transform.localScale = new Vector3(GridConverter.GridSize, GridConverter.GridSize, GridConverter.GridSize);
                 
                 _backgroundTiles.Add(tile);
@@ -65,7 +68,7 @@ namespace DungeonCrawler
             }
         }
 
-        public void InitMiniMap(EntityGridMap entityGridMap)
+        void InitMiniMap(EntityGridMap entityGridMap)
         {
             ResetAllTIiles();
             InstantiateShortageTiles(entityGridMap);
@@ -85,6 +88,14 @@ namespace DungeonCrawler
                     }
                 }
             }
+        }
+
+        void ChasePlayer()
+        {
+            // can use R3?
+            var playerPosition = new Vector3(10, 1, 10);
+
+            _camera.transform.position = playerPosition + _cameraOffset;
         }
     }
 }
