@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using DungeonCrawler.EnemyAssenbly.Classes;
+using DungeonCrawler.EnemyAssembly.Classes;
 using DungeonCrawler.PlayerAssembly.Classes;
 using UnityEngine;
 
-namespace DungeonCrawler.BattleSystem.BattleAssenbly
+namespace DungeonCrawler.BattleSystem.BattleAssembly
 {
     public class BattaleManager
     {
@@ -19,9 +19,29 @@ namespace DungeonCrawler.BattleSystem.BattleAssenbly
         
         public void UpdateTurn()
         {
-            // player attacks to enemy
+            // How should I do about SacredAttack()
+            _player.Attack((_enemy));
+
+            if (_enemy._hp <= 0)
+            {
+                FinishBattle();
+            }
             
             _enemy.Attack(_player);
+
+            if (_player._hp <= 0)
+            {
+                // Game Over
+                Debug.Log("player was defeated by enemy");
+                FinishBattle();
+            }
+            
+            Debug.Log($"In Battle player._hp = {_player._hp}, enemy._hp = {_enemy._hp}");
+        }
+
+        void FinishBattle()
+        {
+            Debug.Log("The battle finished");
         }
     }
 }

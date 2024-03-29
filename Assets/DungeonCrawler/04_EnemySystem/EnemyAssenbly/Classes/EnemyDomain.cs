@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using DungeonCrawler.PlayerAssembly.Classes;
 using UnityEngine;
 
-namespace DungeonCrawler.EnemyAssenbly.Classes
+namespace DungeonCrawler.EnemyAssembly.Classes
 {
     public class EnemyDomain
     {

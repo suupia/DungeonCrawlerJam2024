@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using DungeonCrawler.EnemyAssenbly.Classes;
+using DungeonCrawler.EnemyAssembly.Classes;
 using UnityEngine;
 
 namespace DungeonCrawler.PlayerAssembly.Classes
