@@ -7,6 +7,7 @@ using DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap;
 using DungeonCrawler.MapAssembly.Classes.Entity;
 using DungeonCrawler.MapAssembly.Interfaces;
 using DungeonCrawler.MapAssembly.Classes;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Random = UnityEngine.Random;
@@ -19,20 +20,20 @@ namespace DungeonCrawler.MapAssembly.Classes
         const int DivideCount = 5;
         readonly DivideAreaExecutor _divideAreaExecutor;
         readonly IGridCoordinate _coordinate;
-        readonly GridEntityPlacer _gridEntityPlacer;
+        readonly GridTilePlacer _gridTilePlacer;
         public DungeonBuilder(
             DivideAreaExecutor divideAreaExecutor,
             IGridCoordinate coordinate,
-            GridEntityPlacer gridEntityPlacer
+            GridTilePlacer gridTilePlacer
             )
         {
             _divideAreaExecutor = divideAreaExecutor;
             _coordinate = coordinate;
-            _gridEntityPlacer = gridEntityPlacer;
+            _gridTilePlacer = gridTilePlacer;
         }
 
         
-        public DungeonGridMap CreateDungeon()
+        public PlainDungeonGridMap CreateDungeon()
         {
             var map = new EntityGridMap(_coordinate);
             var plainDungeon = new PlainDungeonGridMap(map,new List<Area>(), new List<Path>());
@@ -40,8 +41,7 @@ namespace DungeonCrawler.MapAssembly.Classes
             {
                 plainDungeon = CreateDungeonByStep(plainDungeon);
             }
-            var dungeon = _gridEntityPlacer.PlaceEntities(plainDungeon);
-            return dungeon;
+            return plainDungeon;
         }
         
         public PlainDungeonGridMap CreateDungeonByStep(PlainDungeonGridMap plainDungeon)
@@ -73,33 +73,7 @@ namespace DungeonCrawler.MapAssembly.Classes
             );
         }
 
-      
 
-        // Following functions should be written in other class.
-        public (int x, int y) CalculatePlayerSpawnPosition(DungeonGridMap dungeon)
-        {
-            // [pre-condition] _areas should not be empty
-            var areas = dungeon.Areas;
-            Assert.IsTrue(areas.Count > 0);
-            Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
-            
-            var area = areas[Random.Range(0,areas.Count())];
-            var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
-            var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
-            return (spawnX, spawnY);
-        }
-        public (int x, int y) CalculateEnemySpawnPosition(DungeonGridMap dungeon)
-        {
-            // [pre-condition] _areas should not be empty
-            var areas = dungeon.Areas;
-            Assert.IsTrue(areas.Count > 0);
-            Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
-            
-            var area = areas[Random.Range(0,areas.Count())];
-            var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
-            var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
-            return (spawnX, spawnY);
-        }
 
     }
     public record Area(int X, int Y, int Width, int Height, Room Room, List<(Area area, Path path)> AdjacentAreas);

@@ -13,8 +13,13 @@ namespace DungeonCrawler
         {
             _dungeonSwitcher = dungeonSwitcher;
         }
+
+        public void GotOn()
+        {
+            StairsDown();
+        }
         
-        public void StairsDown()
+        void StairsDown()
         {
             Debug.Log($"Stairs.StairsDown()");
             _dungeonSwitcher.SwitchNextDungeon();

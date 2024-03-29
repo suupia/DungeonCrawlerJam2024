@@ -11,31 +11,16 @@ namespace DungeonCrawler
 {
     public class GameSystemInitializer : MonoBehaviour
     {
-        IMapBuilderMono _mapBuilderMono = null!;
-        IPlayerSpawnerMono _playerSpawnerMono = null!;
         DungeonBuilder _dungeonBuilder = null!;
-        EnemySpawnerMono _enemySpawnerMono = null!;
-        StairsSpawnerMono _stairsSpawnerMono = null!;
-        TorchSpawnerMono _torchSpawnerMono = null!;
         DungeonSwitcher _dungeonSwitcher = null!;
         
         [Inject]
         public void Construct(
-            IMapBuilderMono mapBuilderMono,
-            IPlayerSpawnerMono playerSpawnerMono,
             DungeonBuilder dungeonBuilder,
-            EnemySpawnerMono enemySpawnerMono,
-            StairsSpawnerMono stairsSpawnerMono,
-            TorchSpawnerMono torchSpawnerMono,
             DungeonSwitcher dungeonSwitcher
             )
         {
-            _mapBuilderMono = mapBuilderMono;
-            _playerSpawnerMono = playerSpawnerMono;
             _dungeonBuilder = dungeonBuilder;
-            _enemySpawnerMono = enemySpawnerMono;
-            _stairsSpawnerMono = stairsSpawnerMono;
-            _torchSpawnerMono = torchSpawnerMono;
             _dungeonSwitcher = dungeonSwitcher;
 
             SetUp();
@@ -43,14 +28,7 @@ namespace DungeonCrawler
         void SetUp()
         {
             Debug.Log("GameSystemInitializer.SetUp()");
-            
-            // Create map
-            _mapBuilderMono.SwitchNextDungeon();
-            
-            // Spawn player
-            var (spawnX, spawnY) = _dungeonBuilder.CalculatePlayerSpawnPosition(_dungeonSwitcher.CurrentDungeon);
-            _playerSpawnerMono.SpawnPlayer(spawnX, spawnY);
-            
+
         }
     }
 }

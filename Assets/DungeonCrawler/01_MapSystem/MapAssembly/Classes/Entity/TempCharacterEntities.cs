@@ -27,11 +27,4 @@ namespace DungeonCrawler.MapAssembly.Classes.Entity
         }
     }
     
-    public class CharacterStairs: IGridEntity
-    {
-        public override string ToString()
-        {
-            return "S";
-        }
-    }
 }

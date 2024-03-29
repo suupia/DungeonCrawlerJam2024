@@ -38,7 +38,7 @@ namespace  DungeonCrawler
 
         void SpawnStairs(int x, int y)
         {
-            Debug.Log($"Key spawn position: {x}, {y}");
+            Debug.Log($"Stair spawn position: {x}, {y}");
             var spawnGridPosition = GridConverter.GridPositionToWorldPosition(new Vector2Int(x, y));
             var spawnPosition = new Vector3(spawnGridPosition.x, KeySpawnHeight, spawnGridPosition.z);
             _stairsController = Instantiate(stairsPrefab, spawnPosition, Quaternion.identity);

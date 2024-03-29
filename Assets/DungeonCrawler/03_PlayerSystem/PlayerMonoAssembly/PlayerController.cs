@@ -38,13 +38,48 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         AnimationMonoSystem  _animationMonoSystem;
 
         DungeonSwitcher _dungeonSwitcher;
-
-        [Inject]
+        
         public void Construct(
             DungeonSwitcher dungeonSwitcher
         )
         {
             _dungeonSwitcher = dungeonSwitcher;
+        }
+        
+        void Awake()
+        {
+            if (playerInput == null) playerInput = GetComponent<PlayerInput>();
+            _animationMonoSystem = new AnimationMonoSystem();
+
+            _currentMovement = MovementAction.None;
+        
+            _moveAction = playerInput.actions["Movement"];
+            _turnAction = playerInput.actions["Turn"];
+        
+            _moveAction.performed += e =>
+            {
+                Vector2 movement = e.ReadValue<Vector2>();
+        
+                if (movement.x > 0) _movements.Enqueue(MovementAction.Right);
+                else if (movement.x < 0) _movements.Enqueue(MovementAction.Left);
+                else if (movement.y > 0) _movements.Enqueue(MovementAction.Up);
+                else if (movement.y < 0) _movements.Enqueue(MovementAction.Down);
+            };
+        
+            _turnAction.performed += e =>
+            {
+                float turn = e.ReadValue<float>();
+                if (turn == 1) _movements.Enqueue(MovementAction.TurnRight);
+                else if (turn == -1) _movements.Enqueue(MovementAction.TurnLeft);
+            };
+        }
+        
+        void FixedUpdate()
+        {
+            movementView = _movements.ToList();
+            ProcessMovement();
+            CheckUnderPlayerEntity();
+            _animationMonoSystem.Update();
         }
         
 
@@ -125,7 +160,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
                 // Debug.Log("Move is cancelled because new position is wall");
                 return;
             }
-            else if (_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<CharacterStairs>(newGridPosition) != null)
+            else if (_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<Stairs>(newGridPosition) != null)
             {
                 Debug.Log("Player is on stairs");
             }
@@ -175,39 +210,21 @@ namespace  DungeonCrawler.PlayerMonoAssembly
             }
         }
         
-        void Awake()
+        void CheckUnderPlayerEntity()
         {
-            if (playerInput == null) playerInput = GetComponent<PlayerInput>();
-            _animationMonoSystem = new AnimationMonoSystem();
+            Vector2Int gridPosition = GridConverter.WorldPositionToGridPosition(transform.position);
+            Debug.Log($"_dungeonSwitcher : {_dungeonSwitcher}");
+            Debug.Log($"_dungeonSwitcher.CurrentDungeon : {_dungeonSwitcher.CurrentDungeon}");
+            Debug.Log($"_dungeonSwitcher.CurrentDungeon.Map : {_dungeonSwitcher.CurrentDungeon.Map}");
+            Debug.Log($"_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<IGridEntity>(gridPosition) : {_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<IGridEntity>(gridPosition)}");
+            IGridEntity? entity = _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<IGridEntity>(gridPosition);
+            if (entity != null)
+            {
+                entity.GotOn();
+                Debug.Log($"Player is on {entity.GetType().Name}");
+            }
+        }
+        
 
-            _currentMovement = MovementAction.None;
-        
-            _moveAction = playerInput.actions["Movement"];
-            _turnAction = playerInput.actions["Turn"];
-        
-            _moveAction.performed += e =>
-            {
-                Vector2 movement = e.ReadValue<Vector2>();
-        
-                if (movement.x > 0) _movements.Enqueue(MovementAction.Right);
-                else if (movement.x < 0) _movements.Enqueue(MovementAction.Left);
-                else if (movement.y > 0) _movements.Enqueue(MovementAction.Up);
-                else if (movement.y < 0) _movements.Enqueue(MovementAction.Down);
-            };
-        
-            _turnAction.performed += e =>
-            {
-                float turn = e.ReadValue<float>();
-                if (turn == 1) _movements.Enqueue(MovementAction.TurnRight);
-                else if (turn == -1) _movements.Enqueue(MovementAction.TurnLeft);
-            };
-        }
-        
-        void FixedUpdate()
-        {
-            movementView = _movements.ToList();
-            ProcessMovement();
-            _animationMonoSystem.Update();
-        }
     }
 }
