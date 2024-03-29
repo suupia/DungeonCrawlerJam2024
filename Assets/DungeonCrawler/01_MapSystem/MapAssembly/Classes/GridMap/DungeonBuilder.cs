@@ -20,7 +20,6 @@ namespace DungeonCrawler.MapAssembly.Classes
         readonly IGridEntity _room;
         readonly DivideAreaExecutor _divideAreaExecutor;
 
-        int _divideCount;
         readonly IGridCoordinate _coordinate;
 
         public DungeonBuilder(
@@ -43,7 +42,6 @@ namespace DungeonCrawler.MapAssembly.Classes
             {
                 dungeon = CreateDungeonByStep(dungeon);
             }
-            _divideCount = 0;
             return dungeon;
         }
         
@@ -52,23 +50,20 @@ namespace DungeonCrawler.MapAssembly.Classes
             var areas = !dungeon.Areas.Any()
                 ? new List<Area> { GetInitArea(dungeon.Map) }
                 : _divideAreaExecutor.DivideAreaOnce(new List<Area>(dungeon.Areas));
-            // var areas =_divideCount == 0 ? new List<Area>{GetInitArea(dungeon)} : _divideAreaExecutor.DivideAreaOnce(_areas);
             var paths = areas.SelectMany(area => area.AdjacentAreas.Select(tuple => tuple.path)).ToList();
             dungeon.Map.ClearMap();
             var nextDungeon = new DungeonGridMap(dungeon.Map, areas, paths);
             var dungeon1 = PlaceRooms(nextDungeon);
             var dungeon2 = PlacePath(dungeon1);
             var dungeon3 = PlaceWall(dungeon2);  // this should be last
-            _divideCount++;
             return dungeon3;
         }
 
         public void Reset()
         {
-            _divideCount = 0;
         }
 
-        public Area GetInitArea(EntityGridMap map)
+        Area GetInitArea(EntityGridMap map)
         {
             return new Area(
                 X: 0,
