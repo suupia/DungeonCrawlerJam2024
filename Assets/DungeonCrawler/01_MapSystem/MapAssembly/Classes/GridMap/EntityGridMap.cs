@@ -21,16 +21,16 @@ namespace DungeonCrawler.MapAssembly.Classes
         public bool IsInDataOrEdgeArea(int x, int y) => _coordinate.IsInDataOrEdgeArea(x, y);
 
         
-        readonly List<IGridEntity>[] _entityMaps;
+        readonly List<IGridTile>[] _entityMaps;
         readonly IGridCoordinate _coordinate;
         
         public EntityGridMap(IGridCoordinate coordinate)
         {
             _coordinate = coordinate;
-            _entityMaps = new List<IGridEntity>[Length];
+            _entityMaps = new List<IGridTile>[Length];
             for (int i = 0; i < Length; i++)
             {
-                _entityMaps[i] = new List<IGridEntity>();
+                _entityMaps[i] = new List<IGridTile>();
             }
         }
         
@@ -43,17 +43,17 @@ namespace DungeonCrawler.MapAssembly.Classes
         {
             for (int i = 0; i < Length; i++)
             {
-                _entityMaps[i] = new List<IGridEntity>();
+                _entityMaps[i] = new List<IGridTile>();
             }
             // _blockPresenterは初期化していなことに注意
             return this;
         }
         
-        public void FillAll(IGridEntity gridEntity)
+        public void FillAll(IGridTile gridTile)
         {
             for (int i = 0; i < Length; i++)
             {
-                _entityMaps[i].Add(gridEntity);
+                _entityMaps[i].Add(gridTile);
             }
         }
 
@@ -67,7 +67,7 @@ namespace DungeonCrawler.MapAssembly.Classes
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    var entities = GetSingleTypeList<IGridEntity>(new Vector2Int(x, y));
+                    var entities = GetSingleTypeList<IGridTile>(new Vector2Int(x, y));
                     if (entities.Any())
                     {
                         int length = entities[0].ToString().Length;
@@ -87,7 +87,7 @@ namespace DungeonCrawler.MapAssembly.Classes
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    var entities = GetSingleTypeList<IGridEntity>(new Vector2Int(x, y));
+                    var entities = GetSingleTypeList<IGridTile>(new Vector2Int(x, y));
                     if (entities.Any())
                     {
                         sb.Append(entities[0].ToString().PadRight(maxStringLength));
@@ -103,21 +103,21 @@ namespace DungeonCrawler.MapAssembly.Classes
         }
 
         //Getter
-        public T? GetSingleEntity<T>(Vector2Int vector) where T : IGridEntity
+        public T? GetSingleEntity<T>(Vector2Int vector) where T : IGridTile
         {
             int x = vector.x;
             int y = vector.y;
 
             return GetSingleEntity<T>(x, y);
         }
-        public T? GetSingleEntity<T>(int x, int y) where T : IGridEntity
+        public T? GetSingleEntity<T>(int x, int y) where T : IGridTile
         {
             if (_coordinate.IsOutOfDataArea(x, y)) {return default(T);}
 
             return GetSingleEntity<T>(ToSubscript(x, y));
         }
         
-        public T? GetSingleEntity<T>(int index) where T : IGridEntity
+        public T? GetSingleEntity<T>(int index) where T : IGridTile
         {
             if (index < 0 || index > Length)
             {
@@ -138,14 +138,14 @@ namespace DungeonCrawler.MapAssembly.Classes
                 return entity;
             }
         }
-        public List<T> GetSingleTypeList<T>(Vector2Int vector) where T : IGridEntity
+        public List<T> GetSingleTypeList<T>(Vector2Int vector) where T : IGridTile
         {
             var x = vector.x;
             var y = vector.y;
 
             return GetSingleTypeList<T>(ToSubscript(x, y));
         }
-        public List<T> GetSingleTypeList<T>(int x, int y) where T : IGridEntity
+        public List<T> GetSingleTypeList<T>(int x, int y) where T : IGridTile
         {
             if (_coordinate.IsOutOfDataArea(x, y)) return new List<T>();
 
@@ -172,39 +172,39 @@ namespace DungeonCrawler.MapAssembly.Classes
             return filteredEntities;
         }
 
-        public IEnumerable<IGridEntity> GetAllTypeList(Vector2Int vector)
+        public IEnumerable<IGridTile> GetAllTypeList(Vector2Int vector)
         {
-            return GetSingleTypeList<IGridEntity>(vector.x, vector.y);
+            return GetSingleTypeList<IGridTile>(vector.x, vector.y);
 
         }
-        public IEnumerable<IGridEntity> GetAllTypeList(int x, int y)
+        public IEnumerable<IGridTile> GetAllTypeList(int x, int y)
         {
-            if (_coordinate.IsOutOfDataArea(x, y)) return  new List<IGridEntity>();
+            if (_coordinate.IsOutOfDataArea(x, y)) return  new List<IGridTile>();
             
-            return GetSingleTypeList<IGridEntity>(ToSubscript(x, y));
+            return GetSingleTypeList<IGridTile>(ToSubscript(x, y));
 
         }
 
-        public IEnumerable<IGridEntity> GetAllTypeList(int  index)
+        public IEnumerable<IGridTile> GetAllTypeList(int  index)
         {
             if (index < 0 || index > Length)
             {
                 Debug.LogError("領域外の値を習得しようとしました");
-                return new List<IGridEntity>(); // 空のリストを返す
+                return new List<IGridTile>(); // 空のリストを返す
             }
 
             return _entityMaps[index];
         }
         
         // AddEntity
-        public void AddEntity(Vector2Int vector, IGridEntity gridEntity)
+        public void AddEntity(Vector2Int vector, IGridTile gridTile)
         {
             var x = vector.x;
             var y = vector.y;
 
-            AddEntity(x,y, gridEntity);
+            AddEntity(x,y, gridTile);
         }
-        public void AddEntity(int x, int y, IGridEntity gridEntity)
+        public void AddEntity(int x, int y, IGridTile gridTile)
         {
 
             if (_coordinate.IsOutOfDataArea(x, y))
@@ -213,10 +213,10 @@ namespace DungeonCrawler.MapAssembly.Classes
                 return;
             }
 
-            AddEntity(ToSubscript(x, y), gridEntity);
+            AddEntity(ToSubscript(x, y), gridTile);
         }
 
-        public void AddEntity(int index, IGridEntity gridEntity)
+        public void AddEntity(int index, IGridTile gridTile)
         {
             if (index < 0 || index > Length)
             {
@@ -228,16 +228,16 @@ namespace DungeonCrawler.MapAssembly.Classes
 
             if (entities.Any())
             {
-                Debug.LogWarning($"[Warning] {typeof(IGridEntity)} is already in. Current Count: {entities.Count}");
+                Debug.LogWarning($"[Warning] {typeof(IGridTile)} is already in. Current Count: {entities.Count}");
             }
 
             // domain
-            _entityMaps[index].Add(gridEntity);
+            _entityMaps[index].Add(gridTile);
             
         }
 
         // RemoveEntity
-        public void RemoveEntity<T>(int x, int y, T entity) where T : IGridEntity
+        public void RemoveEntity<T>(int x, int y, T entity) where T : IGridTile
         {
             if (_coordinate. IsOutOfDataArea(x, y))
             {
@@ -252,7 +252,7 @@ namespace DungeonCrawler.MapAssembly.Classes
 
         }
 
-        public void RemoveEntity<T>(Vector2Int vector, T entity) where T : IGridEntity
+        public void RemoveEntity<T>(Vector2Int vector, T entity) where T : IGridTile
         {
             RemoveEntity(vector.x, vector.y, entity);
         }

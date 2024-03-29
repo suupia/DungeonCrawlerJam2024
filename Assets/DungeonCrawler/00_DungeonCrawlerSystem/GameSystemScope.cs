@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections;
 using System.Collections.Generic;
+using DungeonCrawler._01_MapSystem.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Interfaces;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapMonoAssembly;
@@ -25,7 +26,9 @@ namespace DungeonCrawler
             builder.Register<SquareGridCoordinate>(Lifetime.Scoped).As<IGridCoordinate>().WithParameter("width",50).WithParameter("height",50);
             builder.Register<DivideAreaExecutor>(Lifetime.Scoped);
             builder.Register<DungeonBuilder>(Lifetime.Scoped);
-            
+
+            builder.Register<DefaultDungeonGridMap>(Lifetime.Scoped);
+            builder.Register<GridEntityPlacer>(Lifetime.Scoped);
             builder.Register<DungeonSwitcher>(Lifetime.Scoped);
             
             builder.RegisterComponentInHierarchy<MapBuilderMono>().As<IMapBuilderMono>();

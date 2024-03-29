@@ -1,27 +1,24 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using DungeonCrawler.MapAssembly.Interfaces;
+using Codice.Client.BaseCommands.BranchExplorer.ExplorerData;
+using DungeonCrawler.MapAssembly.Classes;
 
-namespace DungeonCrawler.MapAssembly.Classes
+namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap
 {
     public class DungeonGridMap
     {
-        public EntityGridMap Map => _map; // Aggregating and publishing in PUBLIC is a compromise.
-        public IReadOnlyList<Area> Areas => _areas;
-        public IReadOnlyList<Path> Paths => _paths;
-        readonly EntityGridMap _map;
-        readonly List<Area> _areas;
-        readonly List<Path> _paths;
-
-        public DungeonGridMap(
-            EntityGridMap map,
-            List<Area> areas,
-            List<Path> paths)
-        {
-            _map = map;
-            _areas = areas;
-            _paths = paths;
-        }
+        public EntityGridMap Map => _plainDungeon.Map;
+        public IReadOnlyList<Area> Areas => _plainDungeon.Areas;
+        public IReadOnlyList<Path> Paths => _plainDungeon.Paths;
+        readonly PlainDungeonGridMap _plainDungeon;
         
+        public (int x, int y) StairsPosition { get; set; }
+        public (int x, int y) EnemyPosition { get; set; }
+        public IReadOnlyList<(int x, int y)> TorchPositions { get; set; } = new List<(int x, int y)>();
+
+        public DungeonGridMap(PlainDungeonGridMap plainDungeon)
+        {
+            _plainDungeon = plainDungeon;
+        }
     }
 }
