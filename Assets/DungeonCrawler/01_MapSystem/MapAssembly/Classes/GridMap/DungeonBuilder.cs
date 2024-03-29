@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DungeonCrawler._01_MapSystem.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes.Entity;
 using DungeonCrawler.MapAssembly.Interfaces;
 using DungeonCrawler.MapAssembly.Classes;
@@ -15,22 +16,18 @@ namespace DungeonCrawler.MapAssembly.Classes
     public class DungeonBuilder
     {
         const int DivideCount = 5;
-        readonly IGridEntity _wall;
-        readonly IGridEntity _path;
-        readonly IGridEntity _room;
         readonly DivideAreaExecutor _divideAreaExecutor;
-
         readonly IGridCoordinate _coordinate;
-
+        readonly GridEntityPlacer _gridEntityPlacer;
         public DungeonBuilder(
             DivideAreaExecutor divideAreaExecutor,
-            IGridCoordinate coordinate)
+            IGridCoordinate coordinate,
+            GridEntityPlacer gridEntityPlacer
+            )
         {
             _divideAreaExecutor = divideAreaExecutor;
             _coordinate = coordinate;
-            _wall = new CharacterWall();
-            _path = new CharacterPath();
-            _room = new CharacterRoom();
+            _gridEntityPlacer = gridEntityPlacer;
         }
 
         
@@ -53,14 +50,8 @@ namespace DungeonCrawler.MapAssembly.Classes
             var paths = areas.SelectMany(area => area.AdjacentAreas.Select(tuple => tuple.path)).ToList();
             dungeon.Map.ClearMap();
             var nextDungeon = new DungeonGridMap(dungeon.Map, areas, paths);
-            var dungeon1 = PlaceRooms(nextDungeon);
-            var dungeon2 = PlacePath(dungeon1);
-            var dungeon3 = PlaceWall(dungeon2);  // this should be last
-            return dungeon3;
-        }
-
-        public void Reset()
-        {
+            nextDungeon = _gridEntityPlacer.PlaceEntities(nextDungeon);
+            return nextDungeon;
         }
 
         Area GetInitArea(EntityGridMap map)
@@ -80,51 +71,7 @@ namespace DungeonCrawler.MapAssembly.Classes
             );
         }
 
-        public DungeonGridMap PlaceRooms(DungeonGridMap dungeon)
-        {
-            var areas = dungeon.Areas;  
-            foreach (var area in areas)
-            {
-                var room = area.Room;
-                for (int y = room.Y; y < room.Y + room.Height; y++)
-                {
-                    for (int x = room.X; x < room.X + room.Width; x++)
-                    {
-                        dungeon.Map.AddEntity(x, y, _room);
-                    }
-                }
-            }
-
-            return dungeon;
-        }
-        
-        public DungeonGridMap PlaceWall(DungeonGridMap dungeon)
-        {
-            for (int y = 0; y < dungeon.Map.Height; y++)
-            {
-                for (int x = 0; x < dungeon.Map.Width; x++)
-                {
-                    if (dungeon.Map.GetSingleTypeList<IGridEntity>(x, y).Count == 0)
-                    {
-                        dungeon.Map.AddEntity(x,y, _wall);
-                    }
-                }
-            }
-            return dungeon;
-        }
-        
-        public DungeonGridMap PlacePath(DungeonGridMap dungeon)
-        {
-            var paths = dungeon.Paths;
-            foreach (var path in paths)
-            {
-                foreach (var (x, y) in path.Points)
-                {
-                    dungeon.Map.AddEntity(x, y, _path);
-                }
-            }
-            return dungeon;
-        }
+      
 
         // Following functions should be written in other class.
         public (int x, int y) CalculatePlayerSpawnPosition(DungeonGridMap dungeon)
