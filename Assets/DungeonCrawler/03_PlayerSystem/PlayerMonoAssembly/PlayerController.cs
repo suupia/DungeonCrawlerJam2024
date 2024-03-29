@@ -49,6 +49,13 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         {
             _player = player;
             _dungeonSwitcher = dungeonSwitcher;
+            
+            SetUp();
+        }
+
+        void SetUp()
+        {
+            _player.GridPosition = () => GridPosition;
         }
         
         void Awake()

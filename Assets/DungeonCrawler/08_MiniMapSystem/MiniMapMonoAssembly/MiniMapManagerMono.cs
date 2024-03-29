@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Interfaces;
+using JetBrains.Annotations;
 using R3;
 using UnityEditor.Experimental.Licensing;
 using UnityEngine;
@@ -87,6 +88,7 @@ namespace DungeonCrawler
                 {
                     if (obj is Player)
                     {
+                        _player = obj as Player;;
                         Debug.Log("find player and set playerTile");
                         _playerTile.SetTileSprite(obj);
                         SetTilePosition(_playerTile, i);
@@ -113,6 +115,15 @@ namespace DungeonCrawler
             var playerPosition = new Vector3(10, 1, 10);
 
             _camera.transform.position = playerPosition + _cameraOffset;
+        }
+
+        [CanBeNull] Player _player;
+        void Update()
+        {
+            if(_player != null)
+            {
+                Debug.Log($"player grid position: {_player.GridPosition()}"); 
+            }
         }
     }
 }
