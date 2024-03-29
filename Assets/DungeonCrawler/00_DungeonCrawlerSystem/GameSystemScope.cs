@@ -20,11 +20,8 @@ namespace DungeonCrawler
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            // Player
-            // builder.Register<CarryPlayerFactory>(Lifetime.Scoped).As<ICarryPlayerFactory>();
-            // builder.Register<CarryPlayerControllerNetBuilder>(Lifetime.Scoped).As<IPlayerControllerNetBuilder>();
-            // builder.Register<NetworkPlayerSpawner>(Lifetime.Scoped);
-            // builder.Register<CarryPlayerContainer>(Lifetime.Scoped);
+            // GameState
+            builder.Register<GameStateSwitcher>(Lifetime.Scoped);
 
             builder.Register<SquareGridCoordinate>(Lifetime.Scoped).As<IGridCoordinate>().WithParameter("width",50).WithParameter("height",50);
             builder.Register<DivideAreaExecutor>(Lifetime.Scoped);
@@ -53,6 +50,7 @@ namespace DungeonCrawler
             builder.RegisterComponentInHierarchy<TorchSpawnerMono>();
             
             // UI Mono
+            builder.RegisterComponentInHierarchy<UISwitcherMono>();
             builder.RegisterComponentInHierarchy<FloorUIMono>();
             builder.RegisterComponentInHierarchy<BattleUIInputMono>();
             builder.RegisterComponentInHierarchy<BattleUIOutputMono>();

@@ -47,6 +47,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             dungeon = PlaceStairs(dungeon, dungeonSwitcher);
             dungeon = PlaceEnemies(dungeon, dungeonSwitcher);
             dungeon = PlaceTorches(dungeon);
+            
 
             return dungeon;
         }
