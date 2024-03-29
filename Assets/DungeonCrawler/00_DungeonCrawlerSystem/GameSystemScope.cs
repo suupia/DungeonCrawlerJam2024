@@ -27,6 +27,7 @@ namespace DungeonCrawler
             builder.Register<DivideAreaExecutor>(Lifetime.Scoped);
             builder.Register<DungeonBuilder>(Lifetime.Scoped);
 
+            builder.Register<DefaultDungeonGridMap>(Lifetime.Scoped);
             builder.Register<GridEntityPlacer>(Lifetime.Scoped);
             builder.Register<DungeonSwitcher>(Lifetime.Scoped);
             
