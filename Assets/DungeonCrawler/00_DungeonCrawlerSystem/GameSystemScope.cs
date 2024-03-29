@@ -37,6 +37,11 @@ namespace DungeonCrawler
             builder.Register<DefaultDungeonGridMap>(Lifetime.Scoped);
             builder.Register<GridTilePlacer>(Lifetime.Scoped);
             builder.Register<DungeonSwitcher>(Lifetime.Scoped);
+            
+            // Battle
+            builder.Register<PlayerDomain>(Lifetime.Scoped).WithParameter("maxHp", 100);
+            builder.Register<EnemyDomain>(Lifetime.Scoped).WithParameter("maxHp", 100).WithParameter("attack", 1);
+            builder.Register<BattleSimulator>(Lifetime.Scoped);
 
             // Mono
             builder.RegisterComponentInHierarchy<MapBuilderMono>();
@@ -49,6 +54,8 @@ namespace DungeonCrawler
             
             // UI Mono
             builder.RegisterComponentInHierarchy<FloorUIMono>();
+            builder.RegisterComponentInHierarchy<BattleUIInputMono>();
+            builder.RegisterComponentInHierarchy<BattleUIOutputMono>();
         }
     }
 }
