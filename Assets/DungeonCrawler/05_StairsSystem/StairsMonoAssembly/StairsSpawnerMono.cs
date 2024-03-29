@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap;
 using R3;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Serialization;
 using VContainer;
 
@@ -40,8 +41,11 @@ namespace  DungeonCrawler
         {
             Debug.Log($"Stair spawn position: {x}, {y}");
             var spawnGridPosition = GridConverter.GridPositionToWorldPosition(new Vector2Int(x, y));
+            var stairs = _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<Stairs>(x, y);
+            Assert.IsNotNull(stairs);
             var spawnPosition = new Vector3(spawnGridPosition.x, KeySpawnHeight, spawnGridPosition.z);
             _stairsController = Instantiate(stairsPrefab, spawnPosition, Quaternion.identity);
+            _stairsController.Construct(stairs);
         }
     }   
 }

@@ -160,7 +160,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
         
               
 
-        public DungeonGridMap PlacePlayer(DungeonGridMap dungeon, DungeonSwitcher dungeonSwitcher)
+        DungeonGridMap PlacePlayer(DungeonGridMap dungeon, DungeonSwitcher dungeonSwitcher)
         {
             // [pre-condition] _areas should not be empty
             var areas = dungeon.Areas;
@@ -172,6 +172,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
             var player = _entityFactory.CreateEntity<Player>(dungeonSwitcher);
             dungeon.Map.AddEntity(spawnX, spawnY, player);
+            Debug.Log($"Player spawn position: {spawnX}, {spawnY}");
             dungeon.InitPlayerPosition = (spawnX, spawnY);
             return dungeon;
         }

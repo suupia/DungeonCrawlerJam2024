@@ -6,16 +6,9 @@ namespace DungeonCrawler
 {
     public class StairsControllerMono : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        public void Construct(Stairs stairs)
         {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes;
 using DungeonCrawler.PlayerAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes.Entity;
@@ -42,6 +43,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         DungeonSwitcher _dungeonSwitcher;
         
         public void Construct(
+            Player player,
             DungeonSwitcher dungeonSwitcher
         )
         {

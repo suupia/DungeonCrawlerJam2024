@@ -1,8 +1,11 @@
 ﻿#nullable enable
+using DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes;
+using DungeonCrawler._04_EnemySystem.EnemyAssembly;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.PlayerAssembly.Interfaces;
 using R3;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.PlayerLoop;
 using VContainer;
 
@@ -32,13 +35,15 @@ namespace DungeonCrawler.PlayerMonoAssembly
                     SpawnPlayer(x,y);
                 }); 
         }
-        public void SpawnPlayer(int x, int y)
+        void SpawnPlayer(int x, int y)
         {
             Debug.Log($"Player spawn position: {x}, {y}");
-            var spawnGridPosition = GridConverter.GridPositionToWorldPosition(new Vector2Int(x, y));
-            var spawnPosition = new Vector3(spawnGridPosition.x, PlayerSpawnHeight, spawnGridPosition.z);
+            var spawnWorldPosition = GridConverter.GridPositionToWorldPosition(new Vector2Int(x, y));
+            var player = _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<Player>(x, y);
+            Assert.IsNotNull(player, $"spawnGridPosition: {spawnWorldPosition} player: {player}");
+            var spawnPosition = new Vector3(spawnWorldPosition.x, PlayerSpawnHeight, spawnWorldPosition.z);
             _playerController = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
-            _playerController.Construct(_dungeonSwitcher);
+            _playerController.Construct(player, _dungeonSwitcher);
         }
     }
 }
