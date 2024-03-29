@@ -170,8 +170,9 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             var area = areas[Random.Range(0,areas.Count())];
             var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
-            dungeon.Map.AddEntity(spawnX, spawnY, _entityFactory.CreateEntity<Player>(dungeonSwitcher));
-            dungeon.PlayerPosition = (spawnX, spawnY);
+            var player = _entityFactory.CreateEntity<Player>(dungeonSwitcher);
+            dungeon.Map.AddEntity(spawnX, spawnY, player);
+            dungeon.PlayerPosition = ( )=> (spawnX, spawnY);
             return dungeon;
         }
     }
