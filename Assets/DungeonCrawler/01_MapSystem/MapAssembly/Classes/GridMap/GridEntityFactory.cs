@@ -12,25 +12,14 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap
     {
         public IGridEntity CreateEntity<TEntity> (DungeonSwitcher dungeonSwitcher) where  TEntity : IGridEntity
         {
-            if (typeof(TEntity) == typeof(Stairs))
+            return typeof(TEntity) switch
             {
-                return new Stairs(dungeonSwitcher);
-            }
-            if (typeof(TEntity) == typeof(Enemy))
-            {
-                return new Enemy();
-            }
-            if (typeof(TEntity) == typeof(Torch))
-            {
-                return new Torch();
-            }
-            if (typeof(TEntity) == typeof(Player))
-            {
-                return new Player();
-            }
-
-            
-            return new DefaultEntity();
+                _ when typeof(TEntity) == typeof(Stairs) => new Stairs(dungeonSwitcher),
+                _ when typeof(TEntity) == typeof(Enemy) => new Enemy(),
+                _ when typeof(TEntity) == typeof(Torch) => new Torch(),
+                _ when typeof(TEntity) == typeof(DefaultEntity) => new DefaultEntity(),
+                _ => new DefaultEntity(),
+            };
         }
     }
 }
