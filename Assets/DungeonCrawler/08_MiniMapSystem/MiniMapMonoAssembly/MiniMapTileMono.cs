@@ -17,6 +17,7 @@ public class MiniMapTileMono : MonoBehaviour
     [SerializeField] Sprite playerSprite;
     [SerializeField] Sprite enemySprite;
     [SerializeField] Sprite itemSprite;
+    [SerializeField] Sprite stairsSprite;
 
     [SerializeField] SpriteRenderer _spriteRenderer;
 
@@ -27,6 +28,7 @@ public class MiniMapTileMono : MonoBehaviour
 
     public void SetTileSprite(IGridTile gridTile)
     {
+        Debug.Log($"gridTile type is {gridTile}");
         if (gridTile is CharacterWall)
         {
             _spriteRenderer.sprite = wallSprite;
@@ -39,7 +41,7 @@ public class MiniMapTileMono : MonoBehaviour
         }
         else if (gridTile is Stairs)
         {
-            _spriteRenderer.sprite = enemySprite;
+            _spriteRenderer.sprite = stairsSprite;
             _spriteRenderer.sortingOrder = 1;
         }
         else if (gridTile is Enemy)
@@ -54,6 +56,7 @@ public class MiniMapTileMono : MonoBehaviour
         }
         else if (gridTile is Player)
         {
+            Debug.Log("set player sprite to mini map tile");
             _spriteRenderer.sprite = playerSprite;
             _spriteRenderer.sortingOrder = 10;
         }

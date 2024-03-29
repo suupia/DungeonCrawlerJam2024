@@ -102,4 +102,5 @@ MonoBehaviour:
   playerSprite: {fileID: 21300000, guid: 881d49c833d73324cb707d9119fd2e97, type: 3}
   enemySprite: {fileID: 21300000, guid: 961485bd86fba6343a7558cebbdcf6b2, type: 3}
   itemSprite: {fileID: 21300000, guid: c13d55cd1bf273b43910f1fea1175b5a, type: 3}
+  stairsSprite: {fileID: 21300000, guid: b815b98aa04f57b4aadf838470964c4c, type: 3}
   _spriteRenderer: {fileID: 6007987807343796191}
