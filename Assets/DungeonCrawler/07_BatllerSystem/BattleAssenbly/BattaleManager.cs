@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using DungeonCrawler.EnemyAssembly.Classes;
-using DungeonCrawler.PlayerAssembly.Classes;
 using UnityEngine;
 
-namespace DungeonCrawler.BattleSystem.BattleAssembly
+namespace DungeonCrawler
 {
     public class BattaleManager
     {

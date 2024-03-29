@@ -1,9 +1,8 @@
-using DungeonCrawler.BattleSystem.BattleAssembly;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonCrawler.BattleSystem.BattleMonoAssenbly
+namespace DungeonCrawler
 {
     public class BattleManagerMono : MonoBehaviour
     {

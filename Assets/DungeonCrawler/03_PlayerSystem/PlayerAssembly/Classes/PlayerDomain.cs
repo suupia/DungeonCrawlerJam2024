@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using DungeonCrawler.EnemyAssembly.Classes;
 using UnityEngine;
 
-namespace DungeonCrawler.PlayerAssembly.Classes
+namespace DungeonCrawler
 {
     public class PlayerDomain
     {
