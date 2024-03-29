@@ -1,21 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using DungeonCrawler.MapAssembly.Classes;
+using DungeonCrawler.MapAssembly.Interfaces;
+using UnityEditor.Experimental.Licensing;
 using UnityEngine;
 
 namespace DungeonCrawler
 {
     public class MiniMapManagerMono : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-            
-        }
+        [SerializeField] MiniMapTileMono _miniMapTileMono;
+        List<MiniMapTileMono> _miniMapTileMonos;
 
-        // Update is called once per frame
-        void Update()
+        public void InitMiniMap(EntityGridMap entityGridMap)
         {
-            
+            for (int index = 0; i < entityGridMap.Length; i++)
+            {
+                var entities = entityGridMap.GetAllTypeList(index);
+
+                foreach (var entity in entities)
+                {
+                    
+                }
+            }
         }
     }
 }
