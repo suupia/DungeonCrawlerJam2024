@@ -9,24 +9,32 @@ using DungeonCrawler.MapAssembly.Interfaces;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Sprites;
+using VContainer;
 
 namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
 {
     public class GridEntityPlacer
     {
-        readonly IGridTile _wall;
-        readonly IGridTile _path;
-        readonly IGridTile _room;
-        readonly IGridEntity _stairs;
-        readonly IGridEntity _enemy;
+        readonly CharacterWall _wall;
+        readonly CharacterPath _path;
+        readonly CharacterRoom _room;
+        readonly Stairs _stairs;
+        readonly Enemy _enemy;
 
-        public GridEntityPlacer()
+        [Inject]
+        public GridEntityPlacer(
+            CharacterWall wall,
+            CharacterPath path,
+            CharacterRoom room,
+            Stairs stairs,
+            Enemy enemy
+            )
         {
-            _wall = new CharacterWall();
-            _path = new CharacterPath();
-            _room = new CharacterRoom();
-            _stairs = new CharacterStairs();
-            _enemy = new Enemy();
+            _wall = wall;
+            _path = path;
+            _room = room;
+            _stairs = stairs;
+            _enemy = enemy;
         }
 
         public DungeonGridMap PlaceEntities(PlainDungeonGridMap plainDungeon)
