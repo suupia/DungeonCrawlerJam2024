@@ -32,7 +32,7 @@ namespace DungeonCrawler.MapTestAssembly
             _coordinate = new SquareGridCoordinate(50, 50);
             _divideAreaExecutor = new DivideAreaExecutor();
             _dungeonBuilder = new DungeonBuilder(
-                _divideAreaExecutor
+                _divideAreaExecutor, _coordinate
             );
         }
 

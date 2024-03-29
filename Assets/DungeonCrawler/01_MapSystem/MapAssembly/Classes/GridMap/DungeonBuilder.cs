@@ -22,20 +22,25 @@ namespace DungeonCrawler.MapAssembly.Classes
 
         int _divideCount;
         List<Area> _areas = new ();
+        readonly IGridCoordinate _coordinate;
+
 
 
         public DungeonBuilder(
-            DivideAreaExecutor divideAreaExecutor)
+            DivideAreaExecutor divideAreaExecutor,
+            IGridCoordinate coordinate)
         {
             _divideAreaExecutor = divideAreaExecutor;
+            _coordinate = coordinate;
             _wall = new CharacterWall();
             _path = new CharacterPath();
             _room = new CharacterRoom();
         }
 
         
-        public DungeonGridMap CreateDungeon(EntityGridMap map)
+        public DungeonGridMap CreateDungeon()
         {
+            var map = new EntityGridMap(_coordinate);
             for(int i = 0; i < DivideCount; i++)
             {
                 map = CreateDungeonByStep(map);
