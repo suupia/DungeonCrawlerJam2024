@@ -7,18 +7,18 @@ namespace DungeonCrawler
 {
     public class EnemyDomain
     {
-        public int _hp;
+        public int Hp;
         int _attack;
 
         public EnemyDomain(int hp, int attack)
         {
-            _hp = hp;
+            Hp = hp;
             _attack = attack;
         }
 
         public void Attack(PlayerDomain target)
         {
-            target._hp -= _attack;
+            target.Hp -= _attack;
         }
     }
 }

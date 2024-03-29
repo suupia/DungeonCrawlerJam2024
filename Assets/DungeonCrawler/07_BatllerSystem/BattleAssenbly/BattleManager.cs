@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace DungeonCrawler
 {
-    public class BattaleManager
+    public class BattleManager
     {
         PlayerDomain _player;
         EnemyDomain _enemy;
@@ -13,6 +13,8 @@ namespace DungeonCrawler
 
         public void StartBattle(PlayerDomain player, EnemyDomain enemy)
         {
+            Assert.IsFalse(inBattle);
+            
             _player = player;
             _enemy = enemy;
             inBattle = true;
@@ -26,21 +28,21 @@ namespace DungeonCrawler
             // How should I do about SacredAttack()
             _player.Attack((_enemy));
 
-            if (_enemy._hp <= 0)
+            if (_enemy.Hp <= 0)
             {
                 FinishBattle();
             }
             
             _enemy.Attack(_player);
 
-            if (_player._hp <= 0)
+            if (_player.Hp <= 0)
             {
                 // Game Over
                 Debug.Log("player was defeated by enemy");
                 FinishBattle();
             }
             
-            Debug.Log($"In Battle player._hp = {_player._hp}, enemy._hp = {_enemy._hp}");
+            Debug.Log($"In Battle player._hp = {_player.Hp}, enemy._hp = {_enemy.Hp}");
         }
 
         void FinishBattle()

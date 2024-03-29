@@ -6,19 +6,19 @@ namespace DungeonCrawler
 {
     public class PlayerDomain
     {
-        public int _hp;
+        public int Hp;
         int _attack;
 
 
         public PlayerDomain(int hp, int attack)
         {
-            _hp = hp;
+            Hp = hp;
             _attack = attack;
         }
 
         public void Attack(EnemyDomain target)
         {
-            target._hp -= _attack;
+            target.Hp -= _attack;
         }
 
         public void SacredAttack(EnemyDomain target)
