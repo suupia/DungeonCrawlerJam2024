@@ -214,7 +214,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         
         void CheckUnderPlayerEntity()
         {
-            var (x, y) = GridConverter.WorldPositionToGridPosition(transform.position);
+            var (x, y) = GridPosition;
             Debug.Log($"_dungeonSwitcher : {_dungeonSwitcher}");
             Debug.Log($"_dungeonSwitcher.CurrentDungeon : {_dungeonSwitcher.CurrentDungeon}");
             Debug.Log($"_dungeonSwitcher.CurrentDungeon.Map : {_dungeonSwitcher.CurrentDungeon.Map}");

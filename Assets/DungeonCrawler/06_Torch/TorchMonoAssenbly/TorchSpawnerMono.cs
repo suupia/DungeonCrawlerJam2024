@@ -33,7 +33,7 @@ namespace  DungeonCrawler
                     {
                         Destroy(torchController.gameObject);
                     }
-                    var positions = _dungeonSwitcher.CurrentDungeon.TorchPositions;
+                    var positions = _dungeonSwitcher.CurrentDungeon.InitTorchPositions;
                     foreach (var (x,y) in positions)
                     {
                         SpawnTorch(x,y);

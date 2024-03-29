@@ -31,7 +31,7 @@ namespace  DungeonCrawler
                 .Subscribe(_ =>
                 {
                     if(_stairsController != null) Destroy(_stairsController.gameObject);
-                    var(x,y) = _dungeonSwitcher.CurrentDungeon.StairsPosition;
+                    var(x,y) = _dungeonSwitcher.CurrentDungeon.InitStairsPosition;
                     SpawnStairs(x,y);
                 }); 
         }

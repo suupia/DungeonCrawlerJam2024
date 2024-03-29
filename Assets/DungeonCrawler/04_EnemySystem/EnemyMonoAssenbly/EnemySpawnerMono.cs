@@ -27,7 +27,7 @@ public class EnemySpawnerMono : MonoBehaviour
             .Subscribe(_ =>
             {
                 if(_enemyController != null) Destroy(_enemyController.gameObject);
-                var(x,y) = _dungeonSwitcher.CurrentDungeon.EnemyPosition;
+                var(x,y) = _dungeonSwitcher.CurrentDungeon.InitEnemyPosition;
                 SpawnEnemy(x,y);
             }); 
     }
