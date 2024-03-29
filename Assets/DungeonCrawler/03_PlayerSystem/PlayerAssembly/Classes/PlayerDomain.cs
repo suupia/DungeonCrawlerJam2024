@@ -2,17 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDomain : MonoBehaviour
+namespace DungeonCrawler.PlayerAssembly.Classes
 {
-    // Start is called before the first frame update
-    void Start()
+    public class PlayerDomain : MonoBehaviour
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

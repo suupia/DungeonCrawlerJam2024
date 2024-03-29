@@ -2,17 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDomain : MonoBehaviour
+namespace DungeonCrawler.EnemyAssenbly.Classes
 {
-    // Start is called before the first frame update
-    void Start()
+    public class EnemyDomain
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
