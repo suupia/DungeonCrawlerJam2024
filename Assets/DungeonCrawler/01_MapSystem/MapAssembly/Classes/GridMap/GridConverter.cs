@@ -16,12 +16,12 @@ namespace  DungeonCrawler.MapAssembly.Classes
             return new Vector3(x,0,z);
         }
 
-        public static Vector2Int WorldPositionToGridPosition(Vector3 worldPos)
+        public static (int x, int y) WorldPositionToGridPosition(Vector3 worldPos)
         {
             Vector2 postGridPos = new Vector2(worldPos.x / LengthBetweenHorizontal, worldPos.z / LengthBetweenVertical);
             int x = Mathf.FloorToInt(postGridPos.x);
             int y = Mathf.FloorToInt(postGridPos.y);
-            return new Vector2Int(x, y);
+            return (x, y);
         }
         
         /// <summary>

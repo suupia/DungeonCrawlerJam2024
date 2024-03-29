@@ -112,7 +112,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
             dungeon.Map.AddEntity(spawnX, spawnY, _entityFactory.CreateEntity<Stairs>(dungeonSwitcher));
-            dungeon.StairsPosition = (spawnX, spawnY);
+            dungeon.InitStairsPosition = (spawnX, spawnY);
             return dungeon;
         }
 
@@ -127,7 +127,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
             dungeon.Map.AddEntity(spawnX, spawnY, _entityFactory.CreateEntity<Enemy>(dungeonSwitcher));
-            dungeon.EnemyPosition = (spawnX, spawnY);
+            dungeon.InitEnemyPosition = (spawnX, spawnY);
             return dungeon;
         }
 
@@ -154,13 +154,13 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             {
                 dungeon.Map.AddEntity(x, y, new Torch());
             }
-            dungeon.TorchPositions = result;
+            dungeon.InitTorchPositions = result;
             return dungeon;
         }
         
               
 
-        public DungeonGridMap PlacePlayer(DungeonGridMap dungeon, DungeonSwitcher dungeonSwitcher)
+        DungeonGridMap PlacePlayer(DungeonGridMap dungeon, DungeonSwitcher dungeonSwitcher)
         {
             // [pre-condition] _areas should not be empty
             var areas = dungeon.Areas;
@@ -170,8 +170,10 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             var area = areas[Random.Range(0,areas.Count())];
             var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
-            dungeon.Map.AddEntity(spawnX, spawnY, _entityFactory.CreateEntity<Player>(dungeonSwitcher));
-            dungeon.PlayerPosition = (spawnX, spawnY);
+            var player = _entityFactory.CreateEntity<Player>(dungeonSwitcher);
+            dungeon.Map.AddEntity(spawnX, spawnY, player);
+            Debug.Log($"Player spawn position: {spawnX}, {spawnY}");
+            dungeon.InitPlayerPosition = (spawnX, spawnY);
             return dungeon;
         }
     }

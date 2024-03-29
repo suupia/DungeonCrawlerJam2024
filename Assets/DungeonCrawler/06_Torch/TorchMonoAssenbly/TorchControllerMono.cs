@@ -7,6 +7,9 @@ namespace DungeonCrawler
 {
     public class TorchControllerMono : MonoBehaviour
     {
-        
+        public void Construct(Torch torch)
+        {
+            
+        }
     }
 }

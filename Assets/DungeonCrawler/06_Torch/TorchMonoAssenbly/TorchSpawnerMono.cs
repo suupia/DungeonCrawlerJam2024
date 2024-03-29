@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using PlasticGui;
 using R3;
 using UnityEngine;
+using UnityEngine.Assertions;
 using VContainer;
 
 namespace  DungeonCrawler
@@ -33,7 +34,7 @@ namespace  DungeonCrawler
                     {
                         Destroy(torchController.gameObject);
                     }
-                    var positions = _dungeonSwitcher.CurrentDungeon.TorchPositions;
+                    var positions = _dungeonSwitcher.CurrentDungeon.InitTorchPositions;
                     foreach (var (x,y) in positions)
                     {
                         SpawnTorch(x,y);
@@ -45,9 +46,13 @@ namespace  DungeonCrawler
         {
             Debug.Log($"Torch spawn position: {x}, {y}");
             var spawnGridPosition = GridConverter.GridPositionToWorldPosition(new Vector2Int(x, y));
+            var torch = _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<Torch>(x, y);
+            Assert.IsNotNull(torch);
             var spawnPosition = new Vector3(spawnGridPosition.x, TorchSpawnHeight, spawnGridPosition.z);
             var torchController = Instantiate(torchPrefab, spawnPosition, Quaternion.identity);
+            torchController.Construct(torch);
             _torchControllers.Add(torchController);
+            
         }
     }
 }

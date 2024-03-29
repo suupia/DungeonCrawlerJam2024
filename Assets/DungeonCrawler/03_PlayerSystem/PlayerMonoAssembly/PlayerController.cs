@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes;
 using DungeonCrawler.PlayerAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes.Entity;
@@ -29,6 +30,8 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         readonly Queue<MovementAction> _movements = new();
         [SerializeField] List<MovementAction> movementView;
         MovementAction _currentMovement;
+        
+        public (int x, int y) GridPosition => GridConverter.WorldPositionToGridPosition(transform.position);
 
         bool _inMotion;
 
@@ -36,14 +39,23 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         InputAction _turnAction;
         
         AnimationMonoSystem  _animationMonoSystem;
-
+        Player _player;
         DungeonSwitcher _dungeonSwitcher;
         
         public void Construct(
+            Player player,
             DungeonSwitcher dungeonSwitcher
         )
         {
+            _player = player;
             _dungeonSwitcher = dungeonSwitcher;
+            
+            SetUp();
+        }
+
+        void SetUp()
+        {
+            _player.GridPosition = () => GridPosition;
         }
         
         void Awake()
@@ -149,29 +161,38 @@ namespace  DungeonCrawler.PlayerMonoAssembly
             });
         }
         
+        bool CanMove(MovementAction action)
+        {
+            Vector3 newPosition = GetNextPosition(action);
+            var(x,y) = GridConverter.WorldPositionToGridPosition(newPosition);
+            return _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<CharacterWall>(x,y) == null;
+        }
+        
         void Move(MovementAction action)
         {
             Vector3 newPosition = GetNextPosition(action);
             Quaternion newRotation = GetNextRotation(action);
 
-            Vector2Int newGridPosition = GridConverter.WorldPositionToGridPosition(newPosition);
-            if (_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<CharacterWall>(newGridPosition) != null)
-            {
-                // Debug.Log("Move is cancelled because new position is wall");
-                return;
-            }
-            else if (_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<Stairs>(newGridPosition) != null)
-            {
-                Debug.Log("Player is on stairs");
-            }
+            if (!CanMove(action)) return;
             
-            if (instantTransition)
-            {
-                transform.position = newPosition;
-                transform.rotation = newRotation;
-                _currentMovement = MovementAction.None;
-            }
-            else if (
+            var prePos = GridPosition;
+            var newPos = GridConverter.WorldPositionToGridPosition(newPosition);
+            MovePlayerEntity(prePos, newPos);
+            
+            MoveTransform(action, newPosition, newRotation);
+        }
+        
+        void MovePlayerEntity((int x, int y) prePos, (int x, int y) newPos)
+        {
+            var player = _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<Player>(prePos.x, prePos.y);
+            Assert.IsNotNull(player);
+            _dungeonSwitcher.CurrentDungeon.Map.RemoveEntity<Player>(prePos.x, prePos.y , player);
+            _dungeonSwitcher.CurrentDungeon.Map.AddEntity(newPos.x, newPos.y, player);
+        }
+        
+        void MoveTransform(MovementAction action, Vector3 newPosition, Quaternion newRotation)
+        {
+            if (
                 action == MovementAction.Right ||
                 action == MovementAction.Left ||
                 action == MovementAction.Up ||
@@ -200,6 +221,8 @@ namespace  DungeonCrawler.PlayerMonoAssembly
                 );
             }
         }
+
+
         
         void ProcessMovement()
         {
@@ -212,12 +235,12 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         
         void CheckUnderPlayerEntity()
         {
-            Vector2Int gridPosition = GridConverter.WorldPositionToGridPosition(transform.position);
+            var (x, y) = GridPosition;
             Debug.Log($"_dungeonSwitcher : {_dungeonSwitcher}");
             Debug.Log($"_dungeonSwitcher.CurrentDungeon : {_dungeonSwitcher.CurrentDungeon}");
             Debug.Log($"_dungeonSwitcher.CurrentDungeon.Map : {_dungeonSwitcher.CurrentDungeon.Map}");
-            Debug.Log($"_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<IGridEntity>(gridPosition) : {_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<IGridEntity>(gridPosition)}");
-            IGridEntity? entity = _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<IGridEntity>(gridPosition);
+            Debug.Log($"_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<IGridEntity>(gridPosition) : {_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<IGridEntity>(x,y)}");
+            IGridEntity? entity = _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<IGridEntity>(x,y);
             if (entity != null)
             {
                 entity.GotOn();
