@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DungeonCrawler._01_MapSystem.MapAssembly.Classes;
+using DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap;
 using DungeonCrawler.MapAssembly.Classes.Entity;
 using DungeonCrawler.MapAssembly.Interfaces;
 using DungeonCrawler.MapAssembly.Classes;
@@ -31,14 +32,15 @@ namespace DungeonCrawler.MapAssembly.Classes
         }
 
         
-        public PlainDungeonGridMap CreateDungeon()
+        public DungeonGridMap CreateDungeon()
         {
             var map = new EntityGridMap(_coordinate);
-            var dungeon = new PlainDungeonGridMap(map,new List<Area>(), new List<Path>());
+            var plainDungeon = new PlainDungeonGridMap(map,new List<Area>(), new List<Path>());
             for(int i = 0; i < DivideCount; i++)
             {
-                dungeon = CreateDungeonByStep(dungeon);
+                plainDungeon = CreateDungeonByStep(plainDungeon);
             }
+            var dungeon = _gridEntityPlacer.PlaceEntities(plainDungeon);
             return dungeon;
         }
         
@@ -50,7 +52,7 @@ namespace DungeonCrawler.MapAssembly.Classes
             var paths = areas.SelectMany(area => area.AdjacentAreas.Select(tuple => tuple.path)).ToList();
             plainDungeon.Map.ClearMap();
             var nextDungeon = new PlainDungeonGridMap(plainDungeon.Map, areas, paths);
-            nextDungeon = _gridEntityPlacer.PlaceEntities(nextDungeon);
+            
             return nextDungeon;
         }
 
@@ -74,10 +76,10 @@ namespace DungeonCrawler.MapAssembly.Classes
       
 
         // Following functions should be written in other class.
-        public (int x, int y) CalculatePlayerSpawnPosition(PlainDungeonGridMap plainDungeon)
+        public (int x, int y) CalculatePlayerSpawnPosition(DungeonGridMap dungeon)
         {
             // [pre-condition] _areas should not be empty
-            var areas = plainDungeon.Areas;
+            var areas = dungeon.Areas;
             Assert.IsTrue(areas.Count > 0);
             Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
             
@@ -86,10 +88,10 @@ namespace DungeonCrawler.MapAssembly.Classes
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
             return (spawnX, spawnY);
         }
-        public (int x, int y) CalculateEnemySpawnPosition(PlainDungeonGridMap plainDungeon)
+        public (int x, int y) CalculateEnemySpawnPosition(DungeonGridMap dungeon)
         {
             // [pre-condition] _areas should not be empty
-            var areas = plainDungeon.Areas;
+            var areas = dungeon.Areas;
             Assert.IsTrue(areas.Count > 0);
             Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
             
@@ -99,10 +101,10 @@ namespace DungeonCrawler.MapAssembly.Classes
             return (spawnX, spawnY);
         }
 
-        public (int x, int y) CalculateStairsSpawnPosition(PlainDungeonGridMap plainDungeon)
+        public (int x, int y) CalculateStairsSpawnPosition(DungeonGridMap dungeon)
         {
             // [pre-condition] _areas should not be empty
-            var areas = plainDungeon.Areas;
+            var areas = dungeon.Areas;
             Assert.IsTrue(areas.Count > 0);
             Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
             
@@ -111,10 +113,10 @@ namespace DungeonCrawler.MapAssembly.Classes
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
             return (spawnX, spawnY);
         }
-        public (int x, int y) CalculateTorchSpawnPosition(PlainDungeonGridMap plainDungeon)
+        public (int x, int y) CalculateTorchSpawnPosition(DungeonGridMap dungeon)
         {
             // [pre-condition] _areas should not be empty
-            var areas = plainDungeon.Areas;
+            var areas = dungeon.Areas;
             Assert.IsTrue(areas.Count > 0);
             Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
             

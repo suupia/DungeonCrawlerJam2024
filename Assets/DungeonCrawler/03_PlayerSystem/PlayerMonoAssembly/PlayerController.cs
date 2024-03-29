@@ -120,12 +120,12 @@ namespace  DungeonCrawler.PlayerMonoAssembly
             Quaternion newRotation = GetNextRotation(action);
 
             Vector2Int newGridPosition = GridConverter.WorldPositionToGridPosition(newPosition);
-            if (_dungeonSwitcher.CurrentPlainDungeon.Map.GetSingleEntity<CharacterWall>(newGridPosition) != null)
+            if (_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<CharacterWall>(newGridPosition) != null)
             {
                 // Debug.Log("Move is cancelled because new position is wall");
                 return;
             }
-            else if (_dungeonSwitcher.CurrentPlainDungeon.Map.GetSingleEntity<CharacterStairs>(newGridPosition) != null)
+            else if (_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<CharacterStairs>(newGridPosition) != null)
             {
                 Debug.Log("Player is on stairs");
             }

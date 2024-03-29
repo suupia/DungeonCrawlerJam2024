@@ -48,16 +48,16 @@ namespace DungeonCrawler
             _mapBuilderMono.SwitchNextDungeon();
             
             // Spawn player
-            var (spawnX, spawnY) = _dungeonBuilder.CalculatePlayerSpawnPosition(_dungeonSwitcher.CurrentPlainDungeon);
+            var (spawnX, spawnY) = _dungeonBuilder.CalculatePlayerSpawnPosition(_dungeonSwitcher.CurrentDungeon);
             _playerSpawnerMono.SpawnPlayer(spawnX, spawnY);
             
             // Spawn enemy
-            var (enemySpawnX, enemySpawnY) = _dungeonBuilder.CalculateEnemySpawnPosition(_dungeonSwitcher.CurrentPlainDungeon);
+            var (enemySpawnX, enemySpawnY) = _dungeonBuilder.CalculateEnemySpawnPosition(_dungeonSwitcher.CurrentDungeon);
             _enemySpawnerMono.SpawnEnemy(enemySpawnX, enemySpawnY);
 
             
             // Spawn Torch
-            var (torchSpawnX, torchSpawnY) = _dungeonBuilder.CalculateTorchSpawnPosition(_dungeonSwitcher.CurrentPlainDungeon);
+            var (torchSpawnX, torchSpawnY) = _dungeonBuilder.CalculateTorchSpawnPosition(_dungeonSwitcher.CurrentDungeon);
             _torchSpawnerMono.SpawnTorch(torchSpawnX, torchSpawnY);
         }
     }

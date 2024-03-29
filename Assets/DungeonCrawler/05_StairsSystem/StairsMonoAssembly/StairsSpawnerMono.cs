@@ -2,6 +2,7 @@
 using DungeonCrawler.MapAssembly.Classes;
 using System.Collections;
 using System.Collections.Generic;
+using DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap;
 using R3;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -28,6 +29,7 @@ namespace  DungeonCrawler
             Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
                 .Subscribe(_ =>
                 {
+                    var dungeon = _dungeonSwitcher.CurrentDungeon;
                     SpawnStairs(8, 8); // todo
                 }); 
         }

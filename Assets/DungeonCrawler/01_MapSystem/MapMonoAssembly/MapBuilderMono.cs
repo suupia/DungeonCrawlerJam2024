@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap;
 using DungeonCrawler.MapAssembly.Interfaces;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes.Entity;
@@ -57,7 +58,7 @@ namespace DungeonCrawler.MapMonoAssembly
             }
         }
 
-        void UpdateSprites(PlainDungeonGridMap plainDungeon)
+        void UpdateSprites(DungeonGridMap plainDungeon)
         {
             Debug.Log($"Length:{_coordinate.Length}");
             for(int i = 0; i<_coordinate.Length ; i++)
