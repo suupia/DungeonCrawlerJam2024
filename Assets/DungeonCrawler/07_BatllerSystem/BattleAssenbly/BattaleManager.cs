@@ -19,7 +19,7 @@ namespace DungeonCrawler.BattleSystem.BattleAssenbly
         
         public void UpdateTurn()
         {
-            // player attack
+            // player attacks to enemy
             
             _enemy.Attack(_player);
         }

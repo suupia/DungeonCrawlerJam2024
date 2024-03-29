@@ -7,8 +7,14 @@ namespace DungeonCrawler.EnemyAssenbly.Classes
 {
     public class EnemyDomain
     {
-        public int hp;
-        int attack;
+        public int _hp;
+        int _attack;
+
+        public EnemyDomain(int hp, int attack)
+        {
+            _hp = hp;
+            _attack = attack;
+        }
 
         public void Attack(PlayerDomain target)
         {
