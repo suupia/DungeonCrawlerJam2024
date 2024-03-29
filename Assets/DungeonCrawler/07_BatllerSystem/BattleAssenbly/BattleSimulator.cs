@@ -10,24 +10,15 @@ namespace DungeonCrawler
     {
         PlayerDomain _player;
         EnemyDomain _enemy;
-        bool inBattle = false;
 
         public BattleSimulator(PlayerDomain player, EnemyDomain enemy)
         {
             _player = player;
             _enemy = enemy;
         }
-
-        public void StartBattle()
-        {
-            inBattle = true;
-        }
-
+        
         public void UpdateTurn(IPlayerAttack playerAttack)
         {
-            Assert.IsTrue(inBattle);
-            
-            
             // How should I do about SacredAttack()
             playerAttack.Attack(_enemy);
 
@@ -51,7 +42,6 @@ namespace DungeonCrawler
         void FinishBattle()
         {
             Debug.Log("The battle finished");
-            inBattle = false;
         }
     }
 }

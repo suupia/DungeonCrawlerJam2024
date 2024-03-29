@@ -21,7 +21,7 @@ namespace DungeonCrawler
         {
             if (Input.GetKeyDown(KeyCode.S))
             {
-                _battleSimulator.StartBattle();
+                // _battleSimulator.StartBattle();
             }
             else if (Input.GetKeyDown(KeyCode.U))
             {

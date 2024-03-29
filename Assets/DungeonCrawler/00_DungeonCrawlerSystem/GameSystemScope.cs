@@ -40,6 +40,7 @@ namespace DungeonCrawler
             
             // Battle
             builder.Register<PlayerDomain>(Lifetime.Scoped).WithParameter("hp", 100);
+            builder.Register<EnemyDomain>(Lifetime.Scoped).WithParameter("hp", 100).WithParameter("attack", 1);
             builder.Register<BattleSimulator>(Lifetime.Scoped);
 
             // Mono
@@ -53,6 +54,7 @@ namespace DungeonCrawler
             
             // UI Mono
             builder.RegisterComponentInHierarchy<FloorUIMono>();
+            builder.RegisterComponentInHierarchy<BattleUIInputMono>();
         }
     }
 }
