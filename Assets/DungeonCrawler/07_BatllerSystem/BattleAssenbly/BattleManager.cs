@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DungeonCrawler.PlayerAssembly.Interfaces;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -11,22 +12,24 @@ namespace DungeonCrawler
         EnemyDomain _enemy;
         bool inBattle = false;
 
-        public void StartBattle(PlayerDomain player, EnemyDomain enemy)
+        public BattleManager(PlayerDomain player, EnemyDomain enemy)
         {
-            Assert.IsFalse(inBattle);
-            
             _player = player;
             _enemy = enemy;
+        }
+
+        public void StartBattle()
+        {
             inBattle = true;
         }
 
-        public void UpdateTurn()
+        public void UpdateTurn(IPlayerAttack playerAttack)
         {
             Assert.IsTrue(inBattle);
             
             
             // How should I do about SacredAttack()
-            _player.Attack((_enemy));
+            playerAttack.Attack(_enemy);
 
             if (_enemy.Hp <= 0)
             {

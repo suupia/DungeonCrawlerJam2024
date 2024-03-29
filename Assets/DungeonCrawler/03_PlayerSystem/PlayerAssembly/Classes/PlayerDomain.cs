@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DungeonCrawler.PlayerAssembly.Interfaces;
 using UnityEngine;
 
 namespace DungeonCrawler
@@ -7,23 +8,10 @@ namespace DungeonCrawler
     public class PlayerDomain
     {
         public int Hp;
-        int _attack;
 
-
-        public PlayerDomain(int hp, int attack)
+        public PlayerDomain(int hp)
         {
             Hp = hp;
-            _attack = attack;
-        }
-
-        public void Attack(EnemyDomain target)
-        {
-            target.Hp -= _attack;
-        }
-
-        public void SacredAttack(EnemyDomain target)
-        {
-            
         }
     }
 }
