@@ -7,6 +7,7 @@ using DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap;
 using DungeonCrawler.MapAssembly.Interfaces;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes.Entity;
+using R3;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -14,7 +15,7 @@ using VContainer;
 
 namespace DungeonCrawler.MapMonoAssembly
 {
-    public class MapBuilderMono : MonoBehaviour, IMapBuilderMono
+    public class MapBuilderMono : MonoBehaviour
     {
         [SerializeField] TileMono tilePrefab = null!;
 
@@ -34,19 +35,25 @@ namespace DungeonCrawler.MapMonoAssembly
             _coordinate = coordinate;
             _dungeonSwitcher = dungeonSwitcher;
             
-            for(int i = 0; i<_coordinate.Length ; i++)
-            {
-                var vector = _coordinate.ToVector(i);
-                var tile = Instantiate(tilePrefab, GridConverter.GridPositionToWorldPosition(vector), Quaternion.identity);
-                tile.transform.localScale = new Vector3(GridConverter.GridSize, GridConverter.GridSize, GridConverter.GridSize);
-                _pool.Add(tile);
-            }
+            SetUp();
         }
 
-        public void SwitchNextDungeon()
+        void SetUp()
+        {
+            InstantiateTiles();
+            
+            SwitchNextDungeon(); // Create first dungeon
+            
+            Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
+                .Subscribe(_ =>
+                {
+                    UpdateSprites(_dungeonSwitcher.CurrentDungeon);
+                }); 
+        }
+
+        void SwitchNextDungeon()
         {
             Debug.Log("SwitchNextDungeon");
-            ResetAllTiles();
             var nextMap = _dungeonSwitcher.SwitchNextDungeon();
             UpdateSprites(nextMap);
         }
@@ -57,9 +64,22 @@ namespace DungeonCrawler.MapMonoAssembly
                 tile.ResetSprites();
             }
         }
+        
+        void InstantiateTiles()
+        {
+            for(int i = 0; i<_coordinate.Length ; i++)
+            {
+                var vector = _coordinate.ToVector(i);
+                var tile = Instantiate(tilePrefab, GridConverter.GridPositionToWorldPosition(vector), Quaternion.identity);
+                tile.transform.localScale = new Vector3(GridConverter.GridSize, GridConverter.GridSize, GridConverter.GridSize);
+                _pool.Add(tile);
+            }
+        }
 
         void UpdateSprites(DungeonGridMap plainDungeon)
         {
+            ResetAllTiles();
+
             Debug.Log($"Length:{_coordinate.Length}");
             for(int i = 0; i<_coordinate.Length ; i++)
             {
