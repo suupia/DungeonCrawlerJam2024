@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace DungeonCrawler.PlayerAssembly.Classes
 {
-    public class PlayerDomain : MonoBehaviour
+    public class PlayerDomain
     {
+        
     }
 }
