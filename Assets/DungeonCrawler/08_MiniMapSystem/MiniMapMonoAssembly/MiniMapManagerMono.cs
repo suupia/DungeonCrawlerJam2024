@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Interfaces;
+using DungeonCrawler.PlayerAssembly.Classes;
 using JetBrains.Annotations;
 using R3;
 using UnityEngine;
@@ -52,7 +53,12 @@ namespace DungeonCrawler
             Observable.EveryValueChanged(this, _ => _player.GridPosition())
                 .Subscribe(_ =>
                 {
-                    ChasePlayer();
+                    ChasePlayerPosition();
+                });
+            Observable.EveryValueChanged(this, _ => _player.CurrentMovement())
+                .Subscribe(_ =>
+                {
+                    ChaisePlayerRotation();
                 });
         }
 
@@ -115,13 +121,31 @@ namespace DungeonCrawler
             Debug.Log($"Mini map tiles num = {_miniMapTiles.Count}");
         }
 
-        void ChasePlayer()
+        void ChasePlayerPosition()
         {
             var (x, y) = _player.GridPosition();
             SetTilePosition(_playerTile, _dungeonSwitcher.CurrentDungeon.Map.ToSubscript(x, y));
 
             _camera.transform.position =
                 _cameraOffset + GridConverter.GridPositionToWorldPosition(new Vector2Int(x, y));
+        }
+
+        void ChaisePlayerRotation()
+        {
+            int rotationDegree;
+            MovementAction currentPlayerMovement = _player.CurrentMovement();
+
+            if (currentPlayerMovement == MovementAction.Up) rotationDegree = 90;
+            else if (currentPlayerMovement == MovementAction.Down) rotationDegree = 270;
+            else if (currentPlayerMovement == MovementAction.Right) rotationDegree = 0;
+            else if (currentPlayerMovement == MovementAction.Left) rotationDegree = 180;
+            else
+            {
+                Debug.LogWarning("current player movementAction is none");
+                rotationDegree = 90;
+            }
+            
+            _playerTile.transform.rotation = Quaternion.AngleAxis(rotationDegree, Vector3.up);
         }
 
         [CanBeNull] Player _player;
