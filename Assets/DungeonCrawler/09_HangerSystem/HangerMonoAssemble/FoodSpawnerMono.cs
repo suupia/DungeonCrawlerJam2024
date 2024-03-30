@@ -31,8 +31,10 @@ namespace DungeonCrawler
                 {
                     foreach (var foodController in _foodControllers)
                     {
+                        if (foodController == null) continue;
                         Destroy(foodController.gameObject);
                     }
+                    _foodControllers.Clear();
                     var positions = _dungeonSwitcher.CurrentDungeon.InitFoodPositions;
                     foreach (var (x,y) in positions)
                     {
