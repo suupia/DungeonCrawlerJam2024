@@ -19,14 +19,17 @@ public class BattleUIInputMono : MonoBehaviour
     
     GameStateSwitcher _gameStateSwitcher;
     BattleSimulator _battleSimulator;
+    BattleGameConnector _battleGameConnector;
     [Inject]
     public void Construct(
         GameStateSwitcher gameStateSwitcher,
-        BattleSimulator battleSimulator
+        BattleSimulator battleSimulator,
+        BattleGameConnector battleGameConnector
         )
     {
         _gameStateSwitcher = gameStateSwitcher;
         _battleSimulator = battleSimulator;
+        _battleGameConnector = battleGameConnector;
     }
     void Start()
     {
@@ -48,7 +51,7 @@ public class BattleUIInputMono : MonoBehaviour
         returnToExploreButton.AddListener(() =>
         {
             Debug.Log("Return to Explore");
-            _gameStateSwitcher.EnterExploring();
+            _battleGameConnector.EndBattle();
         });
     }
 }

@@ -34,6 +34,11 @@ namespace DungeonCrawler
             _battleSimulator.StartBattle(player, enemy);
         }
         
+        public void EndBattle()
+        {
+            _battleSimulator.EndBattle();
+        }
+        
         public void OnEnemyLose(Action action)
         {
             _battleSimulator.OnPlyerWin += (sender, e) =>
