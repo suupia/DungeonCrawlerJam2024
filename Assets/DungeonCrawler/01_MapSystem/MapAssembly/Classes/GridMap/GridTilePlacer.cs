@@ -103,13 +103,9 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
 
         DungeonGridMap PlaceStairs(DungeonGridMap dungeon, DungeonSwitcher dungeonSwitcher)
         {
-            var areas = dungeon.Areas;
-            Assert.IsTrue(areas.Count > 0);
-            Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
-
-            var area = areas[Random.Range(0, areas.Count())];
-            var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
-            var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
+            const int stairsCount = 1;
+            var (spawnX, spawnY) = GetSpawnPositions(dungeon, stairsCount)[0];
+            
             dungeon.Map.AddEntity(spawnX, spawnY, _entityFactory.CreateEntity<Stairs>(dungeonSwitcher));
             dungeon.InitStairsPosition = (spawnX, spawnY);
             return dungeon;
