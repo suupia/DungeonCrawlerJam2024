@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DungeonCrawler._04_EnemySystem.EnemyAssembly;
 using DungeonCrawler.MapAssembly.Classes;
+using TMPro;
 using UnityEngine;
 
 public class EnemyControllerMono : MonoBehaviour
@@ -13,5 +14,9 @@ public class EnemyControllerMono : MonoBehaviour
     {
         _enemy = enemy;
         _enemy.GridPosition = () => GridPosition;
+        _enemy.OnDead += (sender, e) =>
+        {
+            Destroy(gameObject);
+        }; 
     }
 }
