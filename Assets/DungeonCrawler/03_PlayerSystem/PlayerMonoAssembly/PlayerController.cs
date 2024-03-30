@@ -30,7 +30,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         readonly Queue<MovementAction> _movements = new();
         [SerializeField] List<MovementAction> movementView;
         MovementAction _currentMovement;
-
+        
         public MovementAction CurrentMovement
         {
             get { return _currentMovement; }
@@ -47,6 +47,9 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         Player _player;
         DungeonSwitcher _dungeonSwitcher;
         GameStateSwitcher _gameStateSwitcher;
+
+        HangerMeter _hangerMeter;
+        HangerSystem _hangerSystem;
         
         bool _isInitialized;
         
@@ -59,6 +62,10 @@ namespace  DungeonCrawler.PlayerMonoAssembly
             _player = player;
             _dungeonSwitcher = dungeonSwitcher;
             _gameStateSwitcher = gameStateSwitcher;
+            
+            _hangerMeter = new HangerMeter(100);
+            _hangerSystem = new HangerSystem(_hangerMeter);
+            
             SetUp();
             _isInitialized = true;
         }
@@ -146,6 +153,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
                 else if (_currentMovement == MovementAction.Down && move.y < 0) _movements.Enqueue(MovementAction.Down);
             }
             CheckUnderPlayerEntity();
+            _hangerSystem.UpdateTurn();
             _currentMovement = MovementAction.None;
             _inMotion = false;
         }

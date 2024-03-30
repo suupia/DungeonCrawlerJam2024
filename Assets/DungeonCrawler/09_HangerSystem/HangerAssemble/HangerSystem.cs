@@ -12,16 +12,18 @@ namespace DungeonCrawler
 
         int _turnDecrease = 1;
 
-        public Action GameOver = () => {};
+        public Action GameOver = () => {Debug.Log("GameOver with HangerMeter 0");};
 
-        public HangerSystem()
+        public HangerSystem(HangerMeter hangerMeter)
         {
-            _hangerMeter = new HangerMeter(100);
+            _hangerMeter = hangerMeter;
         }
 
         public void UpdateTurn() // from PlayerController.Move()?
         {
             _hangerMeter.Value -= _turnDecrease;
+            
+            Debug.Log($"hangerMeter.value = {_hangerMeter.Value}");
 
             if (_hangerMeter.Value <= 0)
             {
