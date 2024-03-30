@@ -30,7 +30,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap
                 _ when typeof(TEntity) == typeof(Stairs) => new Stairs(dungeonSwitcher),
                 _ when typeof(TEntity) == typeof(Enemy) => new Enemy(_battleGameConnector,dungeonSwitcher),
                 _ when typeof(TEntity) == typeof(Torch) => new Torch(),
-                _ when typeof(TEntity) == typeof(Food) => new Food(_hangerSystem),
+                _ when typeof(TEntity) == typeof(Food) => new Food(_hangerSystem, dungeonSwitcher),
                 _ when typeof(TEntity) == typeof(DefaultEntity) => new DefaultEntity(),
                 _ => new DefaultEntity(),
             };
