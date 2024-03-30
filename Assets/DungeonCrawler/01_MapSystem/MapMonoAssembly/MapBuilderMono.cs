@@ -41,7 +41,7 @@ namespace DungeonCrawler.MapMonoAssembly
         {
             InstantiateTiles();
             
-            BuildFirstDungeon(); // Create first dungeon
+            // BuildFirstDungeon(); // Create first dungeon
             
             Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
                 .Subscribe(_ =>
