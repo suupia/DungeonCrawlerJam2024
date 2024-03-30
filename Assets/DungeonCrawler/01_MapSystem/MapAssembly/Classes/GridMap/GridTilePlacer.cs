@@ -146,7 +146,8 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
                 var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
                 var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
                 var spawnPosition = (spawnX, spawnY);
-                if (!result.Contains(spawnPosition)) result.Add(spawnPosition);
+                var isInFrontOfPath = IsInFrontOfPath(dungeon, spawnX, spawnY);
+                if (!result.Contains(spawnPosition) && !isInFrontOfPath) result.Add(spawnPosition);
             }
             
             foreach (var (x, y) in result)
@@ -157,20 +158,20 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             return dungeon;
         }
 
-        bool CanPlaceEntity(DungeonGridMap dugeon, int x, int y)
+        bool IsInFrontOfPath(DungeonGridMap dugeon, int x, int y)
         {
-            bool canPlace = true;
-            // in front of path
+            bool isInFrontOfPath = false;
             foreach (var (dx, dy) in new[] { (-1, 0), (1, 0), (0, -1), (0, 1) })
             {
                 if (dugeon.Map.GetSingleEntity<CharacterPath>(x + dx, y + dy) is CharacterPath)
                 {
-                    canPlace = false;
+                    Debug.Log($"cannot place entity at ({x}, {y}) because ({x+dx}, {y+dy}) is path");
+                    isInFrontOfPath = true;
                     break;
                 }
             }
 
-            return canPlace;
+            return isInFrontOfPath;
         }
 
         DungeonGridMap PlacePlayer(DungeonGridMap dungeon, DungeonSwitcher dungeonSwitcher)
