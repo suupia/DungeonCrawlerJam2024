@@ -25,7 +25,6 @@ namespace DungeonCrawler
             {
                _gameStateSwitcher.EnterExploring();
             };
-            _battleSimulator.Init();
         }
 
         public void StartBattle()

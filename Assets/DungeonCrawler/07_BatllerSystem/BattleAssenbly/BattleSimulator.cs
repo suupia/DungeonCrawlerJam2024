@@ -22,7 +22,6 @@ namespace DungeonCrawler
         enum BattleState
         {
             None,
-            Preparing,
             InBattle,
             InResult,
         }
@@ -31,14 +30,9 @@ namespace DungeonCrawler
         public bool IsInBattle => _battleState == BattleState.InBattle;
         public bool IsInResult => _battleState == BattleState.InResult;
 
-        public void Init()
-        {
-            _battleState = BattleState.Preparing;
-        }
-        
         public void StartBattle(PlayerDomain player, EnemyDomain enemy)
         {
-            Assert.IsTrue(_battleState == BattleState.Preparing);
+            Assert.IsTrue(_battleState == BattleState.None);
             Player = player;
             Enemy = enemy;
             Debug.Log("Battle Start");

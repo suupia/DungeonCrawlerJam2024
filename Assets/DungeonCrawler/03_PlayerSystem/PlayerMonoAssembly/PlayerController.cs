@@ -139,7 +139,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
                 else if (_currentMovement == MovementAction.Up && move.y > 0) _movements.Enqueue(MovementAction.Up);
                 else if (_currentMovement == MovementAction.Down && move.y < 0) _movements.Enqueue(MovementAction.Down);
             }
-        
+            CheckUnderPlayerEntity();
             _currentMovement = MovementAction.None;
             _inMotion = false;
         }
@@ -193,7 +193,6 @@ namespace  DungeonCrawler.PlayerMonoAssembly
             Assert.IsNotNull(player);
             _dungeonSwitcher.CurrentDungeon.Map.RemoveEntity<Player>(prePos.x, prePos.y , player);
             _dungeonSwitcher.CurrentDungeon.Map.AddEntity(newPos.x, newPos.y, player);
-            CheckUnderPlayerEntity();
         }
         
         void MoveTransform(MovementAction action, Vector3 newPosition, Quaternion newRotation)
