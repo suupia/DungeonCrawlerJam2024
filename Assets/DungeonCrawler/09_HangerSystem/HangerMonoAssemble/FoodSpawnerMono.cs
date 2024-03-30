@@ -33,11 +33,11 @@ namespace DungeonCrawler
                     {
                         Destroy(foodController.gameObject);
                     }
-                    // var positions = _dungeonSwitcher.CurrentDungeon.InitTorchPositions;
-                    // foreach (var (x,y) in positions)
-                    // {
-                    //     SpawnFood(x,y);
-                    // }
+                    var positions = _dungeonSwitcher.CurrentDungeon.InitFoodPositions;
+                    foreach (var (x,y) in positions)
+                    {
+                        SpawnFood(x,y);
+                    }
                 }); 
         }
 
