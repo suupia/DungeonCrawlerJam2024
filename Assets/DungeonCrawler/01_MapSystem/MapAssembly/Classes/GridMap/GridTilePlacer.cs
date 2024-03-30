@@ -184,8 +184,12 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
                 var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
                 var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
                 var spawnPosition = (spawnX, spawnY);
-                var isInFrontOfPath = IsInFrontOfPath(dungeon, spawnX, spawnY);
-                if (!result.Contains(spawnPosition) && !isInFrontOfPath) result.Add(spawnPosition);
+                
+                if (dungeon.Map.GetSingleEntity<IGridEntity>(spawnX, spawnY) is IGridEntity) continue;
+                if (IsInFrontOfPath(dungeon, spawnX, spawnY)) continue;
+                if (result.Contains(spawnPosition)) continue;
+                
+                result.Add(spawnPosition);
             }
 
             return result;
