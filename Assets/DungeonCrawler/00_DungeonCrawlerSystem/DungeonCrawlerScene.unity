@@ -919,7 +919,7 @@ GameObject:
   - component: {fileID: 949548157}
   - component: {fileID: 949548158}
   m_Layer: 5
-  m_Name: UISwitcher
+  m_Name: UIDomainConnector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1276,7 +1276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1399058462}
   m_Layer: 5
-  m_Name: StatsUI
+  m_Name: InfoUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2265,6 +2265,16 @@ PrefabInstance:
     - target: {fileID: 5079403389101418172, guid: 68e0529e5a6f26944aad0b8ebbd7d754,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5459343321466632348, guid: 68e0529e5a6f26944aad0b8ebbd7d754,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5459343321466632348, guid: 68e0529e5a6f26944aad0b8ebbd7d754,
+        type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

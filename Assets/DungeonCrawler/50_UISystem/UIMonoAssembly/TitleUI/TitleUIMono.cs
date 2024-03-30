@@ -6,7 +6,13 @@ using UnityEngine;
 public class TitleUIMono : MonoBehaviour
 {
     [SerializeField] GameObject titleView = null!;
+    [SerializeField] UpgradeUIMono upgradeUI = null!;
     
+    public void Init()
+    {
+        // Hide upgrade ui when the game started
+        upgradeUI.HideUpgradeUI();
+    }
     public void ShowTitleUI()
     {
         Debug.Log("TitleUI.Show()");
@@ -18,6 +24,6 @@ public class TitleUIMono : MonoBehaviour
         Debug.Log("TitleUI.Hide()");
         titleView.SetActive(false);
     }
-    
-    
+
+
 }

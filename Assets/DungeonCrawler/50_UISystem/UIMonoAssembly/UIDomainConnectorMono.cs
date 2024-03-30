@@ -25,13 +25,14 @@ public class UIDomainConnectorMono : MonoBehaviour
     void Start()
     {
         // TitleUI
+        titleUI.Init();
         Observable.EveryValueChanged(this, _ => _gameStateSwitcher.IsInTitle())
             .Subscribe(isOn =>
             {
                 if(isOn) titleUI.ShowTitleUI();
                 else titleUI.HideTitleUI();
             });
-        
+
         // BattleUI
         Observable.EveryValueChanged(this, _ => _gameStateSwitcher.IsInBattle())
             .Subscribe(isOn =>

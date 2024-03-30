@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 
 namespace DungeonCrawler
@@ -10,6 +11,11 @@ namespace DungeonCrawler
         [SerializeField] CustomButton upgradeButton = null!;
         [SerializeField] CustomButton settingsButton = null!;
 
+        
+        [Header("Upgrade")]
+        [SerializeField] UpgradeUIMono upgradeUIMono;
+        
+        
         GameStateSwitcher _gameStateSwitcher;
         
         [Inject]
@@ -21,10 +27,16 @@ namespace DungeonCrawler
 
         void SetUp()
         {
+            upgradeUIMono.Init();
             startButton.AddListener(() =>
             {
                 Debug.Log($"Start Game");
                 _gameStateSwitcher.EnterExploring();
+            });
+            upgradeButton.AddListener(() =>
+            {
+                Debug.Log($"Open Upgrade");
+                upgradeUIMono.ShowUpgradeUI();
             });
         }
     }
