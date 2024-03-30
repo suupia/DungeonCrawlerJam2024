@@ -132,7 +132,7 @@ namespace DungeonCrawler
 
         void ChaisePlayerRotation()
         {
-            _playerTile.transform.rotation = _player.CurrentRotation();
+            _playerTile.transform.rotation = _player.CurrentRotation() * _rotateOffset;
         }
 
         [CanBeNull] Player _player;
