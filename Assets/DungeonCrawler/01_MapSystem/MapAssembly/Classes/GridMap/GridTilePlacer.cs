@@ -156,8 +156,22 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             dungeon.InitTorchPositions = result;
             return dungeon;
         }
-        
-              
+
+        bool CanPlaceEntity(DungeonGridMap dugeon, int x, int y)
+        {
+            bool canPlace = true;
+            // in front of path
+            foreach (var (dx, dy) in new[] { (-1, 0), (1, 0), (0, -1), (0, 1) })
+            {
+                if (dugeon.Map.GetSingleEntity<CharacterPath>(x + dx, y + dy) is CharacterPath)
+                {
+                    canPlace = false;
+                    break;
+                }
+            }
+
+            return canPlace;
+        }
 
         DungeonGridMap PlacePlayer(DungeonGridMap dungeon, DungeonSwitcher dungeonSwitcher)
         {
