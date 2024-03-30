@@ -42,6 +42,9 @@ namespace DungeonCrawler
             // Hanger
             builder.Register<HangerMeter>(Lifetime.Scoped).WithParameter("maxValue",50);
             builder.Register<HangerSystem>(Lifetime.Scoped);
+            
+            // FlamePoint
+            builder.Register<FlamePoint>(Lifetime.Scoped);
 
             // Mono
             builder.RegisterComponentInHierarchy<MapBuilderMono>();
