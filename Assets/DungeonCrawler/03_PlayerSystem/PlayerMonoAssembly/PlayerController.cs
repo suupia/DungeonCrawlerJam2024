@@ -61,7 +61,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         void SetUp()
         {
             _player.GridPosition = () => GridPosition;
-            _player.CurrentMovement = () => CurrentMovement;
+            _player.CurrentRotation = () => transform.rotation;
         }
         
         void Awake()

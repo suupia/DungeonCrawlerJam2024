@@ -9,7 +9,7 @@ namespace DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes
     public class Player : IGridEntity
     {
         public Func<(int x, int y)> GridPosition = () => (0, 0);
-        public Func<MovementAction> CurrentMovement = () => MovementAction.Up;
+        public Func<Quaternion> CurrentRotation = () => Quaternion.identity;
         
         public void GotOn()
         {

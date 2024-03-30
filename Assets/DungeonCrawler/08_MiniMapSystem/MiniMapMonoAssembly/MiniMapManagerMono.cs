@@ -55,7 +55,7 @@ namespace DungeonCrawler
                 {
                     ChasePlayerPosition();
                 });
-            Observable.EveryValueChanged(this, _ => _player.CurrentMovement())
+            Observable.EveryValueChanged(this, _ => _player.CurrentRotation())
                 .Subscribe(_ =>
                 {
                     ChaisePlayerRotation();
@@ -132,20 +132,7 @@ namespace DungeonCrawler
 
         void ChaisePlayerRotation()
         {
-            int rotationDegree;
-            MovementAction currentPlayerMovement = _player.CurrentMovement();
-
-            if (currentPlayerMovement == MovementAction.Up) rotationDegree = 90;
-            else if (currentPlayerMovement == MovementAction.Down) rotationDegree = 270;
-            else if (currentPlayerMovement == MovementAction.Right) rotationDegree = 0;
-            else if (currentPlayerMovement == MovementAction.Left) rotationDegree = 180;
-            else
-            {
-                Debug.LogWarning("current player movementAction is none");
-                rotationDegree = 90;
-            }
-            
-            _playerTile.transform.rotation = Quaternion.AngleAxis(rotationDegree, Vector3.up);
+            _playerTile.transform.rotation = _player.CurrentRotation();
         }
 
         [CanBeNull] Player _player;
