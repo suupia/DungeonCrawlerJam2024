@@ -8,20 +8,29 @@ using VContainer;
 
 public class BattleUIInputMono : MonoBehaviour
 {
+    // BattleUI
     [SerializeField] CustomButton normalAttackButton = null!;
     [SerializeField] TextMeshProUGUI normalAttackText = null!;
     [SerializeField] CustomButton sacredAttackButton = null!;
     [SerializeField] TextMeshProUGUI sacredAttackText = null!;
 
+    // ResultUI
+    [SerializeField] CustomButton returnToExploreButton = null!;
+    
+    GameStateSwitcher _gameStateSwitcher;
     BattleSimulator _battleSimulator;
     [Inject]
     public void Construct(
-        BattleSimulator battleSimulator)
+        GameStateSwitcher gameStateSwitcher,
+        BattleSimulator battleSimulator
+        )
     {
+        _gameStateSwitcher = gameStateSwitcher;
         _battleSimulator = battleSimulator;
     }
     void Start()
     {
+        // BattleUI
         normalAttackText.text = "Normal Attack";
         sacredAttackText.text = "Sacred Attack";
         normalAttackButton.AddListener(() =>
@@ -33,6 +42,13 @@ public class BattleUIInputMono : MonoBehaviour
         {
             Debug.Log("Sacred Attack");
             _battleSimulator.UpdateTurn(new SacredAttack(50));
+        });
+        
+        // ResultUI
+        returnToExploreButton.AddListener(() =>
+        {
+            Debug.Log("Return to Explore");
+            _gameStateSwitcher.EnterExploring();
         });
     }
 }

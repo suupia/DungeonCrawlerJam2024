@@ -96,7 +96,6 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         {
             movementView = _movements.ToList();
             ProcessMovement();
-            CheckUnderPlayerEntity();
             _animationMonoSystem.Update();
         }
         
@@ -140,7 +139,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
                 else if (_currentMovement == MovementAction.Up && move.y > 0) _movements.Enqueue(MovementAction.Up);
                 else if (_currentMovement == MovementAction.Down && move.y < 0) _movements.Enqueue(MovementAction.Down);
             }
-        
+            CheckUnderPlayerEntity();
             _currentMovement = MovementAction.None;
             _inMotion = false;
         }
@@ -183,12 +182,12 @@ namespace  DungeonCrawler.PlayerMonoAssembly
             
             var prePos = GridPosition;
             var newPos = GridConverter.WorldPositionToGridPosition(newPosition);
-            MovePlayerEntity(prePos, newPos);
+            MovePlayerGridEntity(prePos, newPos);
             
             MoveTransform(action, newPosition, newRotation);
         }
         
-        void MovePlayerEntity((int x, int y) prePos, (int x, int y) newPos)
+        void MovePlayerGridEntity((int x, int y) prePos, (int x, int y) newPos)
         {
             var player = _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<Player>(prePos.x, prePos.y);
             Assert.IsNotNull(player);
@@ -242,10 +241,6 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         void CheckUnderPlayerEntity()
         {
             var (x, y) = GridPosition;
-            Debug.Log($"_dungeonSwitcher : {_dungeonSwitcher}");
-            Debug.Log($"_dungeonSwitcher.CurrentDungeon : {_dungeonSwitcher.CurrentDungeon}");
-            Debug.Log($"_dungeonSwitcher.CurrentDungeon.Map : {_dungeonSwitcher.CurrentDungeon.Map}");
-            Debug.Log($"_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<IGridEntity>(gridPosition) : {_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<IGridEntity>(x,y)}");
             IGridEntity? entity = _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<IGridEntity>(x,y);
             if (entity != null)
             {
