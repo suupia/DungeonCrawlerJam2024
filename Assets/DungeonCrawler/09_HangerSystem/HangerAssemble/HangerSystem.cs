@@ -13,6 +13,13 @@ namespace DungeonCrawler
         const int TurnDecrease = 1;
 
         public Action GameOver = () => {Debug.Log("GameOver with HangerMeter 0");};
+
+        // Getter
+        public float CurrentHangerRate()
+        {
+            return (float)_hangerMeter.Value/_hangerMeter.MaxValue;
+            
+        }
         
         [Inject]
         public HangerSystem(HangerMeter hangerMeter)
