@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Interfaces;
+using DungeonCrawler.PlayerAssembly.Classes;
 using JetBrains.Annotations;
 using R3;
 using UnityEngine;
@@ -52,7 +53,12 @@ namespace DungeonCrawler
             Observable.EveryValueChanged(this, _ => _player.GridPosition())
                 .Subscribe(_ =>
                 {
-                    ChasePlayer();
+                    ChasePlayerPosition();
+                });
+            Observable.EveryValueChanged(this, _ => _player.CurrentRotation())
+                .Subscribe(_ =>
+                {
+                    ChaisePlayerRotation();
                 });
         }
 
@@ -115,13 +121,18 @@ namespace DungeonCrawler
             Debug.Log($"Mini map tiles num = {_miniMapTiles.Count}");
         }
 
-        void ChasePlayer()
+        void ChasePlayerPosition()
         {
             var (x, y) = _player.GridPosition();
             SetTilePosition(_playerTile, _dungeonSwitcher.CurrentDungeon.Map.ToSubscript(x, y));
 
             _camera.transform.position =
                 _cameraOffset + GridConverter.GridPositionToWorldPosition(new Vector2Int(x, y));
+        }
+
+        void ChaisePlayerRotation()
+        {
+            _playerTile.transform.rotation = _player.CurrentRotation() * _rotateOffset;
         }
 
         [CanBeNull] Player _player;
