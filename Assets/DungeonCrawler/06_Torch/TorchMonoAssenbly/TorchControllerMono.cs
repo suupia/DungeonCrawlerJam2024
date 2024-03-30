@@ -18,5 +18,6 @@ namespace DungeonCrawler
             {
                 Destroy(gameObject);
             };
-        }    }
+        }
+    }
 }
