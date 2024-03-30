@@ -38,6 +38,9 @@ namespace DungeonCrawler
             // Battle
             builder.Register<BattleSimulator>(Lifetime.Scoped);
             builder.Register<BattleGameConnector>(Lifetime.Scoped);
+            
+            // Hanger
+            builder.Register<HangerSystem>(Lifetime.Scoped);
 
             // Mono
             builder.RegisterComponentInHierarchy<MapBuilderMono>();
