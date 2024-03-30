@@ -8,6 +8,7 @@ using VContainer;
 
 public class BattleUIOutputMono : MonoBehaviour
 {
+   [Header("Battle")]
    // Player
    [SerializeField] TextMeshProUGUI playerHpText = null!;
    [SerializeField] TextMeshProUGUI playerAttackText = null!;
@@ -17,6 +18,9 @@ public class BattleUIOutputMono : MonoBehaviour
    
    [SerializeField] HpGaugeMono playerHpGauge = null!;
    [SerializeField] HpGaugeMono enemyHpGauge = null!;
+   
+   [Header("Result")]
+   [SerializeField] TextMeshProUGUI resultText = null!;
 
    BattleSimulator _battleSimulator;
    [Inject]
@@ -28,6 +32,7 @@ public class BattleUIOutputMono : MonoBehaviour
 
    void SetUp()
    {
+      // [Battle]
       Observable.EveryValueChanged(this, _ => _battleSimulator.Player?.CurrentHp)
          .Subscribe(_ =>
          {
@@ -44,5 +49,20 @@ public class BattleUIOutputMono : MonoBehaviour
             enemyHpGauge.FillRate((float)_battleSimulator.Enemy.CurrentHp/_battleSimulator.Enemy.MaxHp);
             // enemyNameText.text = $"Enemy Name: {_battleSimulator.Enemy.Name}";
          });
+      
+      // [Result]
+      _battleSimulator.OnBattleStart += (sender, e) =>
+      {
+         resultText.text = "";
+      };
+      
+      _battleSimulator.OnPlayerWin += (sender, e) =>
+      {
+         resultText.text = "Win!";
+      };
+      _battleSimulator.OnPlayerLose += (sender, e) =>
+      {
+         resultText.text = "Game Over!";
+      };
    }
 }

@@ -1739,36 +1739,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleUI
       objectReference: {fileID: 0}
-    - target: {fileID: 2008984077323577074, guid: 2826ac3fe05bf62469549727743546b1,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2008984077323577074, guid: 2826ac3fe05bf62469549727743546b1,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2008984077323577074, guid: 2826ac3fe05bf62469549727743546b1,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2008984077323577074, guid: 2826ac3fe05bf62469549727743546b1,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3339920006124608189, guid: 2826ac3fe05bf62469549727743546b1,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -28.320068
-      objectReference: {fileID: 0}
-    - target: {fileID: 5473250413566621697, guid: 2826ac3fe05bf62469549727743546b1,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 59.19995
-      objectReference: {fileID: 0}
     - target: {fileID: 5559803249997081984, guid: 2826ac3fe05bf62469549727743546b1,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1867,31 +1837,6 @@ PrefabInstance:
     - target: {fileID: 5559803249997081984, guid: 2826ac3fe05bf62469549727743546b1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8421943644955393203, guid: 2826ac3fe05bf62469549727743546b1,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 15.403442
-      objectReference: {fileID: 0}
-    - target: {fileID: 8899222371542932937, guid: 2826ac3fe05bf62469549727743546b1,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8899222371542932937, guid: 2826ac3fe05bf62469549727743546b1,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8899222371542932937, guid: 2826ac3fe05bf62469549727743546b1,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8899222371542932937, guid: 2826ac3fe05bf62469549727743546b1,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

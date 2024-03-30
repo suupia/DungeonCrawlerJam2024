@@ -75,6 +75,7 @@ MonoBehaviour:
   enemyNameText: {fileID: 9146860798161686020}
   playerHpGauge: {fileID: 7034547019250159671}
   enemyHpGauge: {fileID: 469557008418954421}
+  resultText: {fileID: 3039437779440036389}
 --- !u!114 &7409177395498525559
 MonoBehaviour:
   m_ObjectHideFlags: 0
