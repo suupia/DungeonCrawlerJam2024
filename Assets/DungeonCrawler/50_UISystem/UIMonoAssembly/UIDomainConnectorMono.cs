@@ -5,7 +5,7 @@ using R3;
 using UnityEngine;
 using VContainer;
 
-public class UISwitcherMono : MonoBehaviour
+public class UIDomainConnectorMono : MonoBehaviour
 {
     [SerializeField] BattleUI battleUI;
     [SerializeField] TitleUIMono titleUI;
