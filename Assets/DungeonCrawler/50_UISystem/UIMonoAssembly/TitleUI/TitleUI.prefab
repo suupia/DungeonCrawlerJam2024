@@ -209,6 +209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5079403389101418172}
   - component: {fileID: 2274566375292989410}
+  - component: {fileID: 5006127520364517982}
   m_Layer: 5
   m_Name: TitleUI
   m_TagString: Untagged
@@ -249,6 +250,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   titleView: {fileID: 8250521662352409664}
+--- !u!114 &5006127520364517982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710571080934792099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcac8be9e50f4be0ac44e2e577b17eaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startButton: {fileID: 6251055900977235346}
+  upgradeButton: {fileID: 8039817470937538117}
+  settingsButton: {fileID: 2558898198021090824}
 --- !u!1 &2056067158022754705
 GameObject:
   m_ObjectHideFlags: 0

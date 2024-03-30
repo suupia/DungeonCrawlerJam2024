@@ -35,6 +35,10 @@ namespace DungeonCrawler
         {
             return new[] {GameStateEnum.AtTitle}.Contains(_gameState);
         }
+        public void EnterTitle()
+        {
+            ChangeState(GameStateEnum.AtTitle);
+        }
         
         public bool IsInExploring()
         {
@@ -64,6 +68,7 @@ namespace DungeonCrawler
             Assert.IsTrue(_stateTransitionMap.ContainsKey(_gameState));  // Current State
             Assert.IsTrue(_stateTransitionMap[_gameState].Contains(nextState)); // Next State
             OnStart(_gameState);
+            Debug.Log($"GameStateSwitcher.ChangeState() : {_gameState} -> {nextState}");
             _gameState = nextState;
             OnEnd(_gameState);
         }
