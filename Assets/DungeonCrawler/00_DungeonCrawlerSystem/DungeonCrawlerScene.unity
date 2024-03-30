@@ -155,18 +155,6 @@ Transform:
   - {fileID: 1865881077}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &176733220 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3725663447471440356, guid: cd8d1e3a00123ba4bbb2737c2195c64f,
-    type: 3}
-  m_PrefabInstance: {fileID: 604603452}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84cf753b3f88bf04496dd93373573020, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1090,11 +1078,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8794391084669368989, guid: d9ba9b0d170036c48b9833a6bdb09212,
-        type: 3}
-      propertyPath: _miniMapManagerMono
-      value: 
-      objectReference: {fileID: 176733220}
     - target: {fileID: 9006873765677889017, guid: d9ba9b0d170036c48b9833a6bdb09212,
         type: 3}
       propertyPath: m_Name
