@@ -55,10 +55,12 @@ namespace DungeonCrawler
             builder.RegisterComponentInHierarchy<FoodSpawnerMono>();
             
             // UI Mono
-            builder.RegisterComponentInHierarchy<UISwitcherMono>();
+            builder.RegisterComponentInHierarchy<UIDomainConnectorMono>();
             builder.RegisterComponentInHierarchy<FloorUIMono>();
             builder.RegisterComponentInHierarchy<BattleUIInputMono>();
             builder.RegisterComponentInHierarchy<BattleUIOutputMono>();
+            
+            builder.RegisterComponentInHierarchy<TitleInputMono>();
         }
     }
 }

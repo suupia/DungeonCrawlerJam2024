@@ -5,9 +5,10 @@ using R3;
 using UnityEngine;
 using VContainer;
 
-public class UISwitcherMono : MonoBehaviour
+public class UIDomainConnectorMono : MonoBehaviour
 {
     [SerializeField] BattleUI battleUI;
+    [SerializeField] TitleUIMono titleUI;
     
     GameStateSwitcher _gameStateSwitcher;
     BattleSimulator _battleSimulator;
@@ -23,6 +24,16 @@ public class UISwitcherMono : MonoBehaviour
     }
     void Start()
     {
+        // TitleUI
+        titleUI.Init();
+        Observable.EveryValueChanged(this, _ => _gameStateSwitcher.IsInTitle())
+            .Subscribe(isOn =>
+            {
+                if(isOn) titleUI.ShowTitleUI();
+                else titleUI.HideTitleUI();
+            });
+
+        // BattleUI
         Observable.EveryValueChanged(this, _ => _gameStateSwitcher.IsInBattle())
             .Subscribe(isOn =>
             {

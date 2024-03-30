@@ -183,7 +183,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
             Vector3 newPosition = GetNextPosition(action);
             var(x,y) = GridConverter.WorldPositionToGridPosition(newPosition);
             Debug.Log($"_gameStateSwitcher : {_gameStateSwitcher}");
-            Debug.Log($"_gameStateSwitcher.IsInExploring() : {_gameStateSwitcher.IsInExploring()}");
+                Debug.Log($"_gameStateSwitcher.IsInExploring() : {_gameStateSwitcher.IsInExploring()}");
             if(!_gameStateSwitcher.IsInExploring()) return false;
             if(_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<CharacterWall>(x,y) != null) return false;
             return true;
