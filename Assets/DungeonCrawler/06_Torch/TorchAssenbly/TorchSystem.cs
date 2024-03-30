@@ -21,9 +21,9 @@ namespace DungeonCrawler
         {
             Debug.Log($"place a torch at ({x}, {y})");
         }
-        public void PickUpTorch()
+        public void PickUpTorch(Torch torch)
         {
-            _torchInventory.Value += 1;
+            _torchInventory.Value += torch.Num;
         }
     }
 }
