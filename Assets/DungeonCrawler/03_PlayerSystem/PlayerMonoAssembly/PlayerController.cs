@@ -30,6 +30,11 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         readonly Queue<MovementAction> _movements = new();
         [SerializeField] List<MovementAction> movementView;
         MovementAction _currentMovement;
+
+        public MovementAction CurrentMovement
+        {
+            get { return _currentMovement; }
+        }
         
         public (int x, int y) GridPosition => GridConverter.WorldPositionToGridPosition(transform.position);
 
@@ -56,6 +61,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         void SetUp()
         {
             _player.GridPosition = () => GridPosition;
+            _player.CurrentMovement = () => CurrentMovement;
         }
         
         void Awake()
