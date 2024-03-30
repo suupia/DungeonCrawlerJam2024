@@ -10,7 +10,7 @@ namespace DungeonCrawler
     {
         HangerMeter _hangerMeter;
 
-        int _turnDecrease = 1;
+        const int TurnDecrease = 1;
 
         public Action GameOver = () => {Debug.Log("GameOver with HangerMeter 0");};
         
@@ -22,7 +22,7 @@ namespace DungeonCrawler
 
         public void UpdateTurn() // from PlayerController.Move()?
         {
-            _hangerMeter.Value -= _turnDecrease;
+            _hangerMeter.Value -= TurnDecrease;
             
             Debug.Log($"hangerMeter.value = {_hangerMeter.Value}");
 
@@ -35,6 +35,11 @@ namespace DungeonCrawler
         public void EatFood(Food food)
         {
             _hangerMeter.Value += food.HangerMeterIncreaseAmount;
+        }
+
+        public void SetHangerMeterMaxValue(int maxValue)
+        {
+            _hangerMeter.MaxValue = maxValue;
         }
     }
 }
