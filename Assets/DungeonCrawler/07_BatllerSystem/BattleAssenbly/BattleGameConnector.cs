@@ -27,7 +27,14 @@ namespace DungeonCrawler
             };
             _battleSimulator.OnBattleEnd += (sender, e) =>
             {
-               _gameStateSwitcher.EnterExploring();
+                if(e.IsPlayerWin)
+                {
+                    _gameStateSwitcher.EnterExploring();
+                }
+                else
+                {
+                    _gameStateSwitcher.EnterTitle();
+                }
             };
         }
 

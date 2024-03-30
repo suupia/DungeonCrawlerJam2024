@@ -14,7 +14,7 @@ namespace DungeonCrawler
         public EnemyDomain? Enemy { get; private set; }
 
         public event EventHandler OnBattleStart = (sender, e) => { };
-        public event EventHandler  OnBattleEnd = (sender, e) => { };
+        public event EventHandler<BattleEndEventArgs>   OnBattleEnd = (sender, e) => { };
         
         public event EventHandler OnPlayerWin = (sender, e) => { };
         public event EventHandler OnPlayerLose = (sender, e) => { };
@@ -35,6 +35,8 @@ namespace DungeonCrawler
         };
         public bool IsInBattle => _battleState == BattleState.InBattle;
         public bool IsInResult => _battleState == BattleState.InResult;
+        
+        bool IsPlayerWin => Player?.IsDead == false && Enemy?.IsDead == true;
 
         public void StartBattle(PlayerDomain player, EnemyDomain enemy)
         {
@@ -48,7 +50,7 @@ namespace DungeonCrawler
         public void EndBattle()
         {
             _battleState = BattleState.None;
-            OnBattleEnd?.Invoke(this, EventArgs.Empty);
+            OnBattleEnd?.Invoke(this, new BattleEndEventArgs(IsPlayerWin));
         }
 
 
@@ -70,7 +72,7 @@ namespace DungeonCrawler
 
             if (Enemy.IsDead)
             {
-                StartResult(true);
+                StartResult();
             }
             
             Enemy.Attack(Player);
@@ -79,7 +81,7 @@ namespace DungeonCrawler
             {
                 // Game Over
                 Debug.Log("player was defeated by enemy");
-                StartResult(false);
+                StartResult();
             }
             
             Debug.Log($"In Battle player._hp = {Player.CurrentHp}, enemy._hp = {Enemy.CurrentHp}");
@@ -93,11 +95,11 @@ namespace DungeonCrawler
             // OnEnd(_battleState);
         }
 
-        void StartResult(bool isPlayerWin)
+        void StartResult()
         {
-            Debug.Log("Battle End " + (isPlayerWin ? "Player Win" : "Player Lose"));
+            Debug.Log("Battle End " + (IsPlayerWin ? "Player Win" : "Player Lose"));
             ChangeState(BattleState.InResult);
-            if (isPlayerWin)
+            if (IsPlayerWin)
             {
                 OnPlayerWin?.Invoke(this, EventArgs.Empty);
             }
@@ -108,5 +110,14 @@ namespace DungeonCrawler
         }
         
 
+    }
+    public class BattleEndEventArgs : EventArgs
+    {
+        public bool IsPlayerWin { get; private set; }
+
+        public BattleEndEventArgs(bool IsPlayerWin)
+        {
+            IsPlayerWin = IsPlayerWin;
+        }
     }
 }
