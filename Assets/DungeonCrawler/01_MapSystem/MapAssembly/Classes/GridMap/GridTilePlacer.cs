@@ -47,7 +47,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             dungeon = PlacePlayer(dungeon, dungeonSwitcher);
             dungeon = PlaceStairs(dungeon, dungeonSwitcher);
             dungeon = PlaceEnemies(dungeon, dungeonSwitcher);
-            dungeon = PlaceTorches(dungeon);
+            dungeon = PlaceTorches(dungeon, dungeonSwitcher);
             dungeon = PlaceFoods(dungeon, dungeonSwitcher);
 
             return dungeon;
@@ -126,14 +126,14 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
         }
 
 
-        public DungeonGridMap PlaceTorches(DungeonGridMap dungeon)
+        public DungeonGridMap PlaceTorches(DungeonGridMap dungeon, DungeonSwitcher dungeonSwitcher)
         {
             const int torchCount = 3;
             var spawnPositions = GetSpawnPositions(dungeon, torchCount);
             
             foreach (var (x, y) in spawnPositions)
             {
-                dungeon.Map.AddEntity(x, y, new Torch());
+                dungeon.Map.AddEntity(x, y, _entityFactory.CreateEntity<Torch>(dungeonSwitcher));
             }
             dungeon.InitTorchPositions = spawnPositions;
             return dungeon;

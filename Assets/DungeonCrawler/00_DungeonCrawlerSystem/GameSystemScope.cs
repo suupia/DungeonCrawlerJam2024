@@ -42,6 +42,10 @@ namespace DungeonCrawler
             // Hanger
             builder.Register<HangerMeter>(Lifetime.Scoped).WithParameter("maxValue",50);
             builder.Register<HangerSystem>(Lifetime.Scoped);
+            
+            // Torch
+            builder.Register<TorchInventory>(Lifetime.Scoped).WithParameter("initValue", 0);
+            builder.Register<TorchSystem>(Lifetime.Scoped);
 
             // Mono
             builder.RegisterComponentInHierarchy<MapBuilderMono>();
