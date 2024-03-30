@@ -22,6 +22,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap
         {
             return typeof(TEntity) switch
             {
+                _ when typeof(TEntity) == typeof(Player) => new Player(),
                 _ when typeof(TEntity) == typeof(Stairs) => new Stairs(dungeonSwitcher),
                 _ when typeof(TEntity) == typeof(Enemy) => new Enemy(_battleGameConnector),
                 _ when typeof(TEntity) == typeof(Torch) => new Torch(),

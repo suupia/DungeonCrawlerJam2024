@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
-using Codice.Client.BaseCommands;
 using DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap;
 using DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes;
 using DungeonCrawler._04_EnemySystem.EnemyAssembly;
@@ -104,63 +103,44 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
 
         DungeonGridMap PlaceStairs(DungeonGridMap dungeon, DungeonSwitcher dungeonSwitcher)
         {
-            var areas = dungeon.Areas;
-            Assert.IsTrue(areas.Count > 0);
-            Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
-
-            var area = areas[Random.Range(0, areas.Count())];
-            var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
-            var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
+            const int stairsCount = 1;
+            var (spawnX, spawnY) = GetSpawnPositions(dungeon, stairsCount)[0];
+            
             dungeon.Map.AddEntity(spawnX, spawnY, _entityFactory.CreateEntity<Stairs>(dungeonSwitcher));
-            dungeon.StairsPosition = (spawnX, spawnY);
+            dungeon.InitStairsPosition = (spawnX, spawnY);
             return dungeon;
         }
 
         DungeonGridMap PlaceEnemies(DungeonGridMap dungeon, DungeonSwitcher dungeonSwitcher)
         {
             // [pre-condition] _areas should not be empty
-            var areas = dungeon.Areas;
-            Assert.IsTrue(areas.Count > 0);
-            Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
-
-            var area = areas[Random.Range(0, areas.Count())];
-            var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
-            var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
-            dungeon.Map.AddEntity(spawnX, spawnY, _entityFactory.CreateEntity<Enemy>(dungeonSwitcher));
-            dungeon.EnemyPosition = (spawnX, spawnY);
+            
+            const int enemyCount = 1;
+            var spawnPositions = GetSpawnPositions(dungeon, enemyCount);
+            foreach (var (x, y) in spawnPositions)
+            {
+                dungeon.Map.AddEntity(x, y, _entityFactory.CreateEntity<Enemy>(dungeonSwitcher));
+            }
+            dungeon.InitEnemyPositions = spawnPositions;
             return dungeon;
         }
 
 
         public DungeonGridMap PlaceTorches(DungeonGridMap dungeon)
         {
-            // [pre-condition] _areas should not be empty
             const int torchCount = 3;
-            var areas = dungeon.Areas;
-            Assert.IsTrue(areas.Count > 0);
-            Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
-
-            var result = new List<(int x, int y)>();
-            while (result.Count() < torchCount)
-            {
-                var area = areas[Random.Range(0, areas.Count())];
-                var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
-                var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
-                var spawnPosition = (spawnX, spawnY);
-                if (!result.Contains(spawnPosition)) result.Add(spawnPosition);
-            }
+            var spawnPositions = GetSpawnPositions(dungeon, torchCount);
             
-            foreach (var (x, y) in result)
+            foreach (var (x, y) in spawnPositions)
             {
                 dungeon.Map.AddEntity(x, y, new Torch());
             }
-            dungeon.TorchPositions = result;
+            dungeon.InitTorchPositions = spawnPositions;
             return dungeon;
         }
-        
-              
 
-        public DungeonGridMap PlacePlayer(DungeonGridMap dungeon, DungeonSwitcher dungeonSwitcher)
+
+        DungeonGridMap PlacePlayer(DungeonGridMap dungeon, DungeonSwitcher dungeonSwitcher)
         {
             // [pre-condition] _areas should not be empty
             var areas = dungeon.Areas;
@@ -170,9 +150,48 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             var area = areas[Random.Range(0,areas.Count())];
             var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
             var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
-            dungeon.Map.AddEntity(spawnX, spawnY, _entityFactory.CreateEntity<Player>(dungeonSwitcher));
-            dungeon.PlayerPosition = (spawnX, spawnY);
+            var player = _entityFactory.CreateEntity<Player>(dungeonSwitcher);
+            dungeon.Map.AddEntity(spawnX, spawnY, player);
+            Debug.Log($"Player spawn position: {spawnX}, {spawnY}");
+            dungeon.InitPlayerPosition = (spawnX, spawnY);
             return dungeon;
+        }
+        
+        List<(int, int)> GetSpawnPositions(DungeonGridMap dungeon, int need)
+        {
+            // [pre-condition] _areas should not be empty
+            var areas = dungeon.Areas;
+            Assert.IsTrue(areas.Count > 0);
+            Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
+
+            var result = new List<(int x, int y)>();
+            while (result.Count() < need)
+            {
+                var area = areas[Random.Range(0, areas.Count())];
+                var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
+                var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
+                var spawnPosition = (spawnX, spawnY);
+                var isInFrontOfPath = IsInFrontOfPath(dungeon, spawnX, spawnY);
+                if (!result.Contains(spawnPosition) && !isInFrontOfPath) result.Add(spawnPosition);
+            }
+
+            return result;
+        }
+        
+        bool IsInFrontOfPath(DungeonGridMap dugeon, int x, int y)
+        {
+            bool isInFrontOfPath = false;
+            foreach (var (dx, dy) in new[] { (-1, 0), (1, 0), (0, -1), (0, 1) })
+            {
+                if (dugeon.Map.GetSingleEntity<CharacterPath>(x + dx, y + dy) is CharacterPath)
+                {
+                    Debug.Log($"cannot place entity at ({x}, {y}) because ({x+dx}, {y+dy}) is path");
+                    isInFrontOfPath = true;
+                    break;
+                }
+            }
+
+            return isInFrontOfPath;
         }
     }
 }

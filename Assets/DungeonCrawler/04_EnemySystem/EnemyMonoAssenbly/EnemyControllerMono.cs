@@ -1,17 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using DungeonCrawler._04_EnemySystem.EnemyAssembly;
 using UnityEngine;
 
 public class EnemyControllerMono : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
+    public void Construct(Enemy enemy)
     {
         
     }
