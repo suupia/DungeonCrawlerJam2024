@@ -23,9 +23,9 @@ namespace DungeonCrawler
         }
         public void PickUpTorch(Torch torch)
         {
+            _torchInventory.Value += torch.Num;
             Debug.Log($"player picked up {torch.Num} torch(es)");
             Debug.Log($"player has {_torchInventory.Value} torch(es)");
-            _torchInventory.Value += torch.Num;
         }
     }
 }

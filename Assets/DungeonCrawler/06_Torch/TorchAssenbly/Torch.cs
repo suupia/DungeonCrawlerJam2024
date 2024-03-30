@@ -24,7 +24,7 @@ namespace DungeonCrawler
         }
         public void GotOn()
         {
-            Debug.Log("Food.GotOn()");
+            Debug.Log("Torch.GotOn()");
             _torchSystem.PickUpTorch(this);
             
             OnPicked(this, EventArgs.Empty);
