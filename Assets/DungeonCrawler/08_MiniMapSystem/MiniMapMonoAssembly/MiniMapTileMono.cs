@@ -61,7 +61,7 @@ public class MiniMapTileMono : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Unknown entity");
+            Debug.LogWarning("Unknown entity");
         }
     }
 }
