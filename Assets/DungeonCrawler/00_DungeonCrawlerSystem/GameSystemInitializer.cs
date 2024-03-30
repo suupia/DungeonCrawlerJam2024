@@ -42,7 +42,7 @@ namespace DungeonCrawler
             _gameStateSwitcher.OnGameStateChange += (sender, e) =>
             {
                 Debug.Log($"GameState Changed: {e.PrevGameState} -> {e.PostGameState}");
-                if (e.PostGameState == GameStateSwitcher.GameStateEnum.AtTitle)
+                if (e.PrevGameState == GameStateSwitcher.GameStateEnum.AtTitle)
                 {
                     _dungeonSwitcher.Reset();
                     _mapBuilderMono.BuildFirstDungeon();

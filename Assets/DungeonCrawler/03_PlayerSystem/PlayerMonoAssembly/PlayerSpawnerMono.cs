@@ -42,13 +42,19 @@ namespace DungeonCrawler.PlayerMonoAssembly
                 .Subscribe(_ =>
                 {
                     Reset();
-                    // SpawnPlayer();
+                    if (_dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap)
+                    {
+                        Debug.LogWarning($" _dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap");
+                        return;
+                    }
+                    SpawnPlayer();
                 });
 
             _gameStateSwitcher.OnGameStateChange += (sender, e) =>
             {
                 Debug.Log($"GameState Changed: {e.PrevGameState} -> {e.PostGameState}");
-                if (e.PostGameState == GameStateSwitcher.GameStateEnum.AtTitle)
+                if (e.PrevGameState == GameStateSwitcher.GameStateEnum.Exploring 
+                    && e.PostGameState == GameStateSwitcher.GameStateEnum.AtTitle)
                 {
                     Reset();
                 }
@@ -69,10 +75,7 @@ namespace DungeonCrawler.PlayerMonoAssembly
         void Reset()
         {
             if(_playerController != null) Destroy(_playerController.gameObject);
-            if (_dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap)
-            {
-                Debug.LogWarning($" _dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap");
-            }
+
         }
     }
 }

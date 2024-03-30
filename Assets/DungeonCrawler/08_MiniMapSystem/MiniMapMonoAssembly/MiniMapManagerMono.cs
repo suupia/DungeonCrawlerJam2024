@@ -50,12 +50,12 @@ namespace DungeonCrawler
                 {
                     InitMiniMap();
                 });
-                Observable.EveryValueChanged(this, _ => _player.GridPosition())
+                Observable.EveryValueChanged(this, _ => _player?.GridPosition())
                 .Subscribe(_ =>
                 {
                     ChasePlayerPosition();
                 });
-            Observable.EveryValueChanged(this, _ => _player.CurrentRotation())
+            Observable.EveryValueChanged(this, _ => _player?.CurrentRotation())
                 .Subscribe(_ =>
                 {
                     ChaisePlayerRotation();
@@ -132,6 +132,7 @@ namespace DungeonCrawler
 
         void ChaisePlayerRotation()
         {
+            if (_player != null) return;
             _playerTile.transform.rotation = _player.CurrentRotation() * _rotateOffset;
         }
 
