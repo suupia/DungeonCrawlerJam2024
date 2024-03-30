@@ -19,15 +19,18 @@ namespace DungeonCrawler.PlayerMonoAssembly
         DungeonSwitcher _dungeonSwitcher = null!;
         GameStateSwitcher _gameStateSwitcher = null!;
         PlayerController? _playerController;
+        HangerSystem _hangerSystem;
         
         [Inject]
         public void Construct(
             DungeonSwitcher dungeonSwitcher,
-            GameStateSwitcher gameStateSwitcher
+            GameStateSwitcher gameStateSwitcher,
+            HangerSystem hangerSystem
             )
         {
             _dungeonSwitcher = dungeonSwitcher;
             _gameStateSwitcher = gameStateSwitcher;
+            _hangerSystem = hangerSystem;
             SetUp();
         }
         void SetUp()
@@ -48,7 +51,7 @@ namespace DungeonCrawler.PlayerMonoAssembly
             Assert.IsNotNull(player, $"spawnGridPosition: {spawnWorldPosition} player: {player}");
             var spawnPosition = new Vector3(spawnWorldPosition.x, PlayerSpawnHeight, spawnWorldPosition.z);
             _playerController = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
-            _playerController.Init(player, _dungeonSwitcher,_gameStateSwitcher);
+            _playerController.Init(player, _dungeonSwitcher,_gameStateSwitcher, _hangerSystem);
         }
     }
 }
