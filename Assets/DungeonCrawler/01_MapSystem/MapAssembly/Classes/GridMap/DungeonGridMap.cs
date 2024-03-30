@@ -14,7 +14,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap
         
         public (int x, int y) InitPlayerPosition { get; set; }
         public (int x, int y) InitStairsPosition { get; set; }
-        public (int x, int y) InitEnemyPosition { get; set; }
+        public IReadOnlyList<(int x, int y)> InitEnemyPositions { get; set; }
         public IReadOnlyList<(int x, int y)> InitTorchPositions { get; set; } = new List<(int x, int y)>();
 
         public DungeonGridMap(PlainDungeonGridMap plainDungeon)

@@ -118,15 +118,14 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
         DungeonGridMap PlaceEnemies(DungeonGridMap dungeon, DungeonSwitcher dungeonSwitcher)
         {
             // [pre-condition] _areas should not be empty
-            var areas = dungeon.Areas;
-            Assert.IsTrue(areas.Count > 0);
-            Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
-
-            var area = areas[Random.Range(0, areas.Count())];
-            var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
-            var spawnY = Random.Range(area.Room.Y, area.Room.Y + area.Room.Height);
-            dungeon.Map.AddEntity(spawnX, spawnY, _entityFactory.CreateEntity<Enemy>(dungeonSwitcher));
-            dungeon.InitEnemyPosition = (spawnX, spawnY);
+            
+            const int enemyCount = 1;
+            var spawnPositions = GetSpawnPositions(dungeon, enemyCount);
+            foreach (var (x, y) in spawnPositions)
+            {
+                dungeon.Map.AddEntity(x, y, _entityFactory.CreateEntity<Enemy>(dungeonSwitcher));
+            }
+            dungeon.InitEnemyPositions = spawnPositions;
             return dungeon;
         }
 
