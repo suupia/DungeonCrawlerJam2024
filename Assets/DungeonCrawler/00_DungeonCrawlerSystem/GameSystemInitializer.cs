@@ -32,11 +32,19 @@ namespace DungeonCrawler
         void SetUp()
         {
             Debug.Log("GameSystemInitializer.SetUp()");
+            
+            _mapBuilderMono.BuildFirstDungeon(); // This process is required to run regardless of game state.
             _gameStateSwitcher.OnGameStateChange += (sender, e) =>
             {
-                Debug.Log($"GameState Changed: {e.NextGameState}");
-                _mapBuilderMono.BuildFirstDungeon();
-                // _dungeonSwitcher.Reset();
+                Debug.Log($"GameState Changed: {e.PrevGameState} -> {e.PostGameState}");
+                if (e.PrevGameState == GameStateSwitcher.GameStateEnum.Exploring)
+                {
+                    //  _dungeonSwitcher.Reset();
+                }
+                if(e.PostGameState == GameStateSwitcher.GameStateEnum.Exploring)
+                {
+                    _mapBuilderMono.BuildFirstDungeon();
+                }
             };
             _gameStateSwitcher.EnterTitle();
         }

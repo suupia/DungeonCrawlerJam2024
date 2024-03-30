@@ -67,7 +67,7 @@ namespace DungeonCrawler
         {
             Assert.IsTrue(_stateTransitionMap.ContainsKey(_gameState));  // Current State
             Assert.IsTrue(_stateTransitionMap[_gameState].Contains(nextState)); // Next State
-            OnGameStateChange(this, new GameStateEventArgs(nextState));
+            OnGameStateChange(this, new GameStateEventArgs(_gameState, nextState));
             Debug.Log($"GameStateSwitcher.ChangeState() : {_gameState} -> {nextState}");
             _gameState = nextState;
         }
@@ -75,10 +75,12 @@ namespace DungeonCrawler
         
         public class GameStateEventArgs : EventArgs
         {
-            public GameStateEnum NextGameState { get; }
-            public GameStateEventArgs(GameStateEnum nextGameState)
+            public GameStateEnum PrevGameState { get; }
+            public GameStateEnum PostGameState { get; }
+            public GameStateEventArgs(GameStateEnum prevGameState, GameStateEnum postGameState)
             {
-                NextGameState = nextGameState;
+                PrevGameState = prevGameState;
+                PostGameState = postGameState;
             }
         }
     }

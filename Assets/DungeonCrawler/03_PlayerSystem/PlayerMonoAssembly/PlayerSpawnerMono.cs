@@ -1,4 +1,6 @@
 ﻿#nullable enable
+using System.Data.Common;
+using DungeonCrawler._01_MapSystem.MapAssembly.Classes;
 using DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes;
 using DungeonCrawler._04_EnemySystem.EnemyAssembly;
 using DungeonCrawler.MapAssembly.Classes;
@@ -39,6 +41,11 @@ namespace DungeonCrawler.PlayerMonoAssembly
                 .Subscribe(_ =>
                 {
                     if(_playerController != null) Destroy(_playerController.gameObject);
+                    if (_dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap)
+                    {
+                        Debug.LogWarning($" _dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap");
+                        return;
+                    }
                     var(x,y) = _dungeonSwitcher.CurrentDungeon.InitPlayerPosition;
                     SpawnPlayer(x,y);
                 }); 
@@ -48,7 +55,7 @@ namespace DungeonCrawler.PlayerMonoAssembly
             Debug.Log($"Player spawn position: {x}, {y}");
             var spawnWorldPosition = GridConverter.GridPositionToWorldPosition(new Vector2Int(x, y));
             var player = _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<Player>(x, y);
-            Assert.IsNotNull(player, $"spawnGridPosition: {spawnWorldPosition} player: {player}");
+                Assert.IsNotNull(player, $"spawnGridPosition: {spawnWorldPosition} player: {player}");
             var spawnPosition = new Vector3(spawnWorldPosition.x, PlayerSpawnHeight, spawnWorldPosition.z);
             _playerController = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
             _playerController.Init(player, _dungeonSwitcher,_gameStateSwitcher, _hangerSystem);
