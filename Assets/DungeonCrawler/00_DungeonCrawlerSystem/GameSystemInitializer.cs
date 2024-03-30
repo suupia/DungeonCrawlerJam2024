@@ -39,11 +39,12 @@ namespace DungeonCrawler
                 Debug.Log($"GameState Changed: {e.PrevGameState} -> {e.PostGameState}");
                 if (e.PrevGameState == GameStateSwitcher.GameStateEnum.Exploring)
                 {
-                    //  _dungeonSwitcher.Reset();
+                    _dungeonSwitcher.Reset();
+                    _mapBuilderMono.BuildFirstDungeon();
+
                 }
                 if(e.PostGameState == GameStateSwitcher.GameStateEnum.Exploring)
                 {
-                    _mapBuilderMono.BuildFirstDungeon();
                 }
             };
             _gameStateSwitcher.EnterTitle();
