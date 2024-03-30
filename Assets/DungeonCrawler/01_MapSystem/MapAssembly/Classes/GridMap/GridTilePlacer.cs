@@ -141,7 +141,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
         
         public DungeonGridMap PlaceFoods(DungeonGridMap dungeon)
         {
-            const int foodCount = 0;
+            const int foodCount = 3;
             var spawnPositions = GetSpawnPositions(dungeon, foodCount);
             
             foreach (var (x, y) in spawnPositions)

@@ -593,6 +593,74 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+--- !u!1001 &857980164
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1102846161810089569, guid: 8f7a1a6dad9877045853c86063886107,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102846161810089569, guid: 8f7a1a6dad9877045853c86063886107,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102846161810089569, guid: 8f7a1a6dad9877045853c86063886107,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102846161810089569, guid: 8f7a1a6dad9877045853c86063886107,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102846161810089569, guid: 8f7a1a6dad9877045853c86063886107,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102846161810089569, guid: 8f7a1a6dad9877045853c86063886107,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102846161810089569, guid: 8f7a1a6dad9877045853c86063886107,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102846161810089569, guid: 8f7a1a6dad9877045853c86063886107,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102846161810089569, guid: 8f7a1a6dad9877045853c86063886107,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102846161810089569, guid: 8f7a1a6dad9877045853c86063886107,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6406018575935220062, guid: 8f7a1a6dad9877045853c86063886107,
+        type: 3}
+      propertyPath: m_Name
+      value: FoodSpawnerMono
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8f7a1a6dad9877045853c86063886107, type: 3}
 --- !u!1 &949548156
 GameObject:
   m_ObjectHideFlags: 0
@@ -1849,3 +1917,4 @@ SceneRoots:
   - {fileID: 954241126}
   - {fileID: 604603452}
   - {fileID: 2086206536}
+  - {fileID: 857980164}
