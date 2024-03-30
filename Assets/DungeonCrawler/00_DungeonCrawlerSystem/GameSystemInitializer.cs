@@ -26,7 +26,7 @@ namespace DungeonCrawler
         {
             Debug.Log("GameSystemInitializer.SetUp()");
             _gameStateSwitcher.EnterTitle();
-
+            
         }
     }
 }

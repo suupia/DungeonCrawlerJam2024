@@ -51,6 +51,7 @@ namespace DungeonCrawler
         {
             _battleState = BattleState.None;
             OnBattleEnd?.Invoke(this, new BattleEndEventArgs(IsPlayerWin));
+            Debug.Log("Battle End, IsPlayerWin = " + IsPlayerWin);
         }
 
 
