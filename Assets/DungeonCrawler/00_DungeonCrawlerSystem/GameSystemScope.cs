@@ -44,7 +44,7 @@ namespace DungeonCrawler
             builder.Register<HangerSystem>(Lifetime.Scoped);
             
             // Torch
-            builder.Register<TorchInventory>(Lifetime.Scoped);
+            builder.Register<TorchInventory>(Lifetime.Scoped).WithParameter("initValue", 0);
             builder.Register<TorchSystem>(Lifetime.Scoped);
 
             // Mono

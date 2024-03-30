@@ -12,15 +12,18 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap
     {
         BattleGameConnector _battleGameConnector;
         HangerSystem _hangerSystem;
+        TorchSystem _torchSystem;
         
         [Inject]
         public GridEntityFactory(
             BattleGameConnector battleGameConnector,
-            HangerSystem hangerSystem
+            HangerSystem hangerSystem,
+            TorchSystem torchSystem
             )
         {
             _battleGameConnector = battleGameConnector;
             _hangerSystem = hangerSystem;
+            _torchSystem = torchSystem;
         }
         public IGridEntity CreateEntity<TEntity> (DungeonSwitcher dungeonSwitcher) where  TEntity : IGridEntity
         {
@@ -29,7 +32,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap
                 _ when typeof(TEntity) == typeof(Player) => new Player(),
                 _ when typeof(TEntity) == typeof(Stairs) => new Stairs(dungeonSwitcher),
                 _ when typeof(TEntity) == typeof(Enemy) => new Enemy(_battleGameConnector,dungeonSwitcher),
-                _ when typeof(TEntity) == typeof(Torch) => new Torch(),
+                _ when typeof(TEntity) == typeof(Torch) => new Torch(_torchSystem, dungeonSwitcher),
                 _ when typeof(TEntity) == typeof(Food) => new Food(_hangerSystem, dungeonSwitcher),
                 _ when typeof(TEntity) == typeof(DefaultEntity) => new DefaultEntity(),
                 _ => new DefaultEntity(),

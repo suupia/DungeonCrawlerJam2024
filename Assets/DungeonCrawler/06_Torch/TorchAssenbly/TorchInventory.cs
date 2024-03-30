@@ -5,9 +5,9 @@ namespace DungeonCrawler
     {
         public int Value { get; set; }
 
-        public TorchInventory(int maxValue)
+        public TorchInventory(int initValue)
         {
-            Value = 0;
+            Value = initValue;
         }
     }
 }
