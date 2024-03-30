@@ -46,15 +46,17 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         AnimationMonoSystem  _animationMonoSystem;
         Player _player;
         DungeonSwitcher _dungeonSwitcher;
+        GameStateSwitcher _gameStateSwitcher;
         
         public void Construct(
             Player player,
-            DungeonSwitcher dungeonSwitcher
-        )
+            DungeonSwitcher dungeonSwitcher,
+            GameStateSwitcher gameStateSwitcher
+            )
         {
             _player = player;
             _dungeonSwitcher = dungeonSwitcher;
-            
+            _gameStateSwitcher = gameStateSwitcher;
             SetUp();
         }
 
@@ -170,7 +172,9 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         {
             Vector3 newPosition = GetNextPosition(action);
             var(x,y) = GridConverter.WorldPositionToGridPosition(newPosition);
-            return _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<CharacterWall>(x,y) == null;
+            if(!_gameStateSwitcher.IsInExploring()) return false;
+            if(_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<CharacterWall>(x,y) != null) return false;
+            return true;
         }
         
         void Move(MovementAction action)
