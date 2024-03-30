@@ -31,6 +31,11 @@ namespace DungeonCrawler
             { GameStateEnum.Battling, new() { GameStateEnum.Exploring, GameStateEnum.InSettings}},
             { GameStateEnum.InSettings, new() {GameStateEnum.AtTitle, GameStateEnum.Exploring, GameStateEnum.Battling}},
         };
+        public bool IsInTitle()
+        {
+            return new[] {GameStateEnum.AtTitle}.Contains(_gameState);
+        }
+        
         public bool IsInExploring()
         {
             return new[] {GameStateEnum.Exploring}.Contains(_gameState);
