@@ -31,5 +31,10 @@ namespace DungeonCrawler
                 GameOver();
             }
         }
+
+        public void EatFood(Food food)
+        {
+            _hangerMeter.Value += food.HangerMeterIncreaseAmount;
+        }
     }
 }
