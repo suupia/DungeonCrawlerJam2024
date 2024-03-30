@@ -133,14 +133,26 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
 
         public DungeonGridMap PlaceTorches(DungeonGridMap dungeon)
         {
-            // [pre-condition] _areas should not be empty
             const int torchCount = 3;
+            var spawnPositions = GetSpawnPositions(dungeon, torchCount);
+            
+            foreach (var (x, y) in spawnPositions)
+            {
+                dungeon.Map.AddEntity(x, y, new Torch());
+            }
+            dungeon.InitTorchPositions = spawnPositions;
+            return dungeon;
+        }
+
+        List<(int, int)> GetSpawnPositions(DungeonGridMap dungeon, int need)
+        {
+            // [pre-condition] _areas should not be empty
             var areas = dungeon.Areas;
             Assert.IsTrue(areas.Count > 0);
             Debug.Log($"ares: {string.Join(",", areas.Select(area => area.Room))}");
 
             var result = new List<(int x, int y)>();
-            while (result.Count() < torchCount)
+            while (result.Count() < need)
             {
                 var area = areas[Random.Range(0, areas.Count())];
                 var spawnX = Random.Range(area.Room.X, area.Room.X + area.Room.Width);
@@ -149,15 +161,9 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
                 var isInFrontOfPath = IsInFrontOfPath(dungeon, spawnX, spawnY);
                 if (!result.Contains(spawnPosition) && !isInFrontOfPath) result.Add(spawnPosition);
             }
-            
-            foreach (var (x, y) in result)
-            {
-                dungeon.Map.AddEntity(x, y, new Torch());
-            }
-            dungeon.InitTorchPositions = result;
-            return dungeon;
-        }
 
+            return result;
+        }
         bool IsInFrontOfPath(DungeonGridMap dugeon, int x, int y)
         {
             bool isInFrontOfPath = false;
