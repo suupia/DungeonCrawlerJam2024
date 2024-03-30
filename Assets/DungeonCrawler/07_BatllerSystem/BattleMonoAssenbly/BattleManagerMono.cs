@@ -14,7 +14,8 @@ namespace DungeonCrawler
         {
             var player = new PlayerDomain(20);
             var enemy = new EnemyDomain(15, 1);
-            _battleSimulator = new BattleSimulator(player, enemy);
+            _battleSimulator = new BattleSimulator();
+            _battleSimulator.StartBattle(player, enemy);
         }
 
         void Update()

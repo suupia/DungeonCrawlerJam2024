@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,45 +10,54 @@ namespace DungeonCrawler
 {
     public class BattleSimulator
     {
-        public PlayerDomain Player { get; }
-        public EnemyDomain Enemy { get; }
+        public PlayerDomain? Player { get; private set; }
+        public EnemyDomain? Enemy { get; private set; }
+
+        public event EventHandler OnBattleStart = (sender, e) => { };
+        public event EventHandler  OnBattleEnd = (sender, e) => { };
         
-        public event EventHandler  OnBattleStart;
-        public event EventHandler  OnBattleEnd;
-        
-        public event EventHandler OnPlyerWin;
-        public event EventHandler OnPlyerLose;
+        public event EventHandler OnPlyerWin = (sender, e) => { };
+        public event EventHandler OnPlyerLose = (sender, e) => { };
 
         enum BattleState
         {
             None,
+            Preparing,
             InBattle,
             InResult,
         }
 
         BattleState _battleState = BattleState.None;
-
-        public BattleSimulator(PlayerDomain player, EnemyDomain enemy)
-        {
-            Player = player;
-            Enemy = enemy;
-        }
-        
         public bool IsInBattle => _battleState == BattleState.InBattle;
         public bool IsInResult => _battleState == BattleState.InResult;
-        
-        public void StartBattle()
+
+        public void Init()
         {
+            _battleState = BattleState.Preparing;
+        }
+        
+        public void StartBattle(PlayerDomain player, EnemyDomain enemy)
+        {
+            Assert.IsTrue(_battleState == BattleState.Preparing);
+            Player = player;
+            Enemy = enemy;
             Debug.Log("Battle Start");
             _battleState = BattleState.InBattle;
             OnBattleStart?.Invoke(this, EventArgs.Empty);
         }
-        
+
         public void UpdateTurn(IPlayerAttack playerAttack)
         {
+            Assert.IsNotNull(Player);
+            Assert.IsNotNull(Enemy);
+            
             if(_battleState != BattleState.InBattle)
             {
                 _battleState = BattleState.InBattle;
+            }
+            else
+            {
+                Debug.LogWarning($" Battle is not in progress. Current State = {_battleState}");
             }
             
             playerAttack.Attack(Enemy);

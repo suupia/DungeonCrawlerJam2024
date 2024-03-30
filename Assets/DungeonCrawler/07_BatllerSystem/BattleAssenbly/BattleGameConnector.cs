@@ -1,4 +1,6 @@
 ﻿#nullable enable
+using System;
+
 namespace DungeonCrawler
 {
     public class BattleGameConnector
@@ -22,6 +24,22 @@ namespace DungeonCrawler
             _battleSimulator.OnBattleEnd += (sender, e) =>
             {
                _gameStateSwitcher.EnterExploring();
+            };
+            _battleSimulator.Init();
+        }
+
+        public void StartBattle()
+        {
+            var player = new PlayerDomain(100);
+            var enemy = new EnemyDomain(100, 1);
+            _battleSimulator.StartBattle(player, enemy);
+        }
+        
+        public void OnEnemyLose(Action action)
+        {
+            _battleSimulator.OnPlyerWin += (sender, e) =>
+            {
+                action();
             };
         }
     }

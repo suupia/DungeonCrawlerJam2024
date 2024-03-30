@@ -78,7 +78,6 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         {
             movementView = _movements.ToList();
             ProcessMovement();
-            CheckUnderPlayerEntity();
             _animationMonoSystem.Update();
         }
         

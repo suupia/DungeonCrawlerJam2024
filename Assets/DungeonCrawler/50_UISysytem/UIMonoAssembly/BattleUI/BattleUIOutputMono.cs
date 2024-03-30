@@ -28,16 +28,18 @@ public class BattleUIOutputMono : MonoBehaviour
 
    void SetUp()
    {
-      Observable.EveryValueChanged(this, _ => _battleSimulator.Player.CurrentHp)
+      Observable.EveryValueChanged(this, _ => _battleSimulator.Player?.CurrentHp)
          .Subscribe(_ =>
          {
-            playerHpText.text = $"Player HP: {_battleSimulator.Player.CurrentHp}";
+            if (_battleSimulator.Player == null) return;
+            playerHpText.text = $"Player HP: {_battleSimulator.Player?.CurrentHp}";
             playerHpGauge.FillRate((float)_battleSimulator.Player.CurrentHp/_battleSimulator.Player.MaxHp);
          });
 
-      Observable.EveryValueChanged(this, _ => _battleSimulator.Enemy.CurrentHp)
+      Observable.EveryValueChanged(this, _ => _battleSimulator.Enemy?.CurrentHp)
          .Subscribe(_ =>
          {
+            if (_battleSimulator.Enemy == null) return;
             enemyHpText.text = $"Enemy HP: {_battleSimulator.Enemy.CurrentHp}";
             enemyHpGauge.FillRate((float)_battleSimulator.Enemy.CurrentHp/_battleSimulator.Enemy.MaxHp);
             // enemyNameText.text = $"Enemy Name: {_battleSimulator.Enemy.Name}";
