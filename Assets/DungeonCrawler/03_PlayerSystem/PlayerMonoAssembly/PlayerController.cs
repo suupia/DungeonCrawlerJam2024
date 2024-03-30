@@ -36,7 +36,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
             get { return _currentMovement; }
         }
         
-        public (int x, int y) GridPosition => GridConverter.WorldPositionToGridPosition(transform.position);
+        (int x, int y) GridPosition => GridConverter.WorldPositionToGridPosition(transform.position);
 
         bool _inMotion;
 
@@ -46,16 +46,21 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         AnimationMonoSystem  _animationMonoSystem;
         Player _player;
         DungeonSwitcher _dungeonSwitcher;
+        GameStateSwitcher _gameStateSwitcher;
         
-        public void Construct(
+        bool _isInitialized;
+        
+        public void Init(
             Player player,
-            DungeonSwitcher dungeonSwitcher
-        )
+            DungeonSwitcher dungeonSwitcher,
+            GameStateSwitcher gameStateSwitcher
+            )
         {
             _player = player;
             _dungeonSwitcher = dungeonSwitcher;
-            
+            _gameStateSwitcher = gameStateSwitcher;
             SetUp();
+            _isInitialized = true;
         }
 
         void SetUp()
@@ -92,8 +97,9 @@ namespace  DungeonCrawler.PlayerMonoAssembly
             };
         }
         
-        void FixedUpdate()
+        void Update()
         {
+            if (!_isInitialized) return; 
             movementView = _movements.ToList();
             ProcessMovement();
             _animationMonoSystem.Update();
@@ -170,7 +176,11 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         {
             Vector3 newPosition = GetNextPosition(action);
             var(x,y) = GridConverter.WorldPositionToGridPosition(newPosition);
-            return _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<CharacterWall>(x,y) == null;
+            Debug.Log($"_gameStateSwitcher : {_gameStateSwitcher}");
+            Debug.Log($"_gameStateSwitcher.IsInExploring() : {_gameStateSwitcher.IsInExploring()}");
+            if(!_gameStateSwitcher.IsInExploring()) return false;
+            if(_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<CharacterWall>(x,y) != null) return false;
+            return true;
         }
         
         void Move(MovementAction action)
