@@ -31,8 +31,10 @@ namespace  DungeonCrawler
                 {
                     foreach (var torchController in _torchControllers)
                     {
+                        if (torchController == null) continue;
                         Destroy(torchController.gameObject);
                     }
+                    _torchControllers.Clear();
                     var positions = _dungeonSwitcher.CurrentDungeon.InitTorchPositions;
                     foreach (var (x,y) in positions)
                     {
