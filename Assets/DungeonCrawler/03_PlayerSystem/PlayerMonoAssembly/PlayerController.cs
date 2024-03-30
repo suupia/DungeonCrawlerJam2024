@@ -36,7 +36,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
             get { return _currentMovement; }
         }
         
-        public (int x, int y) GridPosition => GridConverter.WorldPositionToGridPosition(transform.position);
+        (int x, int y) GridPosition => GridConverter.WorldPositionToGridPosition(transform.position);
 
         bool _inMotion;
 

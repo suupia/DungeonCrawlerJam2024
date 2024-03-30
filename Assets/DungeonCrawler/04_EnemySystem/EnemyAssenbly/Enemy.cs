@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Interfaces;
 using UnityEngine;
@@ -8,13 +9,17 @@ namespace DungeonCrawler._04_EnemySystem.EnemyAssembly
 {
     public class Enemy : IGridEntity
     {
-        BattleGameConnector _battleGameConnector;
+        public Func<(int x, int y)> GridPosition = () => (0, 0);
+        readonly BattleGameConnector _battleGameConnector;
+        readonly DungeonSwitcher _dungeonSwitcher;
         
         public Enemy(
-            BattleGameConnector battleGameConnector
+            BattleGameConnector battleGameConnector,
+            DungeonSwitcher dungeonSwitcher
             )
         {
             _battleGameConnector = battleGameConnector;
+            _dungeonSwitcher = dungeonSwitcher;
         }
         
         public void GotOn()
@@ -28,7 +33,7 @@ namespace DungeonCrawler._04_EnemySystem.EnemyAssembly
         void OnLose()
         {
             Debug.Log($"Enemy.Die()");
-            // _dungeonSwitcher.SwitchToBattle();
+            _dungeonSwitcher.CurrentDungeon.Map.RemoveEntity(GridPosition().x,GridPosition().y, this);
         }
     }
 }
