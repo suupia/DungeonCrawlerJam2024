@@ -4,16 +4,29 @@ using UnityEngine;
 
 public class BattleUI : MonoBehaviour
 {
-    [SerializeField] GameObject view;
+    [SerializeField] GameObject battleView;
+    [SerializeField] GameObject resultView;
     
-    public void Show()
+    public void ShowBattleUI()
     {
         Debug.Log("BattleUI.Show()");
-        view.SetActive(true);
+        battleView.SetActive(true);
     }
-    public void Hide()
+    public void HideBattleUI()
     {
         Debug.Log("BattleUI.Hide()");
-        view.SetActive(false);
+        battleView.SetActive(false);
+    }
+    
+    public void ShowResultUI()
+    {
+        Debug.Log("BattleUI.ShowResultUI()");
+        resultView.SetActive(true);
+    }
+    
+    public void HideResultUI()
+    {
+        Debug.Log("BattleUI.HideResultUI()");
+        resultView.SetActive(false);
     }
 }

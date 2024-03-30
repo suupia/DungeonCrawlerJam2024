@@ -10,6 +10,15 @@ namespace DungeonCrawler
     {
         public PlayerDomain Player { get; }
         public EnemyDomain Enemy { get; }
+        
+        enum BattleState
+        {
+            None,
+            InBattle,
+            InResult,
+        }
+
+        BattleState _battleState = BattleState.None;
 
         public BattleSimulator(PlayerDomain player, EnemyDomain enemy)
         {
@@ -17,8 +26,16 @@ namespace DungeonCrawler
             Enemy = enemy;
         }
         
+        public bool IsInBattle => _battleState == BattleState.InBattle;
+        public bool IsInResult => _battleState == BattleState.InResult;
+        
         public void UpdateTurn(IPlayerAttack playerAttack)
         {
+            if(_battleState != BattleState.InBattle)
+            {
+                _battleState = BattleState.InBattle;
+            }
+            
             playerAttack.Attack(Enemy);
 
             if (Enemy.IsDead)
@@ -41,6 +58,7 @@ namespace DungeonCrawler
         void FinishBattle()
         {
             Debug.Log("The battle finished");
+            _battleState = BattleState.InResult;
         }
     }
 }
