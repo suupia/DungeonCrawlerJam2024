@@ -40,6 +40,7 @@ namespace DungeonCrawler
             builder.Register<BattleGameConnector>(Lifetime.Scoped);
             
             // Hanger
+            builder.Register<HangerMeter>(Lifetime.Scoped).WithParameter("maxValue",50);
             builder.Register<HangerSystem>(Lifetime.Scoped);
 
             // Mono

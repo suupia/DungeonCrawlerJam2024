@@ -1,5 +1,6 @@
 #nullable enable
 
+using Codice.Client.GameUI.Explorer;
 using DungeonCrawler.MapAssembly.Interfaces;
 using UnityEngine;
 

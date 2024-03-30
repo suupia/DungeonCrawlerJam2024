@@ -48,7 +48,6 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         DungeonSwitcher _dungeonSwitcher;
         GameStateSwitcher _gameStateSwitcher;
 
-        HangerMeter _hangerMeter;
         HangerSystem _hangerSystem;
         
         bool _isInitialized;
@@ -56,16 +55,15 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         public void Init(
             Player player,
             DungeonSwitcher dungeonSwitcher,
-            GameStateSwitcher gameStateSwitcher
+            GameStateSwitcher gameStateSwitcher,
+            HangerSystem hangerSystem
             )
         {
+            Debug.Log("playerController init");
             _player = player;
             _dungeonSwitcher = dungeonSwitcher;
             _gameStateSwitcher = gameStateSwitcher;
-            
-            _hangerMeter = new HangerMeter(100);
-            _hangerSystem = new HangerSystem(_hangerMeter);
-            
+            _hangerSystem = hangerSystem;
             SetUp();
             _isInitialized = true;
         }

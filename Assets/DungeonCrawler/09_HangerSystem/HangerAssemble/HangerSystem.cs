@@ -13,7 +13,8 @@ namespace DungeonCrawler
         int _turnDecrease = 1;
 
         public Action GameOver = () => {Debug.Log("GameOver with HangerMeter 0");};
-
+        
+        [Inject]
         public HangerSystem(HangerMeter hangerMeter)
         {
             _hangerMeter = hangerMeter;
