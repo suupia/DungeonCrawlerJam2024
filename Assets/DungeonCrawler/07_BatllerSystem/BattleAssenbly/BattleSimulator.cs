@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DungeonCrawler.PlayerAssembly.Interfaces;
@@ -11,6 +12,12 @@ namespace DungeonCrawler
         public PlayerDomain Player { get; }
         public EnemyDomain Enemy { get; }
         
+        public event EventHandler  OnBattleStart;
+        public event EventHandler  OnBattleEnd;
+        
+        public event EventHandler OnPlyerWin;
+        public event EventHandler OnPlyerLose;
+
         enum BattleState
         {
             None,
@@ -29,6 +36,13 @@ namespace DungeonCrawler
         public bool IsInBattle => _battleState == BattleState.InBattle;
         public bool IsInResult => _battleState == BattleState.InResult;
         
+        public void StartBattle()
+        {
+            Debug.Log("Battle Start");
+            _battleState = BattleState.InBattle;
+            OnBattleStart?.Invoke(this, EventArgs.Empty);
+        }
+        
         public void UpdateTurn(IPlayerAttack playerAttack)
         {
             if(_battleState != BattleState.InBattle)
@@ -40,7 +54,7 @@ namespace DungeonCrawler
 
             if (Enemy.IsDead)
             {
-                FinishBattle();
+                EndBattle(true);
             }
             
             Enemy.Attack(Player);
@@ -49,16 +63,18 @@ namespace DungeonCrawler
             {
                 // Game Over
                 Debug.Log("player was defeated by enemy");
-                FinishBattle();
+                EndBattle(false);
             }
             
             Debug.Log($"In Battle player._hp = {Player.CurrentHp}, enemy._hp = {Enemy.CurrentHp}");
         }
-
-        void FinishBattle()
+        
+        void EndBattle(bool isPlayerWin)
         {
-            Debug.Log("The battle finished");
-            _battleState = BattleState.InResult;
+            Debug.Log("Battle End " + (isPlayerWin ? "Player Win" : "Player Lose"));
+            _battleState = BattleState.None;
+            OnBattleEnd?.Invoke(this, EventArgs.Empty);
         }
+        
     }
 }

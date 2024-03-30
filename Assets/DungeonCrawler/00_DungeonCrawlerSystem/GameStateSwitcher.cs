@@ -18,6 +18,12 @@ namespace DungeonCrawler
             InSettings,
             // InInventory,
         }
+        BattleSimulator _battleSimulator;
+
+        public GameStateSwitcher(BattleSimulator battleSimulator)
+        {
+            _battleSimulator = battleSimulator;
+        }
 
         GameStateEnum _gameState = GameStateEnum.None;
         
@@ -68,7 +74,7 @@ namespace DungeonCrawler
                     // Dungeon.SetActive(true);
                     break;
                 case GameStateEnum.Battling:
-                    // Battle.SetActive(true);
+                    _battleSimulator.StartBattle();
                     break;
                 case GameStateEnum.InSettings:
                     // Settings.SetActive(true);

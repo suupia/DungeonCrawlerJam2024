@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Interfaces;
 using UnityEngine;
 using VContainer;
@@ -7,18 +8,29 @@ namespace DungeonCrawler._04_EnemySystem.EnemyAssembly
 {
     public class Enemy : IGridEntity
     {
-        GameStateSwitcher _gameState;
+        DungeonSwitcher _dungeonSwitcher;
+        BattleGameConnector _battleGameConnector;
         
-        public Enemy(GameStateSwitcher gameState)
+        public Enemy(
+            DungeonSwitcher dungeonSwitcher,
+            BattleGameConnector battleGameConnector
+            )
         {
-            _gameState = gameState;
+            _dungeonSwitcher = dungeonSwitcher;
+            _battleGameConnector = battleGameConnector;
         }
         
         public void GotOn()
         {
             Debug.Log($"Enemy.GotOn()");
-            _gameState.EnterBattling();
+            //_battleGameConnector
             
+        }
+        
+        void Die()
+        {
+            Debug.Log($"Enemy.Die()");
+            // _dungeonSwitcher.SwitchToBattle();
         }
     }
 }

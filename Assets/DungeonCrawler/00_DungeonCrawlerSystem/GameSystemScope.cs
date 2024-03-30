@@ -39,6 +39,7 @@ namespace DungeonCrawler
             builder.Register<PlayerDomain>(Lifetime.Scoped).WithParameter("maxHp", 100);
             builder.Register<EnemyDomain>(Lifetime.Scoped).WithParameter("maxHp", 100).WithParameter("attack", 1);
             builder.Register<BattleSimulator>(Lifetime.Scoped);
+            builder.Register<BattleGameConnector>(Lifetime.Scoped);
 
             // Mono
             builder.RegisterComponentInHierarchy<MapBuilderMono>();
