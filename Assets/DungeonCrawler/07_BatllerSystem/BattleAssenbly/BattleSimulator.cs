@@ -16,8 +16,8 @@ namespace DungeonCrawler
         public event EventHandler OnBattleStart = (sender, e) => { };
         public event EventHandler  OnBattleEnd = (sender, e) => { };
         
-        public event EventHandler OnPlyerWin = (sender, e) => { };
-        public event EventHandler OnPlyerLose = (sender, e) => { };
+        public event EventHandler OnPlayerWin = (sender, e) => { };
+        public event EventHandler OnPlayerLose = (sender, e) => { };
 
         enum BattleState
         {
@@ -99,11 +99,11 @@ namespace DungeonCrawler
             ChangeState(BattleState.InResult);
             if (isPlayerWin)
             {
-                OnPlyerWin?.Invoke(this, EventArgs.Empty);
+                OnPlayerWin?.Invoke(this, EventArgs.Empty);
             }
             else
             {
-                OnPlyerLose?.Invoke(this, EventArgs.Empty);
+                OnPlayerLose?.Invoke(this, EventArgs.Empty);
             }
         }
         

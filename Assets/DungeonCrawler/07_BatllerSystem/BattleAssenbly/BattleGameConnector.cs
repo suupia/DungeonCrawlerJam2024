@@ -41,7 +41,7 @@ namespace DungeonCrawler
         
         public void OnEnemyLose(Action action)
         {
-            _battleSimulator.OnPlyerWin += (sender, e) =>
+            _battleSimulator.OnPlayerWin += (sender, e) =>
             {
                 action();
             };

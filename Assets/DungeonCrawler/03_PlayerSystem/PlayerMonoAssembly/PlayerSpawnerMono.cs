@@ -48,7 +48,7 @@ namespace DungeonCrawler.PlayerMonoAssembly
             Assert.IsNotNull(player, $"spawnGridPosition: {spawnWorldPosition} player: {player}");
             var spawnPosition = new Vector3(spawnWorldPosition.x, PlayerSpawnHeight, spawnWorldPosition.z);
             _playerController = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
-            _playerController.Construct(player, _dungeonSwitcher,_gameStateSwitcher);
+            _playerController.Init(player, _dungeonSwitcher,_gameStateSwitcher);
         }
     }
 }
