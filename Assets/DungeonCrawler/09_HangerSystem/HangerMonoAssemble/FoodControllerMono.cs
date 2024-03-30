@@ -7,5 +7,9 @@ namespace DungeonCrawler
 {
     public class FoodControllerMono : MonoBehaviour
     {
+        public void Construct(Food food)
+        {
+            
+        }
     }
 }

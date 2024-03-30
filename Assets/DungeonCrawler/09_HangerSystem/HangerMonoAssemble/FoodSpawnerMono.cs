@@ -11,11 +11,11 @@ namespace DungeonCrawler
 {
     public class FoodSpawnerMono : MonoBehaviour
     {
-        [SerializeField] TorchControllerMono foodPrefab = null!;
+        [SerializeField] FoodControllerMono foodPrefab = null!;
         const float FoodSpawnHeight = 1.0f;
         
         DungeonSwitcher _dungeonSwitcher = null!;
-        readonly List<TorchControllerMono> _foodControllers = new ();
+        readonly List<FoodControllerMono> _foodControllers = new ();
         
         [Inject]
         public void Construct(DungeonSwitcher dungeonSwitcher)
@@ -29,21 +29,21 @@ namespace DungeonCrawler
             Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
                 .Subscribe(_ =>
                 {
-                    foreach (var torchController in _foodControllers)
+                    foreach (var foodController in _foodControllers)
                     {
-                        Destroy(torchController.gameObject);
+                        Destroy(foodController.gameObject);
                     }
-                    var positions = _dungeonSwitcher.CurrentDungeon.InitTorchPositions;
-                    foreach (var (x,y) in positions)
-                    {
-                        SpawnFood(x,y);
-                    }
+                    // var positions = _dungeonSwitcher.CurrentDungeon.InitTorchPositions;
+                    // foreach (var (x,y) in positions)
+                    // {
+                    //     SpawnFood(x,y);
+                    // }
                 }); 
         }
 
         void SpawnFood(int x, int y)
         {
-            Debug.Log($"Torch spawn position: {x}, {y}");
+            Debug.Log($"Food spawn position: {x}, {y}");
             var spawnGridPosition = GridConverter.GridPositionToWorldPosition(new Vector2Int(x, y));
             var food = _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<Food>(x, y);
             Assert.IsNotNull(food);
