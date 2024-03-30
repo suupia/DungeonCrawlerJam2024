@@ -1,18 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+#nullable enable
 
-public class HangerMeter : MonoBehaviour
+namespace DungeonCrawler
 {
-    // Start is called before the first frame update
-    void Start()
+    public class HangerMeter
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
