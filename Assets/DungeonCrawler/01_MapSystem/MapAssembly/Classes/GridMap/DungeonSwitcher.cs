@@ -35,5 +35,11 @@ namespace DungeonCrawler.MapAssembly.Classes
             Floor++;
             return _currentDungeon;
         }
+        
+        public void Reset()
+        {
+            Floor = 0;
+            _currentDungeon = null;
+        }
     }
 }

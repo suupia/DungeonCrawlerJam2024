@@ -9,7 +9,7 @@ namespace DungeonCrawler
 {
     public class GameStateSwitcher
     {
-        enum GameStateEnum
+        public enum GameStateEnum
         {
             None,
             AtTitle,
@@ -18,7 +18,7 @@ namespace DungeonCrawler
             InSettings,
             // InInventory,
         }
-        //public event EventHandler<GameStateEventArgs> OnGameStateChange = (sender, e) => { };
+        public event EventHandler<GameStateEventArgs> OnGameStateChange = (sender, e) => { };
 
         GameStateEnum _gameState = GameStateEnum.None;
         
@@ -67,19 +67,19 @@ namespace DungeonCrawler
         {
             Assert.IsTrue(_stateTransitionMap.ContainsKey(_gameState));  // Current State
             Assert.IsTrue(_stateTransitionMap[_gameState].Contains(nextState)); // Next State
-            //OnGameStateChange(this, new GameStateEventArgs(nextState));
+            OnGameStateChange(this, new GameStateEventArgs(nextState));
             Debug.Log($"GameStateSwitcher.ChangeState() : {_gameState} -> {nextState}");
             _gameState = nextState;
         }
         
         
-        // public class GameStateEventArgs : EventArgs
-        // {
-        //     public GameStateEnum NextGameState { get; }
-        //     public GameStateEventArgs(GameStateEnum nextGameState)
-        //     {
-        //         NextGameState = nextGameState;
-        //     }
-        // }
+        public class GameStateEventArgs : EventArgs
+        {
+            public GameStateEnum NextGameState { get; }
+            public GameStateEventArgs(GameStateEnum nextGameState)
+            {
+                NextGameState = nextGameState;
+            }
+        }
     }
 }

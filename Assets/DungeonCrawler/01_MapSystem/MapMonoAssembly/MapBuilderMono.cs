@@ -41,7 +41,7 @@ namespace DungeonCrawler.MapMonoAssembly
         {
             InstantiateTiles();
             
-            SwitchNextDungeon(); // Create first dungeon
+            BuildFirstDungeon(); // Create first dungeon
             
             Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
                 .Subscribe(_ =>
@@ -50,7 +50,7 @@ namespace DungeonCrawler.MapMonoAssembly
                 }); 
         }
 
-        void SwitchNextDungeon()
+        public void BuildFirstDungeon()
         {
             Debug.Log("SwitchNextDungeon");
             var nextMap = _dungeonSwitcher.SwitchNextDungeon();
@@ -131,7 +131,7 @@ namespace DungeonCrawler.MapMonoAssembly
             if (Input.GetKeyDown(KeyCode.P))
             {
                 Debug.Log("Debug SwitchNextDungeon()");
-                SwitchNextDungeon();
+                BuildFirstDungeon();
             }
 #endif
         }
