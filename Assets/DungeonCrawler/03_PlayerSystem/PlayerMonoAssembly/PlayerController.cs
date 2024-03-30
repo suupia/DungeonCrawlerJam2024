@@ -213,10 +213,6 @@ namespace  DungeonCrawler.PlayerMonoAssembly
         void CheckUnderPlayerEntity()
         {
             Vector2Int gridPosition = GridConverter.WorldPositionToGridPosition(transform.position);
-            Debug.Log($"_dungeonSwitcher : {_dungeonSwitcher}");
-            Debug.Log($"_dungeonSwitcher.CurrentDungeon : {_dungeonSwitcher.CurrentDungeon}");
-            Debug.Log($"_dungeonSwitcher.CurrentDungeon.Map : {_dungeonSwitcher.CurrentDungeon.Map}");
-            Debug.Log($"_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<IGridEntity>(gridPosition) : {_dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<IGridEntity>(gridPosition)}");
             IGridEntity? entity = _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<IGridEntity>(gridPosition);
             if (entity != null)
             {

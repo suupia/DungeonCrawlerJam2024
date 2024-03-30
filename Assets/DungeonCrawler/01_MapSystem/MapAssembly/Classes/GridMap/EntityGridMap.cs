@@ -224,12 +224,11 @@ namespace DungeonCrawler.MapAssembly.Classes
                 return;
             }
 
-            var entities = _entityMaps[index];
-
-            if (entities.Any())
-            {
-                Debug.LogWarning($"[Warning] {typeof(IGridTile)} is already in. Current Count: {entities.Count}");
-            }
+            // var entities = _entityMaps[index];
+            // if (entities.Any())
+            // {
+            //     Debug.LogWarning($"[Warning] {typeof(IGridTile)} is already in. Current Count: {entities.Count}");
+            // }
 
             // domain
             _entityMaps[index].Add(gridTile);
