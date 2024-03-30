@@ -48,7 +48,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
             dungeon = PlaceStairs(dungeon, dungeonSwitcher);
             dungeon = PlaceEnemies(dungeon, dungeonSwitcher);
             dungeon = PlaceTorches(dungeon);
-            
+            dungeon = PlaceFoods(dungeon);
 
             return dungeon;
         }
@@ -136,6 +136,19 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
                 dungeon.Map.AddEntity(x, y, new Torch());
             }
             dungeon.InitTorchPositions = spawnPositions;
+            return dungeon;
+        }
+        
+        public DungeonGridMap PlaceFoods(DungeonGridMap dungeon)
+        {
+            const int foodCount = 0;
+            var spawnPositions = GetSpawnPositions(dungeon, foodCount);
+            
+            foreach (var (x, y) in spawnPositions)
+            {
+                dungeon.Map.AddEntity(x, y, new Food());
+            }
+            dungeon.InitFoodPositions = spawnPositions;
             return dungeon;
         }
 
