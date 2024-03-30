@@ -50,7 +50,7 @@ namespace DungeonCrawler
                 {
                     InitMiniMap();
                 });
-            Observable.EveryValueChanged(this, _ => _player.GridPosition())
+                Observable.EveryValueChanged(this, _ => _player.GridPosition())
                 .Subscribe(_ =>
                 {
                     ChasePlayerPosition();

@@ -5,6 +5,7 @@ using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Interfaces;
 using DungeonCrawler.MapMonoAssembly;
 using DungeonCrawler.PlayerAssembly.Interfaces;
+using DungeonCrawler.PlayerMonoAssembly;
 using UnityEngine;
 using VContainer;
 
@@ -16,16 +17,20 @@ namespace DungeonCrawler
         DungeonSwitcher _dungeonSwitcher = null!;
         MapBuilderMono _mapBuilderMono = null!;
         
+        PlayerSpawnerMono _playerSpawnerMono = null!;
+        
         [Inject]
         public void Construct(
             GameStateSwitcher gameStateSwitcher,
             DungeonSwitcher dungeonSwitcher,
-            MapBuilderMono mapBuilderMono
+            MapBuilderMono mapBuilderMono,
+            PlayerSpawnerMono playerSpawnerMono
             )
         {
             _gameStateSwitcher = gameStateSwitcher;
             _dungeonSwitcher = dungeonSwitcher;
             _mapBuilderMono = mapBuilderMono;
+            _playerSpawnerMono = playerSpawnerMono;
 
             SetUp();
         }
@@ -37,16 +42,19 @@ namespace DungeonCrawler
             _gameStateSwitcher.OnGameStateChange += (sender, e) =>
             {
                 Debug.Log($"GameState Changed: {e.PrevGameState} -> {e.PostGameState}");
-                if (e.PrevGameState == GameStateSwitcher.GameStateEnum.Exploring)
+                if (e.PostGameState == GameStateSwitcher.GameStateEnum.AtTitle)
                 {
                     _dungeonSwitcher.Reset();
                     _mapBuilderMono.BuildFirstDungeon();
-
                 }
                 if(e.PostGameState == GameStateSwitcher.GameStateEnum.Exploring)
                 {
+                    _mapBuilderMono.BuildFirstDungeon();
+                    _playerSpawnerMono.SpawnPlayer();
                 }
             };
+            
+            
             _gameStateSwitcher.EnterTitle();
         }
     }
