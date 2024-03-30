@@ -53,7 +53,7 @@ namespace DungeonCrawler.PlayerMonoAssembly
             _gameStateSwitcher.OnGameStateChange += (sender, e) =>
             {
                 Debug.Log($"GameState Changed: {e.PrevGameState} -> {e.PostGameState}");
-                if (e.PrevGameState == GameStateSwitcher.GameStateEnum.Exploring 
+                if (e.PrevGameState == GameStateSwitcher.GameStateEnum.Battling 
                     && e.PostGameState == GameStateSwitcher.GameStateEnum.AtTitle)
                 {
                     Reset();

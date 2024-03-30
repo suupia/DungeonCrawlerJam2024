@@ -42,16 +42,16 @@ namespace DungeonCrawler
             _gameStateSwitcher.OnGameStateChange += (sender, e) =>
             {
                 Debug.Log($"GameState Changed: {e.PrevGameState} -> {e.PostGameState}");
-                if (e.PrevGameState == GameStateSwitcher.GameStateEnum.AtTitle)
-                {
-                    _dungeonSwitcher.Reset();
-                    _mapBuilderMono.BuildFirstDungeon();
-                }
-                if(e.PostGameState == GameStateSwitcher.GameStateEnum.Exploring)
-                {
-                    _mapBuilderMono.BuildFirstDungeon();
-                    _playerSpawnerMono.SpawnPlayer();
-                }
+                // if (e.PrevGameState == GameStateSwitcher.GameStateEnum.AtTitle)
+                // {
+                //     //_dungeonSwitcher.Reset();
+                //     _mapBuilderMono.BuildFirstDungeon();
+                // }
+                // if(e.PostGameState == GameStateSwitcher.GameStateEnum.Exploring)
+                // {
+                //     _mapBuilderMono.BuildFirstDungeon();
+                //     _playerSpawnerMono.SpawnPlayer();
+                // }
             };
             
             
