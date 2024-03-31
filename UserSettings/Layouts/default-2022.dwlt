@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
-    x: 8
-    y: 51
-    width: 2544
-    height: 1333
+    x: 1930
+    y: 72
+    width: 1920
+    height: 989
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -44,8 +44,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 2544
-    height: 1333
+    width: 1920
+    height: 989
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
@@ -69,7 +69,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 2544
+    width: 1920
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -90,8 +90,8 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 1313
-    width: 2544
+    y: 969
+    width: 1920
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -115,12 +115,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 30
-    width: 2544
-    height: 1283
+    width: 1920
+    height: 939
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 21407
+  controlID: 172
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -140,12 +140,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1323
-    height: 1283
+    width: 830
+    height: 939
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 21324
+  controlID: 50
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -165,12 +165,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1323
-    height: 606
+    width: 830
+    height: 534
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 21325
+  controlID: 26
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -188,13 +188,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 538
-    height: 606
+    width: 402
+    height: 534
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 16}
+  m_ActualView: {fileID: 18}
   m_Panes:
-  - {fileID: 16}
+  - {fileID: 18}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &9
@@ -212,19 +212,20 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 538
+    x: 402
     y: 0
-    width: 785
-    height: 606
+    width: 428
+    height: 534
   m_MinSize: {x: 102, y: 121}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 15}
+  m_ActualView: {fileID: 17}
   m_Panes:
+  - {fileID: 19}
   - {fileID: 17}
+  - {fileID: 16}
   - {fileID: 15}
-  - {fileID: 18}
   m_Selected: 1
-  m_LastSelected: 1
+  m_LastSelected: 0
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -241,14 +242,14 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 606
-    width: 1323
-    height: 677
+    y: 534
+    width: 830
+    height: 405
   m_MinSize: {x: 231, y: 271}
   m_MaxSize: {x: 10001, y: 10021}
-  m_ActualView: {fileID: 19}
+  m_ActualView: {fileID: 20}
   m_Panes:
-  - {fileID: 19}
+  - {fileID: 20}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &11
@@ -268,14 +269,14 @@ MonoBehaviour:
   - {fileID: 13}
   m_Position:
     serializedVersion: 2
-    x: 1323
+    x: 830
     y: 0
-    width: 777
-    height: 1283
+    width: 530
+    height: 939
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 21408
+  controlID: 136
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -293,13 +294,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 777
-    height: 704
+    width: 530
+    height: 553
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 20}
+  m_ActualView: {fileID: 21}
   m_Panes:
-  - {fileID: 20}
+  - {fileID: 21}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &13
@@ -318,14 +319,14 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 704
-    width: 777
-    height: 579
-  m_MinSize: {x: 102, y: 121}
-  m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 21}
+    y: 553
+    width: 530
+    height: 386
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 22}
   m_Panes:
-  - {fileID: 21}
+  - {fileID: 22}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &14
@@ -343,19 +344,470 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 2100
+    x: 1360
     y: 0
-    width: 444
-    height: 1283
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 22}
+    width: 560
+    height: 939
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 23}
   m_Panes:
-  - {fileID: 22}
   - {fileID: 23}
   m_Selected: 0
-  m_LastSelected: 2
+  m_LastSelected: 0
 --- !u!114 &15
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 13401, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Test Runner
+    m_Image: {fileID: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 426
+    y: 73
+    width: 1093
+    height: 624
+  m_SerializedDataModeController:
+    m_DataMode: 0
+    m_PreferredDataMode: 0
+    m_SupportedDataModes: 
+    isAutomatic: 1
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_OverlaysVisible: 1
+  m_Spl:
+    ID: 878
+    splitterInitialOffset: 678
+    currentActiveSplitter: -1
+    realSizes:
+    - 315
+    - 239
+    relativeSizes:
+    - 0.56888473
+    - 0.43111527
+    minSizes:
+    - 32
+    - 32
+    maxSizes:
+    - 0
+    - 0
+    lastTotalSize: 554
+    splitSize: 6
+    xOffset: 0
+    m_Version: 1
+    oldRealSizes: 
+    oldMinSizes: 
+    oldMaxSizes: 
+    oldSplitSize: 0
+  m_TestTypeToolbarIndex: 1
+  m_PlayModeTestListGUI:
+    m_Window: {fileID: 15}
+    m_NewResultList:
+    - id: 1004
+      uniqueId: '[DungeonCrawlerJam2024][suite]'
+      name: DungeonCrawlerJam2024
+      fullName: DungeonCrawlerJam2024
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 
+      parentUniqueId: 
+    m_ResultText: 
+    m_ResultStacktrace: 
+    m_TestListState:
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 9cceb3c8ffffff7f
+      m_RenameOverlay:
+        m_UserAcceptedRename: 0
+        m_Name: 
+        m_OriginalName: 
+        m_EditFieldRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        m_UserData: 0
+        m_IsWaitingForDelay: 0
+        m_IsRenaming: 0
+        m_OriginalEventType: 11
+        m_IsRenamingFilename: 0
+        m_ClientGUIView: {fileID: 0}
+      m_SearchString: 
+    m_TestRunnerUIFilter:
+      PassedHidden: 0
+      FailedHidden: 0
+      NotRunHidden: 0
+      m_SearchString: 
+      selectedCategoryMask: 0
+      availableCategories:
+      - Uncategorized
+    m_SelectedOption: 0
+  m_EditModeTestListGUI:
+    m_Window: {fileID: 15}
+    m_NewResultList:
+    - id: 1000
+      uniqueId: '[DungeonCrawlerJam2024][suite]'
+      name: DungeonCrawlerJam2024
+      fullName: DungeonCrawlerJam2024
+      resultStatus: 1
+      duration: 0.0612503
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 
+      parentUniqueId: 
+    - id: 1004
+      uniqueId: '[MapTests][D:/Unity/UnityProjects/DungeonCrawlerJam2024/Library/ScriptAssemblies/MapTests.dll][suite]'
+      name: MapTests.dll
+      fullName: D:/Unity/UnityProjects/DungeonCrawlerJam2024/Library/ScriptAssemblies/MapTests.dll
+      resultStatus: 1
+      duration: 0.045264
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1000
+      parentUniqueId: '[DungeonCrawlerJam2024][suite]'
+    - id: 1001
+      uniqueId: MapTests.dll/[MapTests][MapTest][suite]
+      name: MapTest
+      fullName: MapTest
+      resultStatus: 1
+      duration: 0.0420894
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1004
+      parentUniqueId: '[MapTests][D:/Unity/UnityProjects/DungeonCrawlerJam2024/Library/ScriptAssemblies/MapTests.dll][suite]'
+    - id: 1003
+      uniqueId: MapTests.dll/MapTest/[MapTests][MapTest.TestDungeonBuilder]
+      name: TestDungeonBuilder
+      fullName: MapTest.TestDungeonBuilder
+      resultStatus: 1
+      duration: 0.0287832
+      messages: 
+      output: 'Area i: 0, X: 0, Y: 0, Width: 5, Height: 10
+
+        Area i: 1, X:
+        5, Y: 0, Width: 5, Height: 10
+
+        Room i: 0, X: 1, Y: 5, Width: 3, Height:
+        3
+
+        Room i: 1, X: 6, Y: 2, Width: 3, Height: 4
+
+        Point i: 0,
+        X: 1, Y: 5
+
+        Point i: 1, X: 2, Y: 5
+
+        Point i: 2, X: 3, Y:
+        5
+
+        Point i: 3, X: 4, Y: 5
+
+        Point i: 4, X: 5, Y: 5
+
+        Point
+        i: 5, X: 6, Y: 5
+
+        Point i: 6, X: 6, Y: 4
+
+        Point i: 7, X:
+        6, Y: 3
+
+        [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity is
+        already in. Current Count: 1
+
+        [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
+        is already in. Current Count: 1
+
+        [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
+        is already in. Current Count: 1
+
+        [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
+        is already in. Current Count: 1
+
+        [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
+        is already in. Current Count: 1
+
+        [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
+        is already in. Current Count: 1
+
+        WWWWWWWWWW
+
+        WWWWWWWWWW
+
+        WWWWWWPPPW
+
+        WWWWWWPPPW
+
+        WWWWWWPPPW
+
+        WPPPPPPPPW
+
+        WPPPWWWWWW
+
+        WPPPWWWWWW
+
+        WWWWWWWWWW
+
+        WWWWWWWWWW
+
+
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: MapTests.dll/[MapTests][MapTest][suite]
+    - id: 1004
+      uniqueId: MapTests.dll/MapTest/[MapTests][MapTest.TestEntityGridMap]
+      name: TestEntityGridMap
+      fullName: MapTest.TestEntityGridMap
+      resultStatus: 1
+      duration: 0.0007902
+      messages: 
+      output: 'WWWWWWWWWW
+
+        WWWWWWWWWW
+
+        WWWWWWWWWW
+
+        WWWWWWWWWW
+
+        WWWWWWWWWW
+
+        WWWWWWWWWW
+
+        WWWWWWWWWW
+
+        WWWWWWWWWW
+
+        WWWWWWWWWW
+
+        WWWWWWWWWW
+
+
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: MapTests.dll/[MapTests][MapTest][suite]
+    m_ResultText: 'TestDungeonBuilder (0.029s)
+
+      ---
+
+      Area i: 0, X: 0,
+      Y: 0, Width: 5, Height: 10
+
+      Area i: 1, X: 5, Y: 0, Width: 5, Height:
+      10
+
+      Room i: 0, X: 1, Y: 5, Width: 3, Height: 3
+
+      Room i: 1, X: 6,
+      Y: 2, Width: 3, Height: 4
+
+      Point i: 0, X: 1, Y: 5
+
+      Point i: 1,
+      X: 2, Y: 5
+
+      Point i: 2, X: 3, Y: 5
+
+      Point i: 3, X: 4, Y: 5
+
+      Point
+      i: 4, X: 5, Y: 5
+
+      Point i: 5, X: 6, Y: 5
+
+      Point i: 6, X: 6, Y:
+      4
+
+      Point i: 7, X: 6, Y: 3
+
+      [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
+      is already in. Current Count: 1
+
+      [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
+      is already in. Current Count: 1
+
+      [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
+      is already in. Current Count: 1
+
+      [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
+      is already in. Current Count: 1
+
+      [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
+      is already in. Current Count: 1
+
+      [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
+      is already in. Current Count: 1
+
+      WWWWWWWWWW
+
+      WWWWWWWWWW
+
+      WWWWWWPPPW
+
+      WWWWWWPPPW
+
+      WWWWWWPPPW
+
+      WPPPPPPPPW
+
+      WPPPWWWWWW
+
+      WPPPWWWWWW
+
+      WWWWWWWWWW
+
+      WWWWWWWWWW'
+    m_ResultStacktrace: 
+    m_TestListState:
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 6feaefd0
+      m_LastClickedID: -789583249
+      m_ExpandedIDs: 27341d80ba8a27802076b780a9cd0a838c3b7d859daf2e88f1fe3b892a6fd689d69f388ccfebdc8f30e5d1901cc37192c150499305cb62951744ab9541b6fd9726d2ca997a9792a0c5dc25a1b40f83a68ac4e9a62cecfda865d8b8a9d3e1a6ab2b3ed9ab23b810ac8b1b2eadcb4051afac1b46b00158ebb09d1511b1cc9256b4a47a31be5d514cc681f0d7c6e881e0c7c65463c89cceb3c8eaedb4c92ed928ca954229cac1c4ffcb7a4f13ccf52e51cf09fa37d4b342aad8113b2dd91e3b3cd9ddad9bd9db76b8d9df0a83dd7d0786ddfc37dddd20fa82de599eacdf643d13e55fb13feb9ba435ec50e340ed149096ed6ce072ee37ccc9f071f0baf5377d7dfd287c46fe581af0ffc9c8b60000025d0262947004cdb5350997db500aa9b1200bca982f0c4f00300c4e9b0d0f7eed1c1098ab6311fb761614f3bd5915f999e316905f0e18a3785218abf717198eff8719d406c61b41cf001c0031b01c8adeda20f13b9823a1c1ba237cf7e7231c5e6226870a6128be0da0295dedc92adc1d212bb804472c7dc2552d65bf832d6d272d3043b45a302e094933892b85346fcee536a65aa437ce55e9374c12d9399cccd23b8abb453df0ea4e3d9b09ca3e6745c23f97bca5414f1dad410289c1418359db41818fec413526ff4b1af2164cfc2c484d5efce74ff9bc6151aa565c52d5130153b534de534b1ac054eb36f35459e2e255b60302587d187c59ff50445a9695665cbc033a5d9b35a86098f0086578988866a286af6601a2f16c08e9856fe586f075bcad74762be2c078fefece7953931d7a23df437b6a8bb47c6427b47e93d9ee7eb501497fffffff7f
+      m_RenameOverlay:
+        m_UserAcceptedRename: 0
+        m_Name: 
+        m_OriginalName: 
+        m_EditFieldRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        m_UserData: 0
+        m_IsWaitingForDelay: 0
+        m_IsRenaming: 0
+        m_OriginalEventType: 11
+        m_IsRenamingFilename: 0
+        m_ClientGUIView: {fileID: 0}
+      m_SearchString: 
+    m_TestRunnerUIFilter:
+      PassedHidden: 0
+      FailedHidden: 0
+      NotRunHidden: 0
+      m_SearchString: 
+      selectedCategoryMask: 0
+      availableCategories:
+      - Uncategorized
+--- !u!114 &16
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 13854, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 310, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Project Settings
+    m_Image: {fileID: -5712115415447495865, guid: 0000000000000000d000000000000000,
+      type: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 2390
+    y: 73
+    width: 548
+    height: 477
+  m_SerializedDataModeController:
+    m_DataMode: 0
+    m_PreferredDataMode: 0
+    m_SupportedDataModes: 
+    isAutomatic: 1
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_OverlaysVisible: 1
+  m_PosLeft: {x: 0, y: 0}
+  m_PosRight: {x: 0, y: 0}
+  m_Scope: 1
+  m_SplitterFlex: 0.2
+  m_SearchText: 
+  m_TreeViewState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 4dcf9b58
+    m_LastClickedID: 1486606157
+    m_ExpandedIDs: a01a5fa653336be200000000c53aba5a
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: 
+      m_OriginalName: 
+      m_EditFieldRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      m_UserData: 0
+      m_IsWaitingForDelay: 0
+      m_IsRenaming: 0
+      m_OriginalEventType: 11
+      m_IsRenamingFilename: 0
+      m_ClientGUIView: {fileID: 0}
+    m_SearchString: 
+--- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -376,10 +828,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 546
-    y: 81
-    width: 783
-    height: 585
+    x: 403
+    y: 19
+    width: 426
+    height: 513
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -398,7 +850,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 1280, y: 720}
+  m_TargetSize: {x: 960, y: 540}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -407,16 +859,16 @@ MonoBehaviour:
   m_VSyncEnabled: 0
   m_Gizmos: 0
   m_Stats: 0
-  m_SelectedSizes: 0e000000000000000000000005000000000000000000000000000000000000000000000000000000
+  m_SelectedSizes: 09000000000000000000000005000000000000000000000000000000000000000000000000000000
   m_ZoomArea:
     m_HRangeLocked: 0
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -640
-    m_HBaseRangeMax: 640
-    m_VBaseRangeMin: -360
-    m_VBaseRangeMax: 360
+    m_HBaseRangeMin: -480
+    m_HBaseRangeMax: 480
+    m_VBaseRangeMin: -270
+    m_VBaseRangeMax: 270
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -434,29 +886,29 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 783
-      height: 564
-    m_Scale: {x: 0.6117188, y: 0.6117188}
-    m_Translation: {x: 391.5, y: 282}
+      width: 426
+      height: 492
+    m_Scale: {x: 0.44375, y: 0.44375}
+    m_Translation: {x: 213, y: 246}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -640
-      y: -460.99615
-      width: 1280
-      height: 921.9923
+      x: -480
+      y: -554.3662
+      width: 960
+      height: 1108.7324
     m_MinimalGUI: 1
-  m_defaultScale: 0.6117188
-  m_LastWindowPixelSize: {x: 783, y: 585}
+  m_defaultScale: 0.44375
+  m_LastWindowPixelSize: {x: 426, y: 513}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000001000000000000
   m_XRRenderMode: 0
   m_RenderTexture: {fileID: 0}
---- !u!114 &16
+--- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -477,10 +929,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 8
-    y: 81
-    width: 537
-    height: 585
+    x: 0
+    y: 19
+    width: 401
+    height: 513
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -846,7 +1298,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 48, y: 10}
+      snapOffset: {x: 0, y: 330}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: UnityEditor.SceneViewCameraOverlay
@@ -854,33 +1306,20 @@ MonoBehaviour:
       layout: 4
       size: {x: 0, y: 0}
       sizeOverriden: 0
-    - dockPosition: 1
-      containerId: overlay-container--right
-      floating: 0
-      collapsed: 0
-      displayed: 1
-      snapOffset: {x: 48, y: 48}
-      snapOffsetDelta: {x: 0, y: 0}
-      snapCorner: 0
-      id: UnityEditor.SceneViewCameraOverlay (0)
-      index: 9
-      layout: 4
-      size: {x: 0, y: 0}
-      sizeOverriden: 0
     m_OverlaysVisible: 1
   m_WindowGUID: cc27987af1a868c49b0894db9c0f5429
-  m_Gizmos: 1
+  m_Gizmos: 0
   m_OverrideSceneCullingMask: 6917529027641081856
   m_SceneIsLit: 0
   m_SceneLighting: 1
-  m_2DMode: 0
+  m_2DMode: 1
   m_isRotationLocked: 0
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 26.22621, y: 22.116613, z: 91.71746}
+    m_Target: {x: 461.7874, y: 285.47113, z: -4.589667}
     speed: 2
-    m_Value: {x: 26.22621, y: 22.116613, z: 91.71746}
+    m_Value: {x: 461.7874, y: 285.47113, z: -4.589667}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -908,17 +1347,17 @@ MonoBehaviour:
       m_Size: {x: 1, y: 1}
     yGrid:
       m_Fade:
-        m_Target: 1
+        m_Target: 0
         speed: 2
-        m_Value: 1
+        m_Value: 0
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
       m_Size: {x: 1, y: 1}
     zGrid:
       m_Fade:
-        m_Target: 0
+        m_Target: 1
         speed: 2
-        m_Value: 0
+        m_Value: 1
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
       m_Size: {x: 1, y: 1}
@@ -926,17 +1365,17 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.6879817, y: -0.044528097, z: 0.04236425, w: 0.72312266}
+    m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
-    m_Value: {x: 0.68798083, y: -0.044528037, z: 0.042364195, w: 0.7231217}
+    m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 29.305885
+    m_Target: 529.6777
     speed: 2
-    m_Value: 29.305885
+    m_Value: 529.6777
   m_Ortho:
-    m_Target: 0
+    m_Target: 1
     speed: 2
-    m_Value: 0
+    m_Value: 1
   m_CameraSettings:
     m_Speed: 0.94053
     m_SpeedNormalized: 0.47
@@ -950,14 +1389,14 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: 0.55685693, y: -0.15595563, z: 0.10738337, w: 0.8087383}
+  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
   m_SceneVisActive: 1
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
---- !u!114 &17
+--- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -978,44 +1417,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 731
-    y: 152
-    width: 1052
-    height: 878
-  m_SerializedDataModeController:
-    m_DataMode: 0
-    m_PreferredDataMode: 0
-    m_SupportedDataModes: 
-    isAutomatic: 1
-  m_ViewDataDictionary: {fileID: 0}
-  m_OverlayCanvas:
-    m_LastAppliedPresetName: Default
-    m_SaveData: []
-    m_OverlaysVisible: 1
---- !u!114 &18
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 13401, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: Test Runner
-    m_Image: {fileID: 0}
-    m_Tooltip: 
-  m_Pos:
-    serializedVersion: 2
-    x: 426
+    x: 2390
     y: 73
-    width: 1093
-    height: 624
+    width: 548
+    height: 477
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1026,363 +1431,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
-  m_Spl:
-    ID: 878
-    splitterInitialOffset: 678
-    currentActiveSplitter: -1
-    realSizes:
-    - 315
-    - 239
-    relativeSizes:
-    - 0.56888473
-    - 0.43111527
-    minSizes:
-    - 32
-    - 32
-    maxSizes:
-    - 0
-    - 0
-    lastTotalSize: 554
-    splitSize: 6
-    xOffset: 0
-    m_Version: 1
-    oldRealSizes: 
-    oldMinSizes: 
-    oldMaxSizes: 
-    oldSplitSize: 0
-  m_TestTypeToolbarIndex: 1
-  m_PlayModeTestListGUI:
-    m_Window: {fileID: 18}
-    m_NewResultList:
-    - id: 1004
-      uniqueId: '[DungeonCrawlerJam2024][suite]'
-      name: DungeonCrawlerJam2024
-      fullName: DungeonCrawlerJam2024
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 
-      parentUniqueId: 
-    m_ResultText: 
-    m_ResultStacktrace: 
-    m_TestListState:
-      scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: 9cceb3c8ffffff7f
-      m_RenameOverlay:
-        m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
-        m_EditFieldRect:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 0
-        m_UserData: 0
-        m_IsWaitingForDelay: 0
-        m_IsRenaming: 0
-        m_OriginalEventType: 11
-        m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 0}
-      m_SearchString: 
-    m_TestRunnerUIFilter:
-      PassedHidden: 0
-      FailedHidden: 0
-      NotRunHidden: 0
-      m_SearchString: 
-      selectedCategoryMask: 0
-      availableCategories:
-      - Uncategorized
-    m_SelectedOption: 0
-  m_EditModeTestListGUI:
-    m_Window: {fileID: 18}
-    m_NewResultList:
-    - id: 1000
-      uniqueId: '[DungeonCrawlerJam2024][suite]'
-      name: DungeonCrawlerJam2024
-      fullName: DungeonCrawlerJam2024
-      resultStatus: 1
-      duration: 0.0612503
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 
-      parentUniqueId: 
-    - id: 1004
-      uniqueId: '[MapTests][D:/Unity/UnityProjects/DungeonCrawlerJam2024/Library/ScriptAssemblies/MapTests.dll][suite]'
-      name: MapTests.dll
-      fullName: D:/Unity/UnityProjects/DungeonCrawlerJam2024/Library/ScriptAssemblies/MapTests.dll
-      resultStatus: 1
-      duration: 0.045264
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1000
-      parentUniqueId: '[DungeonCrawlerJam2024][suite]'
-    - id: 1001
-      uniqueId: MapTests.dll/[MapTests][MapTest][suite]
-      name: MapTest
-      fullName: MapTest
-      resultStatus: 1
-      duration: 0.0420894
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1004
-      parentUniqueId: '[MapTests][D:/Unity/UnityProjects/DungeonCrawlerJam2024/Library/ScriptAssemblies/MapTests.dll][suite]'
-    - id: 1003
-      uniqueId: MapTests.dll/MapTest/[MapTests][MapTest.TestDungeonBuilder]
-      name: TestDungeonBuilder
-      fullName: MapTest.TestDungeonBuilder
-      resultStatus: 1
-      duration: 0.0287832
-      messages: 
-      output: 'Area i: 0, X: 0, Y: 0, Width: 5, Height: 10
-
-        Area i: 1, X:
-        5, Y: 0, Width: 5, Height: 10
-
-        Room i: 0, X: 1, Y: 5, Width: 3, Height:
-        3
-
-        Room i: 1, X: 6, Y: 2, Width: 3, Height: 4
-
-        Point i: 0,
-        X: 1, Y: 5
-
-        Point i: 1, X: 2, Y: 5
-
-        Point i: 2, X: 3, Y:
-        5
-
-        Point i: 3, X: 4, Y: 5
-
-        Point i: 4, X: 5, Y: 5
-
-        Point
-        i: 5, X: 6, Y: 5
-
-        Point i: 6, X: 6, Y: 4
-
-        Point i: 7, X:
-        6, Y: 3
-
-        [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity is
-        already in. Current Count: 1
-
-        [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
-        is already in. Current Count: 1
-
-        [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
-        is already in. Current Count: 1
-
-        [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
-        is already in. Current Count: 1
-
-        [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
-        is already in. Current Count: 1
-
-        [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
-        is already in. Current Count: 1
-
-        WWWWWWWWWW
-
-        WWWWWWWWWW
-
-        WWWWWWPPPW
-
-        WWWWWWPPPW
-
-        WWWWWWPPPW
-
-        WPPPPPPPPW
-
-        WPPPWWWWWW
-
-        WPPPWWWWWW
-
-        WWWWWWWWWW
-
-        WWWWWWWWWW
-
-
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: MapTests.dll/[MapTests][MapTest][suite]
-    - id: 1004
-      uniqueId: MapTests.dll/MapTest/[MapTests][MapTest.TestEntityGridMap]
-      name: TestEntityGridMap
-      fullName: MapTest.TestEntityGridMap
-      resultStatus: 1
-      duration: 0.0007902
-      messages: 
-      output: 'WWWWWWWWWW
-
-        WWWWWWWWWW
-
-        WWWWWWWWWW
-
-        WWWWWWWWWW
-
-        WWWWWWWWWW
-
-        WWWWWWWWWW
-
-        WWWWWWWWWW
-
-        WWWWWWWWWW
-
-        WWWWWWWWWW
-
-        WWWWWWWWWW
-
-
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: MapTests.dll/[MapTests][MapTest][suite]
-    m_ResultText: 'TestDungeonBuilder (0.029s)
-
-      ---
-
-      Area i: 0, X: 0,
-      Y: 0, Width: 5, Height: 10
-
-      Area i: 1, X: 5, Y: 0, Width: 5, Height:
-      10
-
-      Room i: 0, X: 1, Y: 5, Width: 3, Height: 3
-
-      Room i: 1, X: 6,
-      Y: 2, Width: 3, Height: 4
-
-      Point i: 0, X: 1, Y: 5
-
-      Point i: 1,
-      X: 2, Y: 5
-
-      Point i: 2, X: 3, Y: 5
-
-      Point i: 3, X: 4, Y: 5
-
-      Point
-      i: 4, X: 5, Y: 5
-
-      Point i: 5, X: 6, Y: 5
-
-      Point i: 6, X: 6, Y:
-      4
-
-      Point i: 7, X: 6, Y: 3
-
-      [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
-      is already in. Current Count: 1
-
-      [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
-      is already in. Current Count: 1
-
-      [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
-      is already in. Current Count: 1
-
-      [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
-      is already in. Current Count: 1
-
-      [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
-      is already in. Current Count: 1
-
-      [Warning] DungeonCrawler.MapSystem.Interfaces.IEntity
-      is already in. Current Count: 1
-
-      WWWWWWWWWW
-
-      WWWWWWWWWW
-
-      WWWWWWPPPW
-
-      WWWWWWPPPW
-
-      WWWWWWPPPW
-
-      WPPPPPPPPW
-
-      WPPPWWWWWW
-
-      WPPPWWWWWW
-
-      WWWWWWWWWW
-
-      WWWWWWWWWW'
-    m_ResultStacktrace: 
-    m_TestListState:
-      scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 6feaefd0
-      m_LastClickedID: -789583249
-      m_ExpandedIDs: 27341d80ba8a27802076b780a9cd0a838c3b7d859daf2e88f1fe3b892a6fd689d69f388ccfebdc8f30e5d1901cc37192c150499305cb62951744ab9541b6fd9726d2ca997a9792a0c5dc25a1b40f83a68ac4e9a62cecfda865d8b8a9d3e1a6ab2b3ed9ab23b810ac8b1b2eadcb4051afac1b46b00158ebb09d1511b1cc9256b4a47a31be5d514cc681f0d7c6e881e0c7c65463c89cceb3c8eaedb4c92ed928ca954229cac1c4ffcb7a4f13ccf52e51cf09fa37d4b342aad8113b2dd91e3b3cd9ddad9bd9db76b8d9df0a83dd7d0786ddfc37dddd20fa82de599eacdf643d13e55fb13feb9ba435ec50e340ed149096ed6ce072ee37ccc9f071f0baf5377d7dfd287c46fe581af0ffc9c8b60000025d0262947004cdb5350997db500aa9b1200bca982f0c4f00300c4e9b0d0f7eed1c1098ab6311fb761614f3bd5915f999e316905f0e18a3785218abf717198eff8719d406c61b41cf001c0031b01c8adeda20f13b9823a1c1ba237cf7e7231c5e6226870a6128be0da0295dedc92adc1d212bb804472c7dc2552d65bf832d6d272d3043b45a302e094933892b85346fcee536a65aa437ce55e9374c12d9399cccd23b8abb453df0ea4e3d9b09ca3e6745c23f97bca5414f1dad410289c1418359db41818fec413526ff4b1af2164cfc2c484d5efce74ff9bc6151aa565c52d5130153b534de534b1ac054eb36f35459e2e255b60302587d187c59ff50445a9695665cbc033a5d9b35a86098f0086578988866a286af6601a2f16c08e9856fe586f075bcad74762be2c078fefece7953931d7a23df437b6a8bb47c6427b47e93d9ee7eb501497fffffff7f
-      m_RenameOverlay:
-        m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
-        m_EditFieldRect:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 0
-        m_UserData: 0
-        m_IsWaitingForDelay: 0
-        m_IsRenaming: 0
-        m_OriginalEventType: 11
-        m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 0}
-      m_SearchString: 
-    m_TestRunnerUIFilter:
-      PassedHidden: 0
-      FailedHidden: 0
-      NotRunHidden: 0
-      m_SearchString: 
-      selectedCategoryMask: 0
-      availableCategories:
-      - Uncategorized
---- !u!114 &19
+--- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1403,10 +1452,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 8
-    y: 687
-    width: 1322
-    height: 656
+    x: 0
+    y: 553
+    width: 829
+    height: 384
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1428,7 +1477,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/DungeonCrawler/10_SaveSystem/SaveAssembly
+    - Assets/DungeonCrawler
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1436,16 +1485,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/DungeonCrawler/10_SaveSystem/SaveAssembly
+  - Assets/DungeonCrawler/10_UpgradeSystem/UpgradeAssembly
   m_LastFoldersGridSize: 16
-  m_LastProjectPath: D:\Unity\UnityProjects\DungeonCrawlerJam2024
+  m_LastProjectPath: I:\projects\DungeonCrawlerJam2024
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: ee9b0100
-    m_LastClickedID: 105454
-    m_ExpandedIDs: 00000000627300006473000066730000687300006a7300006c7300006e730000cc740000f0b90000ba220100ea9b0100ffffff7f
+    m_SelectedIDs: cc750000
+    m_LastClickedID: 30156
+    m_ExpandedIDs: 00000000c6750000c8750000cc750000ce750000d0750000d2750000d4750000d8750000dc750000f2830000ffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1473,7 +1522,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000627300006473000066730000687300006a7300006c7300006e73000070730000ffffff7f
+    m_ExpandedIDs: 00000000c6750000c8750000ca750000cc750000ce750000d0750000d2750000d4750000d6750000d8750000da750000dc750000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1501,21 +1550,21 @@ MonoBehaviour:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c62300003c7200004ea00200ca7601009c01010034030100863e0400b04a010044af0000200b01006e77010014420100d0be000080b20000ec06010086b2000000000000
+    m_ExpandedInstanceIDs: c62300003c7200004ea00200ca7601009c01010034030100863e0400b04a010044af0000200b01006e77010014420100d0be000080b20000ec06010086b2000000000000baee0000ca820000f6760000f0760000087700000a770000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Save
-      m_OriginalName: Save
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 105466
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 10}
     m_CreateAssetUtility:
@@ -1529,7 +1578,7 @@ MonoBehaviour:
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 239
---- !u!114 &20
+--- !u!114 &21
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1550,10 +1599,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1331
-    y: 81
-    width: 775
-    height: 683
+    x: 1
+    y: 19
+    width: 528
+    height: 532
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1567,20 +1616,20 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: f8750000
       m_LastClickedID: 0
-      m_ExpandedIDs: f6ab5dff86d15dff6ae95dffa2e95dffe4b05eff16b15eff1a3c60ff563c60ffc28988fff48988ff241594ff281594ff2e1594ff641594ffb297aaff901dafffbe1eafff5222afff442aafff722bafff222fafff7274b1ff9e75b1ff4878b1ff8244b8ff86a2c1ff8af7ffffb0f7ffffc8700000d2f800003823010078230100
+      m_ExpandedIDs: 80c6efff200ff2ff6c97fdff7297fdff8cf9ffffa6f9ffffacf9ffffb2f9ffffbcf9ffffc6f9ffffe2f9ffffe8f9ffff52faffff2afbffff846f0000a26f0000be6f0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: Player(Clone)
-        m_OriginalName: Player(Clone)
+        m_Name: UpgradeContentButton
+        m_OriginalName: UpgradeContentButton
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: -16535356
+        m_UserData: -1626
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
         m_OriginalEventType: 0
@@ -1593,7 +1642,7 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: 4c969a2b90040154d917609493e03593
---- !u!114 &21
+--- !u!114 &22
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1614,10 +1663,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1331
-    y: 785
-    width: 775
-    height: 558
+    x: 1
+    y: 572
+    width: 528
+    height: 365
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1628,7 +1677,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
---- !u!114 &22
+--- !u!114 &23
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1649,10 +1698,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 2108
-    y: 81
-    width: 443
-    height: 1262
+    x: 3290
+    y: 102
+    width: 559
+    height: 918
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1676,49 +1725,3 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_PreviewWindow: {fileID: 0}
---- !u!114 &23
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 13961, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 275, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: manager
-    m_Image: {fileID: -7606759526039521141, guid: 0000000000000000d000000000000000,
-      type: 0}
-    m_Tooltip: Battle Layout Doozy/Prefab Mode in Context/Battle Layout Doozy/Battle
-      - View/manager
-  m_Pos:
-    serializedVersion: 2
-    x: 2014
-    y: 73
-    width: 545
-    height: 1278
-  m_SerializedDataModeController:
-    m_DataMode: 0
-    m_PreferredDataMode: 0
-    m_SupportedDataModes: 
-    isAutomatic: 1
-  m_ViewDataDictionary: {fileID: 0}
-  m_OverlayCanvas:
-    m_LastAppliedPresetName: Default
-    m_SaveData: []
-    m_OverlaysVisible: 1
-  m_ObjectsLockedBeforeSerialization: []
-  m_InstanceIDsLockedBeforeSerialization: 
-  m_PreviewResizer:
-    m_CachedPref: -160
-    m_ControlHash: 1412526313
-    m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: 0
-  m_LastVerticalScrollValue: 0
-  m_GlobalObjectId: GlobalObjectId_V1-2-00000000000000000000000000000000-3805781411067699059-0
-  m_InspectorMode: 0
