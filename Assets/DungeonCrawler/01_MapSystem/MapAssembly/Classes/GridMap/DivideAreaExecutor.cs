@@ -9,7 +9,7 @@ namespace DungeonCrawler.MapAssembly.Classes
     public class DivideAreaExecutor
     {
         public const int MinRoomMargin = 2;  // This should be 2 or greater, because the rooms are connected to each other by a path.
-        const int MinRoomSize = 5;
+        const int MinRoomSize = 6;
         const int MaxRoomSize = 25;
         const int MinAreaSize = MinRoomSize + MinRoomMargin * 2;
         public List<Area> DivideAreaOnce(List<Area> areas)

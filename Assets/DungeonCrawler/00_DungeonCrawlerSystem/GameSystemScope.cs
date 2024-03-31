@@ -24,7 +24,7 @@ namespace DungeonCrawler
             // GameState
             builder.Register<GameStateSwitcher>(Lifetime.Scoped);
 
-            builder.Register<SquareGridCoordinate>(Lifetime.Scoped).As<IGridCoordinate>().WithParameter("width",50).WithParameter("height",50);
+            builder.Register<SquareGridCoordinate>(Lifetime.Scoped).As<IGridCoordinate>().WithParameter("width",35).WithParameter("height",35);
             builder.Register<DivideAreaExecutor>(Lifetime.Scoped);
             builder.Register<DungeonBuilder>(Lifetime.Scoped);
 
