@@ -45,7 +45,7 @@ namespace DungeonCrawler
             builder.Register<HangerSystem>(Lifetime.Scoped);
 
             // FlamePoint
-            builder.Register<FlamePoint>(Lifetime.Scoped);
+            builder.Register<DungeonCrawler._10_UpgradeSystem.UpgradeAssembly.FlamePoint>(Lifetime.Scoped);
 
             // Torch
             builder.Register<TorchInventory>(Lifetime.Scoped).WithParameter("initValue", 0);

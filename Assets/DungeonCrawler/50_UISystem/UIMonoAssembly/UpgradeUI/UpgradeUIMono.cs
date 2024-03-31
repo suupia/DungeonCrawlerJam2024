@@ -26,6 +26,7 @@ public class UpgradeUIMono : MonoBehaviour
     public void Init()
     {
         closeButton.AddListener(HideUpgradeUI);
+        InstantiateUpgradeContentUIs();
     }
     
     public void ShowUpgradeUI()
@@ -47,6 +48,7 @@ public class UpgradeUIMono : MonoBehaviour
             {
                 case UpgradeKind.Test1:
                     upgradeContentUIMono.SetUp("test1", 10,
+                        _flamePoint,
                         () => {Debug.Log("upgrade test1");},
                         () => 0,
                         () => 1);
