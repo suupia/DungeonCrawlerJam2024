@@ -1,8 +1,10 @@
 ﻿#nullable enable
 using System;
+using System.Collections.Generic;
 using DungeonCrawler._01_MapSystem.MapAssembly.Classes;
 using DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap;
 using DungeonCrawler.MapAssembly.Interfaces;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 namespace DungeonCrawler.MapAssembly.Classes
@@ -15,6 +17,7 @@ namespace DungeonCrawler.MapAssembly.Classes
         readonly DungeonBuilder _dungeonBuilder;
         readonly GridTilePlacer _gridTilePlacer;
         readonly DefaultDungeonGridMap _defaultDungeonGridMap;
+        Action[] onChangedFloor = new Action[100];
         
         public DungeonSwitcher(
             DungeonBuilder dungeonBuilder,
@@ -33,6 +36,10 @@ namespace DungeonCrawler.MapAssembly.Classes
             var nextPlainDungeon = _dungeonBuilder.CreateDungeon();
             _currentDungeon = _gridTilePlacer.PlaceEntities(nextPlainDungeon, this);
             Floor++;
+            foreach (var onChangedAction in onChangedFloor)
+            {
+                onChangedAction?.Invoke();
+            }
             return _currentDungeon;
         }
         
@@ -40,6 +47,12 @@ namespace DungeonCrawler.MapAssembly.Classes
         {
             Floor = value;
             _currentDungeon = _defaultDungeonGridMap;
+            onChangedFloor = new Action[100];
+        }
+
+        public void RegisterOnFloorChangedAction(int order, Action action)
+        {
+            onChangedFloor[order] = action;
         }
     }
 }

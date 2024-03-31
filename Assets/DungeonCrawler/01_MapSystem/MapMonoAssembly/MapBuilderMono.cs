@@ -41,11 +41,15 @@ namespace DungeonCrawler.MapMonoAssembly
         {
             InstantiateTiles();
             
-            Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
-                .Subscribe(_ =>
-                {
-                    UpdateSprites(_dungeonSwitcher.CurrentDungeon);
-                }); 
+            // Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
+            //     .Subscribe(_ =>
+            //     {
+            //         UpdateSprites(_dungeonSwitcher.CurrentDungeon);
+            //     }); 
+            _dungeonSwitcher.RegisterOnFloorChangedAction(15, () =>
+            {
+                UpdateSprites(_dungeonSwitcher.CurrentDungeon);
+            });
         }
 
         public void BuildFirstDungeon()

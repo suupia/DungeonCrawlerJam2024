@@ -49,12 +49,16 @@ namespace DungeonCrawler
             
             _playerTile = InstantiateTile();
 
-            Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
-                .Subscribe(_ =>
-                {
-                    InitMiniMap();
-                });
-                Observable.EveryValueChanged(this, _ => _player?.GridPosition())
+            // Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
+            //     .Subscribe(_ =>
+            //     {
+            //         InitMiniMap();
+            //     });
+            _dungeonSwitcher.RegisterOnFloorChangedAction(20,() =>
+            {
+                InitMiniMap();
+            });
+            Observable.EveryValueChanged(this, _ => _player?.GridPosition())
                 .Subscribe(_ =>
                 {
                     if (_dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap)
@@ -138,6 +142,7 @@ namespace DungeonCrawler
 
         void ChasePlayerPosition()
         {
+            if (_player == null) return;
             var (x, y) = _player.GridPosition();
             SetTilePosition(_playerTile, _dungeonSwitcher.CurrentDungeon.Map.ToSubscript(x, y));
 
@@ -147,7 +152,7 @@ namespace DungeonCrawler
 
         void ChaisePlayerRotation()
         {
-            if (_player != null) return;
+            if (_player == null) return;
             _playerTile.transform.rotation = _player.CurrentRotation() * _rotateOffset;
         }
 

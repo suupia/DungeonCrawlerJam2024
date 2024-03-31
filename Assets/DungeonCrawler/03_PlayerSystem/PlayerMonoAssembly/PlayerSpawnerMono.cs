@@ -38,38 +38,36 @@ namespace DungeonCrawler.PlayerMonoAssembly
 
         void SetUp()
         {
-            Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
-                .Subscribe(_ =>
-                {
-                    Debug.Log($"Subscribe __dungeonSwitcher:{_dungeonSwitcher}");
-                    Debug.Log($"Subscribe Floor:{_dungeonSwitcher.Floor}");
-                    Reset();
-                    if (_dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap)
-                    {
-                        Debug.LogWarning($" _dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap");
-                        return;
-                    }
-                    SpawnPlayer();
-                });
-            
-
-            // _gameStateSwitcher.OnGameStateChange += (sender, e) =>
-            // {
-            //     Debug.Log($"GameState Changed: {e.PrevGameState} -> {e.PostGameState}");
-            //     if (e.PrevGameState == GameStateSwitcher.GameStateEnum.Battling 
-            //         && e.PostGameState == GameStateSwitcher.GameStateEnum.AtTitle)
+            // Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
+            //     .Subscribe(_ =>
             //     {
-            //         Debug.Log("Reset");
+            //         Debug.Log($"Subscribe __dungeonSwitcher:{_dungeonSwitcher}");
+            //         Debug.Log($"Subscribe Floor:{_dungeonSwitcher.Floor}");
             //         Reset();
-            //         Debug.Log($"spawn");
+            //         if (_dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap)
+            //         {
+            //             Debug.LogWarning($" _dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap");
+            //             return;
+            //         }
             //         SpawnPlayer();
-            //     }
-            // };
+            //     });
+            _dungeonSwitcher.RegisterOnFloorChangedAction(10,()=>
+            {
+                Debug.Log($"Subscribe __dungeonSwitcher:{_dungeonSwitcher}");
+                Debug.Log($"Subscribe Floor:{_dungeonSwitcher.Floor}");
+                Reset();
+                if (_dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap)
+                {
+                    Debug.LogWarning($" _dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap");
+                    return;
+                }
+                SpawnPlayer();
+            });
         }
         public void SpawnPlayer()
         {
             var(x,y) = _dungeonSwitcher.CurrentDungeon.InitPlayerPosition;
-            Debug.Log($"Player spawn position: {x}, {y}");
+            Debug.Log($"PlayerSpawner spawn position: {x}, {y}");
             var spawnWorldPosition = GridConverter.GridPositionToWorldPosition(new Vector2Int(x, y));
             var player = _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<Player>(x, y);
                 Assert.IsNotNull(player, $"spawnGridPosition: {spawnWorldPosition} player: {player}");
