@@ -1,9 +1,7 @@
 ﻿#nullable enable
-using DungeonCrawler.MapAssembly.Classes;
 using UnityEngine;
-using VContainer;
 
-namespace DungeonCrawler
+namespace DungeonCrawler._10_UpgradeSystem.UpgradeAssembly
 {
     public class FlamePoint
     {
@@ -19,5 +17,4 @@ namespace DungeonCrawler
             Debug.Log($"Gain FlamePoint {value}");
             FlamePointValue += value;
         }
-    }
-}
+    }}
