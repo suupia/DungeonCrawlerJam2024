@@ -47,7 +47,7 @@ namespace DungeonCrawler.MapAssembly.Classes
         {
             Floor = value;
             _currentDungeon = _defaultDungeonGridMap;
-            onChangedFloor = new Action[100];
+
         }
 
         public void RegisterOnFloorChangedAction(int order, Action action)

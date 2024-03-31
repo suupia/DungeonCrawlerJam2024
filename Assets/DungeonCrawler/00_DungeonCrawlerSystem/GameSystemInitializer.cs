@@ -50,8 +50,6 @@ namespace DungeonCrawler
                     Debug.Log($"_dungeonSwitcher.Reset()");
                     _dungeonSwitcher.Reset(0);
                     _mapBuilderMono.BuildFirstDungeon();
-                    _mapBuilderMono.BuildFirstDungeon(); // WHY??
-                    // if you call BuildFirstDungeon once, an error occurs. 
 
                 }
             };
