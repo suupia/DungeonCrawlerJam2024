@@ -43,7 +43,6 @@ public class UpgradeUIMono : MonoBehaviour
         foreach (var upgradeKind in Enum.GetValues(typeof(UpgradeKind)))
         {
             var upgradeContentUIMono = Instantiate(upgradeContentPrefab, Vector3.zero, Quaternion.identity, upgradeContentsParent.transform);
-            upgradeContentUIMono.SetFlamePointGetter(() => _flamePoint.FlamePointValue);
             
             switch (upgradeKind)
             {
@@ -52,17 +51,16 @@ public class UpgradeUIMono : MonoBehaviour
                         () => { Debug.Log("upgrade test1"); },
                         () => 10,
                         () => 10,
-                        () => 20);
-                    
-                    // for test (delete this later)
-                    upgradeContentUIMono.SetFlamePointGetter(() => 100);
+                        () => 20,
+                        () => 100); // the last arg is for test
                     break;
                 case UpgradeKind.Test2:
                     upgradeContentUIMono.SetUp("test2",
                         () => {Debug.Log("upgrade test2");},
                         () => 1000,
                         () => 100,
-                        () => 200);
+                        () => 200,
+                        () => _flamePoint.FlamePointValue);
                     break;
                 default:
                     Debug.LogWarning($"Unsupported UpgradeKind {upgradeKind}");

@@ -2,9 +2,11 @@
 using System;
 using DungeonCrawler._10_UpgradeSystem.UpgradeAssembly;
 using PlasticGui.WebApi.Responses;
+using R3;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.Utilities;
+using Observable = R3.Observable;
 
 namespace DungeonCrawler
 {
@@ -23,24 +25,33 @@ namespace DungeonCrawler
         Func<int> NextValue = () => 0;
         Func<int> CurrentFlamePoint = () => 0;        
 
-        public void SetFlamePointGetter(Func<int> currentFlamePoint)
-        {
-            CurrentFlamePoint = currentFlamePoint;
-        }
-        public void SetUp(string upgradeName, Action upgrade, Func<int> upgradeCost, Func<int> currentValue, Func<int> nextValue)
+        public void SetUp(string upgradeName, Action upgrade, Func<int> upgradeCost, Func<int> currentValue, Func<int> nextValue, Func<int> currentFlamePoint)
         {
             _upgradeName = upgradeName;
             UpgradeCost = upgradeCost;
             Upgrade = upgrade;
             CurrentValue = currentValue;
             NextValue = nextValue;
+            CurrentFlamePoint = currentFlamePoint;
             
-            
+            Observable.EveryValueChanged(this, _ => CurrentFlamePoint())
+                .Subscribe(_ =>
+                {
+                    var isEnbale = CurrentFlamePoint() >= UpgradeCost();
+                    Debug.Log($"upgrade {_upgradeName} isEnable {isEnbale}");
+                    upgradeCustomButton.ChangeEnableState(isEnbale);
+                }); 
 
+            
             SetValuesToUI();
             upgradeCustomButton.AddListener(() =>
             {
-                if (CurrentFlamePoint()<UpgradeCost()) Debug.Log($"cancel upgrade {_upgradeName}, cost = {UpgradeCost()}, flamePoint = {CurrentFlamePoint()}");
+                if (CurrentFlamePoint()<UpgradeCost())
+                {
+                    Debug.Log(
+                        $"cancel upgrade {_upgradeName}, cost = {UpgradeCost()}, flamePoint = {CurrentFlamePoint()}");
+                    return;
+                }
                 
                 Debug.Log($"upgrade {_upgradeName} from {CurrentValue()} to {NextValue()}");
                 Upgrade();
