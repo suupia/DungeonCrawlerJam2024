@@ -1,6 +1,8 @@
 ﻿#nullable enable
 using System.Text.RegularExpressions;
+using DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes;
 using UnityEngine;
+using VContainer;
 
 namespace DungeonCrawler
 {
@@ -16,14 +18,20 @@ namespace DungeonCrawler
         public int Level => CalcLevel(Exp);
         public int MaxHp => CalcMaxHp(Level);
         public int Atk => CalcAtk(Level);
+        PlayerUpgradeStats _playerUpgradeStats;
 
+        [Inject]
+        public PlayerStats(PlayerUpgradeStats upgradeStats)
+        {
+            _playerUpgradeStats = upgradeStats;
+        }
         int CalcMaxHp(int level)
         {
             return level * 10;
         }
         int CalcAtk(int level)
         {
-            return (int)(level * 1.5);
+            return (int)(level * 1.5) + _playerUpgradeStats.Atk;
         }
         int CalcLevel(int exp)
         {

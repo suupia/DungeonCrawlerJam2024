@@ -16,11 +16,16 @@ public class UpgradeUIMono : MonoBehaviour
     [SerializeField] CustomButton closeButton;
 
     FlamePoint _flamePoint;
+    PlayerUpgradeStats _playerUpgradeStats;
 
     [Inject]
-    public void Construct(FlamePoint flamePoint)
+    public void Construct(
+        FlamePoint flamePoint,
+        PlayerUpgradeStats playerUpgradeStats
+        )
     {
         _flamePoint = flamePoint;
+        _playerUpgradeStats = playerUpgradeStats;
     }
 
     public void Init()
@@ -40,7 +45,7 @@ public class UpgradeUIMono : MonoBehaviour
 
     void InstantiateUpgradeContentUIs()
     {
-        foreach (var upgradeKind in Enum.GetValues(typeof(UpgradeKind)))
+        foreach (UpgradeKind upgradeKind in Enum.GetValues(typeof(UpgradeKind)))
         {
             var upgradeContentUIMono = Instantiate(upgradeContentPrefab, Vector3.zero, Quaternion.identity, upgradeContentsParent.transform);
             
@@ -66,6 +71,14 @@ public class UpgradeUIMono : MonoBehaviour
                     Debug.LogWarning($"Unsupported UpgradeKind {upgradeKind}");
                     break;
             }
+            
+            upgradeContentUIMono.SetUp(
+                "ATK Attack",
+                () => _playerUpgradeStats.OnCompleteUpgrade(upgradeKind),
+                        () => _playerUpgradeStats.UpgradeCost(upgradeKind),
+                
+                
+                );
         }
         
     }

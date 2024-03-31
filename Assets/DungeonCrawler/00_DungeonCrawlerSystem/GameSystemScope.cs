@@ -42,6 +42,8 @@ namespace DungeonCrawler
             
             // Player
             builder.Register<PlayerStats>(Lifetime.Scoped);
+            builder.Register<PlayerUpgradeStats>(Lifetime.Scoped);
+
             
             // Enemy
             
