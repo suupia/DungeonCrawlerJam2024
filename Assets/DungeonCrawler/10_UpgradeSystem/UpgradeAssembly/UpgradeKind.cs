@@ -6,5 +6,4 @@ namespace DungeonCrawler._10_UpgradeSystem.UpgradeAssembly
         Test1,
         Test2
     }
-    
 }
