@@ -29,6 +29,10 @@ public class UIDomainConnectorMono : MonoBehaviour
         Debug.Log($"UIDomainConnectorMono titleUI:{titleUI}");
         Debug.Log($"UIDomainConnectorMono _gameStateSwitcher:{_gameStateSwitcher}");
         Debug.Log($"UIDomainConnectorMono _battleSimulator:{_battleSimulator}");
+        battleUI = FindObjectOfType<BattleUI>();
+        titleUI = FindObjectOfType<TitleUIMono>();
+        Debug.Log($"UIDomainConnectorMono after battleUI:{battleUI}");
+        Debug.Log($"UIDomainConnectorMono after titleUI:{titleUI}");
         
         // TitleUI
         titleUI.Init();
