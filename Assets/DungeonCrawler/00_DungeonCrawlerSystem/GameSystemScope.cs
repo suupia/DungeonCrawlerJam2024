@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DungeonCrawler._01_MapSystem.MapAssembly.Classes;
 using DungeonCrawler._01_MapSystem.MapAssembly.Classes.GridMap;
 using DungeonCrawler._04_EnemySystem.EnemyAssembly;
+using DungeonCrawler._10_UpgradeSystem.UpgradeAssembly;
 using DungeonCrawler.MapAssembly.Interfaces;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes.Entity;
@@ -46,6 +47,9 @@ namespace DungeonCrawler
             // Torch
             builder.Register<TorchInventory>(Lifetime.Scoped).WithParameter("initValue", 0);
             builder.Register<TorchSystem>(Lifetime.Scoped);
+            
+            // UpgradeSystem
+            builder.Register<FlamePoint>(Lifetime.Scoped);
 
             // Mono
             builder.RegisterComponentInHierarchy<MapBuilderMono>();
