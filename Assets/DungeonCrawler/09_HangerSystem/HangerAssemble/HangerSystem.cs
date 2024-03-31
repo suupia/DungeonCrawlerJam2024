@@ -11,7 +11,7 @@ namespace DungeonCrawler
 
         const int TurnDecrease = 1;
 
-        public Action GameOver = () => {Debug.Log("GameOver with HangerMeter 0");};
+        GameStateSwitcher _gameStateSwitcher;
 
         // Getter
         public float CurrentHangerRate()
@@ -21,12 +21,23 @@ namespace DungeonCrawler
         }
         
         [Inject]
-        public HangerSystem(HangerMeter hangerMeter)
+        public HangerSystem(HangerMeter hangerMeter, GameStateSwitcher gameStateSwitcher)
         {
             _hangerMeter = hangerMeter;
+            _gameStateSwitcher = gameStateSwitcher;
+            
+            _gameStateSwitcher.OnGameStateChange += (sender, e) =>
+            {
+                Debug.Log($"GameState Changed: {e.PrevGameState} -> {e.PostGameState}");
+                if (e.PrevGameState == GameStateSwitcher.GameStateEnum.Exploring 
+                    && e.PostGameState == GameStateSwitcher.GameStateEnum.AtTitle)
+                {
+                    _hangerMeter.ResetHangerMeter();
+                }
+            };
         }
 
-        public void UpdateTurn() // from PlayerController.Move()?
+        public void UpdateTurn()
         {
             _hangerMeter.Value -= TurnDecrease;
             
@@ -34,7 +45,7 @@ namespace DungeonCrawler
 
             if (_hangerMeter.Value <= 0)
             {
-                GameOver();
+                _gameStateSwitcher.EnterTitle();
             }
         }
 
