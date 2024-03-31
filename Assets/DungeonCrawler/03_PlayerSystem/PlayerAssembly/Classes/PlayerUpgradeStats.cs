@@ -35,8 +35,8 @@ namespace DungeonCrawler
         {
             switch (kind)
             {
-                case UpgradeKind.PlayerAttack: return 0;
-                case UpgradeKind.PlayerHp: return 0;
+                case UpgradeKind.PlayerAttack: return _atkUpgradeCount;
+                case UpgradeKind.PlayerHp: return _maxHpUpgradeCount;
                 default: 
                     Debug.LogWarning("Unsupported UpgradeKind");
                     return -1;
