@@ -41,7 +41,7 @@ public class StatsUIMono : MonoBehaviour
         Observable.EveryValueChanged(this, _ => _playerStats.Exp)
             .Subscribe(_ =>
             {
-                expText.text = $"LEVEL: {_playerStats.Exp}";
+                expText.text = $"EXP: {_playerStats.Exp}";
             }); 
     }
 }
