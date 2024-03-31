@@ -21,14 +21,17 @@ namespace DungeonCrawler
 
         FlamePoint _flamePoint;
 
-        public void SetUp(string upgradeName, int cost, FlamePoint flamePoint, Action upgrade, Func<int> currentValue, Func<int> nextValue)
+        public void SetFlamePoint(FlamePoint flamePoint)
+        {
+            _flamePoint = flamePoint;
+        }
+        public void SetUp(string upgradeName, int cost, Action upgrade, Func<int> currentValue, Func<int> nextValue)
         {
             _upgradeName = upgradeName;
             _upgradeCost = cost;
             Upgrade = upgrade;
             CurrentValue = currentValue;
             NextValue = nextValue;
-            _flamePoint = flamePoint;
 
             upgradeText.text = _upgradeName;
             upgradeCustomButton.AddListener(() =>

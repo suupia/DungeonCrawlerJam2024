@@ -43,12 +43,11 @@ public class UpgradeUIMono : MonoBehaviour
         foreach (var upgradeKind in Enum.GetValues(typeof(UpgradeKind)))
         {
             var upgradeContentUIMono = Instantiate(upgradeContentPrefab, Vector3.zero, Quaternion.identity, upgradeContentsParent.transform);
-            
+            upgradeContentUIMono.SetFlamePoint(_flamePoint);
             switch (upgradeKind)
             {
                 case UpgradeKind.Test1:
                     upgradeContentUIMono.SetUp("test1", 10,
-                        _flamePoint,
                         () => {Debug.Log("upgrade test1");},
                         () => 0,
                         () => 1);
