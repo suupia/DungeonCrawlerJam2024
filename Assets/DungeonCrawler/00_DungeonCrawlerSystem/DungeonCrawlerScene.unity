@@ -284,6 +284,26 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+--- !u!1 &469071873 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4877903887192130814, guid: 68e0529e5a6f26944aad0b8ebbd7d754,
+    type: 3}
+  m_PrefabInstance: {fileID: 8246887405697623948}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &469071876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469071873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 1
 --- !u!1001 &569947488
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2734,13 +2754,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8451936822878016235, guid: 68e0529e5a6f26944aad0b8ebbd7d754,
         type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8451936822878016235, guid: 68e0529e5a6f26944aad0b8ebbd7d754,
+        type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 45.950035
+      value: 46.421165
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4877903887192130814, guid: 68e0529e5a6f26944aad0b8ebbd7d754,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 469071876}
   m_SourcePrefab: {fileID: 100100000, guid: 68e0529e5a6f26944aad0b8ebbd7d754, type: 3}
 --- !u!1001 &9164787765178181812
 PrefabInstance:
