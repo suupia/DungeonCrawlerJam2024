@@ -3,9 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using DungeonCrawler;
 using DungeonCrawler._10_UpgradeSystem.UpgradeAssembly;
+using R3;
+using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.Utilities;
 using VContainer;
 using FlamePoint = DungeonCrawler._10_UpgradeSystem.UpgradeAssembly.FlamePoint;
+using Observable = R3.Observable;
 
 
 public class UpgradeUIMono : MonoBehaviour
@@ -14,6 +18,7 @@ public class UpgradeUIMono : MonoBehaviour
     [SerializeField] GameObject upgradeContentsParent;
     [SerializeField] UpgradeContentUIMono upgradeContentPrefab;
     [SerializeField] CustomButton closeButton;
+    [SerializeField] TextMeshProUGUI flamePointText;
 
     FlamePoint _flamePoint;
     
@@ -37,6 +42,12 @@ public class UpgradeUIMono : MonoBehaviour
     {
         closeButton.AddListener(HideUpgradeUI);
         InstantiateUpgradeContentUIs();
+        
+        Observable.EveryValueChanged(this, _ => _flamePoint.FlamePointValue)
+            .Subscribe(_ =>
+            {
+                flamePointText.text = $"Flame point : {_flamePoint.FlamePointValue}";
+            }); 
     }
     
     public void ShowUpgradeUI()
