@@ -14,7 +14,7 @@ namespace DungeonCrawler
     {
         public event EventHandler OnEaten = (sender, e) => { };
         public Func<(int x, int y)> GridPosition = () => (0, 0);
-        public int HangerMeterIncreaseAmount { get; set; } = 11;
+        public int HangerMeterIncreaseAmount { get; set; } = 30;
         HangerSystem _hangerSystem;
 
         public Food(HangerSystem hangerSystem, DungeonSwitcher dungeonSwitcher)
