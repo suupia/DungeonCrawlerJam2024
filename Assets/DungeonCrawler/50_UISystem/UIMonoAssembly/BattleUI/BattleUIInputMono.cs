@@ -50,7 +50,7 @@ public class BattleUIInputMono : MonoBehaviour
         // ResultUI
         returnToExploreButton.AddListener(() =>
         {
-            Debug.Log("Return to Explore");
+                Debug.Log("Return to Explore");
             _battleGameConnector.EndBattle();
         });
     }

@@ -1,14 +1,18 @@
 ﻿#nullable enable
 using System;
+using DungeonCrawler.MapAssembly.Classes;
 
 namespace DungeonCrawler
 {
+    // This class is responsible for connecting the BattleSimulator 
     public class BattleGameConnector
     {
-        readonly BattleSimulator _battleSimulator;
+        readonly BattleSimulator _battleSimulator;  
         readonly GameStateSwitcher _gameStateSwitcher;
-        
-        public BattleGameConnector(BattleSimulator battleSimulator, GameStateSwitcher gameStateSwitcher)
+        public BattleGameConnector(
+            BattleSimulator battleSimulator,
+            GameStateSwitcher gameStateSwitcher
+        )
         {
             _battleSimulator = battleSimulator;
             _gameStateSwitcher = gameStateSwitcher;
@@ -23,7 +27,14 @@ namespace DungeonCrawler
             };
             _battleSimulator.OnBattleEnd += (sender, e) =>
             {
-               _gameStateSwitcher.EnterExploring();
+                if(e.IsPlayerWin)
+                {
+                    _gameStateSwitcher.EnterExploring();
+                }
+                else
+                {
+                    _gameStateSwitcher.EnterTitle();
+                }
             };
         }
 
@@ -39,7 +50,15 @@ namespace DungeonCrawler
             _battleSimulator.EndBattle();
         }
         
-        public void OnEnemyLose(Action action)
+        public void RegisterPlayerWinAction(Action action)
+        {
+            _battleSimulator.OnPlayerWin += (sender, e) =>
+            {
+                action();
+            };
+        }
+
+        public void RegisterPlayerLooseAction(Action action)
         {
             _battleSimulator.OnPlayerWin += (sender, e) =>
             {
