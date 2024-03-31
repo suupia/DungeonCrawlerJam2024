@@ -10,17 +10,21 @@ namespace DungeonCrawler
         public int MaxHp => CalcMaxHp();
 
         public int Atk => CalcAtk();
+        readonly Func<int> _levelFunc;
 
-        public Func<int> CalcLevel = () => 1;
+        public EnemyStats(Func<int> leveFunc)
+        {
+            _levelFunc = leveFunc;
+        }
 
         int CalcMaxHp()
         {
-            return 5 * CalcLevel();
+            return 5 * _levelFunc();
         }
 
         int CalcAtk()
         {
-            return CalcLevel();
+            return _levelFunc();
         }
     }
     

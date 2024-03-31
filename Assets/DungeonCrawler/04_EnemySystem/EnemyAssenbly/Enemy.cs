@@ -17,8 +17,7 @@ namespace DungeonCrawler._04_EnemySystem.EnemyAssembly
         
         public Enemy(
             BattleGameConnector battleGameConnector,
-            DungeonSwitcher dungeonSwitcher,
-            EnemyStats enemyStats
+            DungeonSwitcher dungeonSwitcher
             )
         {
             _battleGameConnector = battleGameConnector;
@@ -28,6 +27,7 @@ namespace DungeonCrawler._04_EnemySystem.EnemyAssembly
                 Debug.Log("Enemy.OnDead()");
                 _dungeonSwitcher.CurrentDungeon.Map.RemoveEntity(GridPosition().x,GridPosition().y, this);
             };
+            var enemyStats = new EnemyStats( () => _dungeonSwitcher.Floor+1);
             _enemyDomain = new EnemyDomain(enemyStats.MaxHp, enemyStats.Atk);
         }
         

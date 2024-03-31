@@ -12,18 +12,15 @@ namespace DungeonCrawler
         readonly BattleSimulator _battleSimulator;  
         readonly GameStateSwitcher _gameStateSwitcher;
         readonly PlayerStats _playerStats;
-        readonly EnemyStats _enemyStats;
         public BattleGameConnector(
             BattleSimulator battleSimulator,
             GameStateSwitcher gameStateSwitcher,
-            PlayerStats playerStats,
-            EnemyStats enemyStats
+            PlayerStats playerStats
         )
         {
             _battleSimulator = battleSimulator;
             _gameStateSwitcher = gameStateSwitcher;
             _playerStats = playerStats;
-            _enemyStats = enemyStats;
             Init();
         }
 
