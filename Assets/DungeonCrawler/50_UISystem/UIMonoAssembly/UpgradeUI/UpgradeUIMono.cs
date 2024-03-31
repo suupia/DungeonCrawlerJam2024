@@ -10,6 +10,7 @@ using FlamePoint = DungeonCrawler._10_UpgradeSystem.UpgradeAssembly.FlamePoint;
 public class UpgradeUIMono : MonoBehaviour
 {
     [SerializeField] GameObject view;
+    [SerializeField] GameObject upgradeContentsParent;
     [SerializeField] UpgradeContentUIMono upgradeContentPrefab;
     [SerializeField] CustomButton closeButton;
 
@@ -34,4 +35,8 @@ public class UpgradeUIMono : MonoBehaviour
     {
         view.SetActive(false);
     }
+
+    void InstantiateUpgradeContentUIs()
+    {
+        Instantiate(upgradeContentPrefab, Vector3.zero, Quaternion.identity, upgradeContentsParent.transform);    }
 }
