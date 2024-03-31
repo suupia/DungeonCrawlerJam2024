@@ -7,16 +7,24 @@ namespace DungeonCrawler
 {
     public class PlayerUpgradeStats
     {
-        public int Atk => CalcAtk();
-        public int AtkUpgradeDelta => CalcAtkUpgradeDelta();
+        public int Atk => CalcAtk(_atkUpgradeCount);
+        public int AtkUpgradeDelta => CalcAtk(_atkUpgradeCount+1) - CalcAtk(_atkUpgradeCount);
         int _atkUpgradeCount;
+
+        public int maxHp => CalcMaxHp(_maxHpUpgradeCount);
+        public int MaxHpUpgradeDelta => CalcMaxHp(_maxHpUpgradeCount+1) - CalcMaxHp(_maxHpUpgradeCount);
+        int _maxHpUpgradeCount;
+        
         
         public void Upgrade(UpgradeKind kind)
         {
             switch (kind)
             {
-                case UpgradeKind.Test1:
+                case UpgradeKind.PlayerAttack:
                     _atkUpgradeCount++;
+                    break;
+                case UpgradeKind.PlayerHp:
+                    _maxHpUpgradeCount++;
                     break;
                 default:
                     break;
@@ -27,22 +35,24 @@ namespace DungeonCrawler
         {
             switch (kind)
             {
-                case UpgradeKind.Test1: return 0;
-                case UpgradeKind.Test2: return 200;
+                case UpgradeKind.PlayerAttack: return 0;
+                case UpgradeKind.PlayerHp: return 0;
                 default: 
                     Debug.LogWarning("Unsupported UpgradeKind");
                     return -1;
             }
         }
         
-        int CalcAtk()
+        // attack
+        int CalcAtk(int upgradeCount)
         {
             // UpgradeCount -> Upgrade Amount
-            return  _atkUpgradeCount;
+            return  upgradeCount;
         }
-        int CalcAtkUpgradeDelta()
+        // maxhp
+        int CalcMaxHp(int upgradeCount)
         {
-            return 1;
+            return upgradeCount;
         }
     }
 }

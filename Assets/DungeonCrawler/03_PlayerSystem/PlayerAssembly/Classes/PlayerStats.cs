@@ -27,7 +27,7 @@ namespace DungeonCrawler
         }
         int CalcMaxHp(int level)
         {
-            return level * 10;
+            return level * 10 + _playerUpgradeStats.maxHp;
         }
         int CalcAtk(int level)
         {

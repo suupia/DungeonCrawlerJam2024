@@ -56,7 +56,7 @@ public class UpgradeUIMono : MonoBehaviour
             
             switch (upgradeKind)
             {
-                case UpgradeKind.Test1:
+                case UpgradeKind.PlayerAttack:
                     upgradeContentUIMono.SetUp(
                         "Attack",
                         () => _playerUpgradeStats.Upgrade(upgradeKind),
@@ -66,13 +66,14 @@ public class UpgradeUIMono : MonoBehaviour
                         () => _flamePoint.FlamePointValue
                     );
                     break;
-                case UpgradeKind.Test2:
-                    upgradeContentUIMono.SetUp("test2",
-                        () => {Debug.Log("upgrade test2");},
-                        () => 1000,
-                        () => 100,
-                        () => 200,
-                        () => _flamePoint.FlamePointValue);
+                case UpgradeKind.PlayerHp:
+                    upgradeContentUIMono.SetUp("MaxHP",
+                        () => _playerUpgradeStats.Upgrade(upgradeKind),
+                        () => _playerUpgradeStats.UpgradeCost(upgradeKind),
+                        () => _playerStats.MaxHp,
+                        () => _playerStats.MaxHp + _playerUpgradeStats.MaxHpUpgradeDelta,
+                        () => _flamePoint.FlamePointValue
+                    );
                     break;
                 default:
                     Debug.LogWarning($"Unsupported UpgradeKind {upgradeKind}");
