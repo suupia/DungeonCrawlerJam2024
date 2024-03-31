@@ -44,6 +44,7 @@ public class UpgradeUIMono : MonoBehaviour
         {
             var upgradeContentUIMono = Instantiate(upgradeContentPrefab, Vector3.zero, Quaternion.identity, upgradeContentsParent.transform);
             upgradeContentUIMono.SetFlamePoint(_flamePoint);
+            
             switch (upgradeKind)
             {
                 case UpgradeKind.Test1:
@@ -53,6 +54,10 @@ public class UpgradeUIMono : MonoBehaviour
                         () => 1);
                     break;
                 case UpgradeKind.Test2:
+                    upgradeContentUIMono.SetUp("test2", 0,
+                        () => {Debug.Log("upgrade test2");},
+                        () => 10,
+                        () => 100);
                     break;
                 default:
                     Debug.LogWarning($"Unsupported UpgradeKind {upgradeKind}");
