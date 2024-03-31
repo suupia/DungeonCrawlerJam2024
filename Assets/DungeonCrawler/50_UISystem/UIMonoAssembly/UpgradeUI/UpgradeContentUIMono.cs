@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using PlasticGui.WebApi.Responses;
+using TMPro;
 using UnityEngine;
 
 namespace DungeonCrawler
@@ -8,6 +9,7 @@ namespace DungeonCrawler
     public class UpgradeContentUIMono : MonoBehaviour
     {
         [SerializeField] CustomButton upgradeCustomButton = null!;
+        [SerializeField] TextMeshProUGUI upgradeText = null!;
         
         string _upgradeName = null!;
         int _upgradeCost = 0;

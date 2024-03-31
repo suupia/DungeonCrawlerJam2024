@@ -319,3 +319,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7793ce44c0fa4d5abb1d04e44716de4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  upgradeCustomButton: {fileID: 7943266932298164489}
+  upgradeText: {fileID: 113795192020321755}
