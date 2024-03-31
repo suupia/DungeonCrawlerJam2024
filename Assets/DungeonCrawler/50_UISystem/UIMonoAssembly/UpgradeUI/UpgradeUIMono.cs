@@ -16,16 +16,21 @@ public class UpgradeUIMono : MonoBehaviour
     [SerializeField] CustomButton closeButton;
 
     FlamePoint _flamePoint;
+    
     PlayerUpgradeStats _playerUpgradeStats;
+    PlayerStats _playerStats;
+    
 
     [Inject]
     public void Construct(
         FlamePoint flamePoint,
-        PlayerUpgradeStats playerUpgradeStats
+        PlayerUpgradeStats playerUpgradeStats,
+        PlayerStats playerStats
         )
     {
         _flamePoint = flamePoint;
         _playerUpgradeStats = playerUpgradeStats;
+        _playerStats = playerStats;
     }
 
     public void Init()
@@ -52,12 +57,14 @@ public class UpgradeUIMono : MonoBehaviour
             switch (upgradeKind)
             {
                 case UpgradeKind.Test1:
-                    upgradeContentUIMono.SetUp("test1",
-                        () => { Debug.Log("upgrade test1"); },
-                        () => 10,
-                        () => 10,
-                        () => 20,
-                        () => 100); // the last arg is for test
+                    upgradeContentUIMono.SetUp(
+                        "Attack",
+                        () => _playerUpgradeStats.Upgrade(upgradeKind),
+                        () => _playerUpgradeStats.UpgradeCost(upgradeKind),
+                        () => _playerStats.Atk,
+                        () => _playerStats.Atk + _playerUpgradeStats.AtkUpgradeDelta,
+                        () => _flamePoint.FlamePointValue
+                    );
                     break;
                 case UpgradeKind.Test2:
                     upgradeContentUIMono.SetUp("test2",
@@ -71,15 +78,6 @@ public class UpgradeUIMono : MonoBehaviour
                     Debug.LogWarning($"Unsupported UpgradeKind {upgradeKind}");
                     break;
             }
-            
-            upgradeContentUIMono.SetUp(
-                "ATK Attack",
-                () => _playerUpgradeStats.OnCompleteUpgrade(upgradeKind),
-                        () => _playerUpgradeStats.UpgradeCost(upgradeKind),
-                
-                
-                );
         }
-        
     }
 }
