@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections;
 using System.Collections.Generic;
+using DungeonCrawler._10_UpgradeSystem.UpgradeAssembly;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Interfaces;
 using DungeonCrawler.MapMonoAssembly;
@@ -18,19 +19,23 @@ namespace DungeonCrawler
         MapBuilderMaterialMono _mapBuilderMono = null!;
         
         PlayerSpawnerMono _playerSpawnerMono = null!;
+
+        FlamePoint _flamePoint = null!;
         
         [Inject]
         public void Construct(
             GameStateSwitcher gameStateSwitcher,
             DungeonSwitcher dungeonSwitcher,
             MapBuilderMaterialMono mapBuilderMono,
-            PlayerSpawnerMono playerSpawnerMono
+            PlayerSpawnerMono playerSpawnerMono,
+            FlamePoint flamePoint
             )
         {
             _gameStateSwitcher = gameStateSwitcher;
             _dungeonSwitcher = dungeonSwitcher;
             _mapBuilderMono = mapBuilderMono;
             _playerSpawnerMono = playerSpawnerMono;
+            _flamePoint = flamePoint;
 
             SetUp();
         }
@@ -47,6 +52,8 @@ namespace DungeonCrawler
                 if (e.PrevGameState == GameStateSwitcher.GameStateEnum.Battling 
                     && e.PostGameState == GameStateSwitcher.GameStateEnum.AtTitle)
                 {
+                    _flamePoint.GainFlamePoint(_dungeonSwitcher.Floor);
+                    
                     Debug.Log($"_dungeonSwitcher.Reset()");
                     _dungeonSwitcher.Reset(0);
                     _mapBuilderMono.BuildFirstDungeon();
