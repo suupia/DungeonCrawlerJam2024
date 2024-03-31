@@ -28,11 +28,11 @@ public class StatsUIMono : MonoBehaviour
             {
                 levelText.text = $"LEVEL: {_playerStats.Level}";
             }); 
-        // Observable.EveryValueChanged(this, _ => _playerStats.PlayerHp)
-        //     .Subscribe(_ =>
-        //     {
-        //         levelText.text = $"LEVEL: {_playerStats.PlayerLevel}";
-        //     }); 
+        Observable.EveryValueChanged(this, _ => _playerStats.MaxHp)
+            .Subscribe(_ =>
+            {
+                hpText.text = $"HP: {_playerStats.MaxHp}";
+            }); 
         Observable.EveryValueChanged(this, _ => _playerStats.Atk)
             .Subscribe(_ =>
             {
