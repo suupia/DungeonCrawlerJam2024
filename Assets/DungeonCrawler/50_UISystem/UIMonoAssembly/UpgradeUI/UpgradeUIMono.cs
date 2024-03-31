@@ -1,13 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using DungeonCrawler;
+using DungeonCrawler._10_UpgradeSystem.UpgradeAssembly;
 using UnityEngine;
+using VContainer;
 
 public class UpgradeUIMono : MonoBehaviour
 {
     [SerializeField] GameObject view;
     [SerializeField] UpgradeContentUIMono upgradeContentPrefab;
     [SerializeField] CustomButton closeButton;
+
+    FlamePoint _flamePoint;
+
+    [Inject]
+    public void Construct(FlamePoint flamePoint)
+    {
+        _flamePoint = flamePoint;
+    }
 
     public void Init()
     {
