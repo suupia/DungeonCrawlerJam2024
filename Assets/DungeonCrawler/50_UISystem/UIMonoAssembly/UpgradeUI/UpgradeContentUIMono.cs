@@ -4,6 +4,7 @@ using DungeonCrawler._10_UpgradeSystem.UpgradeAssembly;
 using PlasticGui.WebApi.Responses;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.Utilities;
 
 namespace DungeonCrawler
 {
@@ -15,7 +16,7 @@ namespace DungeonCrawler
         [SerializeField] TextMeshProUGUI costText = null!;
         
         string _upgradeName = null!;
-        int _upgradeCost = 0;
+        Func<int> UpgradeCost = () => 0;
 
         Action Upgrade = () => { };
         Func<int> CurrentValue = () => 0;
@@ -26,24 +27,32 @@ namespace DungeonCrawler
         {
             CurrentFlamePoint = currentFlamePoint;
         }
-        public void SetUp(string upgradeName, int cost, Action upgrade, Func<int> currentValue, Func<int> nextValue)
+        public void SetUp(string upgradeName, Action upgrade, Func<int> upgradeCost, Func<int> currentValue, Func<int> nextValue)
         {
             _upgradeName = upgradeName;
-            _upgradeCost = cost;
+            UpgradeCost = upgradeCost;
             Upgrade = upgrade;
             CurrentValue = currentValue;
             NextValue = nextValue;
+            
+            
 
-            upgradeText.text = _upgradeName;
-            valueDiffText.text = $"{CurrentValue()} -> {NextValue()}";
-            costText.text = $"cost: {cost}";
+            SetValuesToUI();
             upgradeCustomButton.AddListener(() =>
             {
-                if (CurrentFlamePoint()<cost) Debug.Log($"cancel upgrade {_upgradeName}, cost = {cost}, flamePoint = {CurrentFlamePoint()}");
+                if (CurrentFlamePoint()<UpgradeCost()) Debug.Log($"cancel upgrade {_upgradeName}, cost = {UpgradeCost()}, flamePoint = {CurrentFlamePoint()}");
                 
                 Debug.Log($"upgrade {_upgradeName} from {CurrentValue()} to {NextValue()}");
                 Upgrade();
+                SetValuesToUI();
             });
+        }
+
+        void SetValuesToUI()
+        {
+            upgradeText.text = _upgradeName;
+            valueDiffText.text = $"{CurrentValue()} -> {NextValue()}";
+            costText.text = $"cost: {UpgradeCost()}";
         }
     }
 }
