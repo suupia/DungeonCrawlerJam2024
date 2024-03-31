@@ -115,7 +115,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
         {
             // [pre-condition] _areas should not be empty
             
-            const int enemyCount = 1;
+            int enemyCount = Random.Range(3, 5);
             var spawnPositions = GetSpawnPositions(dungeon, enemyCount);
             foreach (var (x, y) in spawnPositions)
             {
@@ -128,7 +128,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
 
         public DungeonGridMap PlaceTorches(DungeonGridMap dungeon, DungeonSwitcher dungeonSwitcher)
         {
-            const int torchCount = 3;
+            int torchCount = Random.Range(5, 7);
             var spawnPositions = GetSpawnPositions(dungeon, torchCount);
             
             foreach (var (x, y) in spawnPositions)
@@ -141,7 +141,7 @@ namespace DungeonCrawler._01_MapSystem.MapAssembly.Classes
         
         public DungeonGridMap PlaceFoods(DungeonGridMap dungeon, DungeonSwitcher dungeonSwitcher)
         {
-            const int foodCount = 3;
+            int foodCount = Random.Range(3, 5);
             var spawnPositions = GetSpawnPositions(dungeon, foodCount);
             
             foreach (var (x, y) in spawnPositions)
