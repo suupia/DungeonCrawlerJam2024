@@ -55,6 +55,7 @@ public class UpgradeUIMono : MonoBehaviour
                     break;
                 default:
                     Debug.LogWarning($"Unsupported UpgradeKind {upgradeKind}");
+                    break;
             }
         }
         
