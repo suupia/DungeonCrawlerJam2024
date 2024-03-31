@@ -2,6 +2,7 @@
 using System;
 using DungeonCrawler._10_UpgradeSystem.UpgradeAssembly;
 using UnityEngine;
+using VContainer;
 
 namespace DungeonCrawler
 {
@@ -14,10 +15,18 @@ namespace DungeonCrawler
         public int maxHp => CalcMaxHp(_maxHpUpgradeCount);
         public int MaxHpUpgradeDelta => CalcMaxHp(_maxHpUpgradeCount+1) - CalcMaxHp(_maxHpUpgradeCount);
         int _maxHpUpgradeCount;
-        
+
+        FlamePoint _flamePoint;
+
+        [Inject]
+        public PlayerUpgradeStats(FlamePoint flamePoint)
+        {
+            _flamePoint = flamePoint;
+        }
         
         public void Upgrade(UpgradeKind kind)
         {
+            _flamePoint.FlamePointValue -= UpgradeCost(kind);
             switch (kind)
             {
                 case UpgradeKind.PlayerAttack:
@@ -29,14 +38,15 @@ namespace DungeonCrawler
                 default:
                     break;
             }
+            
         }
 
         public int UpgradeCost(UpgradeKind kind)
         {
             switch (kind)
             {
-                case UpgradeKind.PlayerAttack: return _atkUpgradeCount;
-                case UpgradeKind.PlayerHp: return _maxHpUpgradeCount;
+                case UpgradeKind.PlayerAttack: return _atkUpgradeCount + 1;
+                case UpgradeKind.PlayerHp: return _maxHpUpgradeCount + 1;
                 default: 
                     Debug.LogWarning("Unsupported UpgradeKind");
                     return -1;
