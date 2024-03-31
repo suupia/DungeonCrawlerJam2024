@@ -4,6 +4,8 @@ using DungeonCrawler;
 using DungeonCrawler._10_UpgradeSystem.UpgradeAssembly;
 using UnityEngine;
 using VContainer;
+using FlamePoint = DungeonCrawler._10_UpgradeSystem.UpgradeAssembly.FlamePoint;
+
 
 public class UpgradeUIMono : MonoBehaviour
 {
