@@ -7,10 +7,11 @@ namespace DungeonCrawler
 {
     public class FlamePoint
     {
+        const string SaveKey = "FlamePoint";
         public int FlamePointValue
         {
-            get =>  Save.GetFlamePoint(); 
-            set =>  Save.SetFlamePoint(value);
+            get =>  PlayerPrefs.GetInt(SaveKey, 0);
+            set =>  PlayerPrefs.SetInt(SaveKey, value);
         }
 
         public void GainFlamePoint(int value)

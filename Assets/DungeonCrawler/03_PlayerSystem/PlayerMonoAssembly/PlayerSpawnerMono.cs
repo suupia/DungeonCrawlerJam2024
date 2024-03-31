@@ -49,16 +49,20 @@ namespace DungeonCrawler.PlayerMonoAssembly
                     }
                     SpawnPlayer();
                 });
+            
 
-            _gameStateSwitcher.OnGameStateChange += (sender, e) =>
-            {
-                Debug.Log($"GameState Changed: {e.PrevGameState} -> {e.PostGameState}");
-                if (e.PrevGameState == GameStateSwitcher.GameStateEnum.Battling 
-                    && e.PostGameState == GameStateSwitcher.GameStateEnum.AtTitle)
-                {
-                    Reset();
-                }
-            };
+            // _gameStateSwitcher.OnGameStateChange += (sender, e) =>
+            // {
+            //     Debug.Log($"GameState Changed: {e.PrevGameState} -> {e.PostGameState}");
+            //     if (e.PrevGameState == GameStateSwitcher.GameStateEnum.Battling 
+            //         && e.PostGameState == GameStateSwitcher.GameStateEnum.AtTitle)
+            //     {
+            //         Debug.Log("Reset");
+            //         Reset();
+            //         Debug.Log($"spawn");
+            //         SpawnPlayer();
+            //     }
+            // };
         }
         public void SpawnPlayer()
         {
