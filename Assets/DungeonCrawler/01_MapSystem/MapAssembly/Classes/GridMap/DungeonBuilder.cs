@@ -17,7 +17,7 @@ namespace DungeonCrawler.MapAssembly.Classes
 {
     public class DungeonBuilder
     {
-        const int DivideCount = 5;
+        const int DivideCount = 6;
         readonly DivideAreaExecutor _divideAreaExecutor;
         readonly IGridCoordinate _coordinate;
         readonly GridTilePlacer _gridTilePlacer;
