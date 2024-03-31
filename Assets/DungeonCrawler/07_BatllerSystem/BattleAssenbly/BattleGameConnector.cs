@@ -1,6 +1,8 @@
 ﻿#nullable enable
 using System;
+using DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes;
+using UnityEngine;
 
 namespace DungeonCrawler
 {
@@ -9,13 +11,16 @@ namespace DungeonCrawler
     {
         readonly BattleSimulator _battleSimulator;  
         readonly GameStateSwitcher _gameStateSwitcher;
+        readonly PlayerStats _playerStats;
         public BattleGameConnector(
             BattleSimulator battleSimulator,
-            GameStateSwitcher gameStateSwitcher
+            GameStateSwitcher gameStateSwitcher,
+            PlayerStats playerStats
         )
         {
             _battleSimulator = battleSimulator;
             _gameStateSwitcher = gameStateSwitcher;
+            _playerStats = playerStats;
             Init();
         }
 
@@ -27,6 +32,7 @@ namespace DungeonCrawler
             };
             _battleSimulator.OnBattleEnd += (sender, e) =>
             {
+                Debug.Log($"e.IsPlayerWin: {e.IsPlayerWin}");
                 if(e.IsPlayerWin)
                 {
                     _gameStateSwitcher.EnterExploring();
@@ -38,16 +44,25 @@ namespace DungeonCrawler
             };
         }
 
-        public void StartBattle()
+        public void StartBattle(EnemyDomain enemyDomain)
         {
-            var player = new PlayerDomain(100);
-            var enemy = new EnemyDomain(100, 1);
-            _battleSimulator.StartBattle(player, enemy);
+            var player = new PlayerDomain(_playerStats.MaxHp);
+            _battleSimulator.StartBattle(player, enemyDomain);
         }
         
         public void EndBattle()
         {
             _battleSimulator.EndBattle();
+        }
+
+        public void UpdateTurnWithNormalAttack()
+        {
+            _battleSimulator.UpdateTurn(new NormalAttack(_playerStats.Atk));
+        }
+
+        public void UpdateTurnWithSacredAttack()
+        {
+            _battleSimulator.UpdateTurn(new SacredAttack(_playerStats.Atk));
         }
         
         public void RegisterPlayerWinAction(Action action)

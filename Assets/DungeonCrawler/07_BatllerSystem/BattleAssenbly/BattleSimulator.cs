@@ -114,11 +114,11 @@ namespace DungeonCrawler
     }
     public class BattleEndEventArgs : EventArgs
     {
-        public bool IsPlayerWin { get; private set; }
+        public bool IsPlayerWin { get; }
 
-        public BattleEndEventArgs(bool IsPlayerWin)
+        public BattleEndEventArgs(bool isPlayerWin)
         {
-            IsPlayerWin = IsPlayerWin;
+            IsPlayerWin = isPlayerWin;
         }
     }
 }
