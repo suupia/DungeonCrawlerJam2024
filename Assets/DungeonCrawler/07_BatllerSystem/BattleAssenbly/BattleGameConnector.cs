@@ -2,6 +2,7 @@
 using System;
 using DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes;
+using UnityEngine;
 
 namespace DungeonCrawler
 {
@@ -34,6 +35,7 @@ namespace DungeonCrawler
             };
             _battleSimulator.OnBattleEnd += (sender, e) =>
             {
+                Debug.Log($"e.IsPlayerWin: {e.IsPlayerWin}");
                 if(e.IsPlayerWin)
                 {
                     _gameStateSwitcher.EnterExploring();
