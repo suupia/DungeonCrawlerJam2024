@@ -11,6 +11,8 @@ namespace DungeonCrawler
     {
         [SerializeField] CustomButton upgradeCustomButton = null!;
         [SerializeField] TextMeshProUGUI upgradeText = null!;
+        [SerializeField] TextMeshProUGUI valueDiffText = null!;
+        [SerializeField] TextMeshProUGUI costText = null!;
         
         string _upgradeName = null!;
         int _upgradeCost = 0;
@@ -33,6 +35,8 @@ namespace DungeonCrawler
             NextValue = nextValue;
 
             upgradeText.text = _upgradeName;
+            valueDiffText.text = $"{CurrentValue()} -> {NextValue()}";
+            costText.text = $"cost: {cost}";
             upgradeCustomButton.AddListener(() =>
             {
                 if (CurrentFlamePoint()<cost) Debug.Log($"cancel upgrade {_upgradeName}, cost = {cost}, flamePoint = {CurrentFlamePoint()}");
