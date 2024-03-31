@@ -46,7 +46,7 @@ namespace DungeonCrawler
             // Enemy
             
             // Hanger
-            builder.Register<HangerMeter>(Lifetime.Scoped).WithParameter("maxValue",50);
+            builder.Register<HangerMeter>(Lifetime.Scoped).WithParameter("maxValue",500);
             builder.Register<HangerSystem>(Lifetime.Scoped);
 
             // FlamePoint
