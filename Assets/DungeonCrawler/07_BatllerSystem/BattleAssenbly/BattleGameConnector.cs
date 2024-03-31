@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes;
 
 namespace DungeonCrawler
@@ -9,13 +10,19 @@ namespace DungeonCrawler
     {
         readonly BattleSimulator _battleSimulator;  
         readonly GameStateSwitcher _gameStateSwitcher;
+        readonly PlayerStats _playerStats;
+        readonly EnemyStats _enemyStats;
         public BattleGameConnector(
             BattleSimulator battleSimulator,
-            GameStateSwitcher gameStateSwitcher
+            GameStateSwitcher gameStateSwitcher,
+            PlayerStats playerStats,
+            EnemyStats enemyStats
         )
         {
             _battleSimulator = battleSimulator;
             _gameStateSwitcher = gameStateSwitcher;
+            _playerStats = playerStats;
+            _enemyStats = enemyStats;
             Init();
         }
 
@@ -40,8 +47,8 @@ namespace DungeonCrawler
 
         public void StartBattle()
         {
-            var player = new PlayerDomain(100);
-            var enemy = new EnemyDomain(100, 1);
+            var player = new PlayerDomain(_playerStats.MaxHp);
+            var enemy = new EnemyDomain(_enemyStats.MaxHp, _enemyStats.Atk);
             _battleSimulator.StartBattle(player, enemy);
         }
         

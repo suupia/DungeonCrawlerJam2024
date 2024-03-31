@@ -42,6 +42,9 @@ namespace DungeonCrawler
             // Player
             builder.Register<PlayerStats>(Lifetime.Scoped);
             
+            // Enemy
+            builder.Register<EnemyStats>(Lifetime.Scoped);
+            
             // Hanger
             builder.Register<HangerMeter>(Lifetime.Scoped).WithParameter("maxValue",50);
             builder.Register<HangerSystem>(Lifetime.Scoped);

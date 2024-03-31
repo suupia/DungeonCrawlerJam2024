@@ -8,20 +8,20 @@ namespace DungeonCrawler
     {
         const string SaveKey = "PlayerExp";
 
-        public int PlayerExp
+        public int Exp
         {
-            get =>  PlayerPrefs.GetInt(SaveKey, 0);
+            get =>  PlayerPrefs.GetInt(SaveKey, 10);
             set =>  PlayerPrefs.SetInt(SaveKey, value);
         }
-        public int PlayerLevel => CalcLevel(PlayerExp);
-        public int PlayerMaxHp => CalcMaxHp(PlayerLevel);
-        public int PlayerAttack => CalcAttack(PlayerLevel);
+        public int Level => CalcLevel(Exp);
+        public int MaxHp => CalcMaxHp(Level);
+        public int Atk => CalcAtk(Level);
 
         int CalcMaxHp(int level)
         {
             return level * 10;
         }
-        int CalcAttack(int level)
+        int CalcAtk(int level)
         {
             return (int)(level * 1.5);
         }
