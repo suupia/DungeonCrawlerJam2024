@@ -39,12 +39,12 @@ public class BattleUIInputMono : MonoBehaviour
         normalAttackButton.AddListener(() =>
         {
             Debug.Log("Normal Attack");
-            _battleSimulator.UpdateTurn(new NormalAttack(10));
+            _battleGameConnector.UpdateTurnWithNormalAttack();
         });
         sacredAttackButton.AddListener(() =>
         {
             Debug.Log("Sacred Attack");
-            _battleSimulator.UpdateTurn(new SacredAttack(50));
+            _battleGameConnector.UpdateTurnWithSacredAttack();
         });
         
         // ResultUI

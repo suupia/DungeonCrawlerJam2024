@@ -54,6 +54,16 @@ namespace DungeonCrawler
         {
             _battleSimulator.EndBattle();
         }
+
+        public void UpdateTurnWithNormalAttack()
+        {
+            _battleSimulator.UpdateTurn(new NormalAttack(_playerStats.Atk));
+        }
+
+        public void UpdateTurnWithSacredAttack()
+        {
+            _battleSimulator.UpdateTurn(new SacredAttack(_playerStats.Atk));
+        }
         
         public void RegisterPlayerWinAction(Action action)
         {
