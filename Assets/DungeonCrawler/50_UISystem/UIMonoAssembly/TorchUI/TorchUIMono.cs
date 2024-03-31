@@ -1,18 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using DungeonCrawler;
+using R3;
 using UnityEngine;
+using VContainer;
 
 public class TorchUIMono : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] TorchInventoryUIMono _torchInventoryUIMono;
+    
+    TorchSystem _torchSystem = null!;
+
+    [Inject]
+    public void Construct(TorchSystem torchSystem)
     {
-        
+        _torchSystem = torchSystem;
+        SetUp();
     }
 
-    // Update is called once per frame
-    void Update()
+    void SetUp()
     {
-        
+        Observable.EveryValueChanged(this, _ => _torchSystem.TorchInventoryNum())
+            .Subscribe(_ =>
+            {
+                _torchInventoryUIMono.SetTorchInventoryNum( _torchSystem.TorchInventoryNum());
+            }); 
     }
 }
