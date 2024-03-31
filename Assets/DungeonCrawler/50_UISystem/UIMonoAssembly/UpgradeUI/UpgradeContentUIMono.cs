@@ -38,7 +38,7 @@ namespace DungeonCrawler
             {
                 if (_flamePoint.FlamePointValue<cost) Debug.Log($"cancel upgrade {_upgradeName}, cost = {cost}, flamePoint = {_flamePoint.FlamePointValue}");
                 
-                Debug.Log($"upgrade {_upgradeName}");
+                Debug.Log($"upgrade {_upgradeName} from {CurrentValue()} to {NextValue()}");
                 Upgrade();
             });
         }
