@@ -7,6 +7,8 @@ namespace DungeonCrawler
 {
     public class UpgradeContentUIMono : MonoBehaviour
     {
+        [SerializeField] CustomButton upgradeCustomButton = null!;
+        
         string _upgradeName = null!;
         int _upgradeCost = 0;
 
@@ -21,6 +23,11 @@ namespace DungeonCrawler
             Upgrade = upgrade;
             CurrentValue = currentValue;
             NextValue = nextValue;
+            
+            upgradeCustomButton.AddListener(() =>
+            {
+                Debug.Log($"upgrade {_upgradeName}");
+            });
         }
     }
 }
