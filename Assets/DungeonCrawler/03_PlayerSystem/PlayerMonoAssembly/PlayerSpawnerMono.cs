@@ -41,6 +41,8 @@ namespace DungeonCrawler.PlayerMonoAssembly
             Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
                 .Subscribe(_ =>
                 {
+                    Debug.Log($"Subscribe __dungeonSwitcher:{_dungeonSwitcher}");
+                    Debug.Log($"Subscribe Floor:{_dungeonSwitcher.Floor}");
                     Reset();
                     if (_dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap)
                     {
@@ -78,6 +80,7 @@ namespace DungeonCrawler.PlayerMonoAssembly
 
         void Reset()
         {
+            Debug.Log($"PlayerSpawner _playerController:{_playerController}");
             if(_playerController != null) Destroy(_playerController.gameObject);
 
         }

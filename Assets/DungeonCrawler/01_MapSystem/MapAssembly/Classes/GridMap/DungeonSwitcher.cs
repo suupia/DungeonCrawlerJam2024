@@ -36,10 +36,10 @@ namespace DungeonCrawler.MapAssembly.Classes
             return _currentDungeon;
         }
         
-        public void Reset()
+        public void Reset(int value)
         {
-            Floor = 0;
-            _currentDungeon = null;
+            Floor = value;
+            _currentDungeon = _defaultDungeonGridMap;
         }
     }
 }
