@@ -30,8 +30,9 @@ public class BattleUIInputMono : MonoBehaviour
         _gameStateSwitcher = gameStateSwitcher;
         _battleSimulator = battleSimulator;
         _battleGameConnector = battleGameConnector;
+        SetUp();
     }
-    void Start()
+    void SetUp()
     {
         // BattleUI
         normalAttackText.text = "Normal Attack";

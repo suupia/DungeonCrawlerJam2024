@@ -21,9 +21,15 @@ public class UIDomainConnectorMono : MonoBehaviour
     {
         _gameStateSwitcher = gameStateSwitcher;
         _battleSimulator = battleSimulator;
+        SetUp();
     }
-    void Start()
+    void SetUp()
     {
+        Debug.Log($"UIDomainConnectorMono battleUI:{battleUI}");
+        Debug.Log($"UIDomainConnectorMono titleUI:{titleUI}");
+        Debug.Log($"UIDomainConnectorMono _gameStateSwitcher:{_gameStateSwitcher}");
+        Debug.Log($"UIDomainConnectorMono _battleSimulator:{_battleSimulator}");
+        
         // TitleUI
         titleUI.Init();
         Observable.EveryValueChanged(this, _ => _gameStateSwitcher.IsInTitle())
