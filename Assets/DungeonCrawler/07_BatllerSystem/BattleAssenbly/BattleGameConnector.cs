@@ -47,11 +47,10 @@ namespace DungeonCrawler
             };
         }
 
-        public void StartBattle()
+        public void StartBattle(EnemyDomain enemyDomain)
         {
             var player = new PlayerDomain(_playerStats.MaxHp);
-            var enemy = new EnemyDomain(_enemyStats.MaxHp, _enemyStats.Atk);
-            _battleSimulator.StartBattle(player, enemy);
+            _battleSimulator.StartBattle(player, enemyDomain);
         }
         
         public void EndBattle()
