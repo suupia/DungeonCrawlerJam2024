@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using Codice.CM.WorkspaceServer.Tree.GameUI.Checkin.Updater;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Interfaces;
 using DungeonCrawler.MapAssembly.Classes.Entity;

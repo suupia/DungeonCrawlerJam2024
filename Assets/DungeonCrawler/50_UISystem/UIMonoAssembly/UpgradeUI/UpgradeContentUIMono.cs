@@ -1,7 +1,5 @@
 ﻿#nullable enable
 using System;
-using DungeonCrawler._10_UpgradeSystem.UpgradeAssembly;
-using PlasticGui.WebApi.Responses;
 using R3;
 using TMPro;
 using UnityEngine;

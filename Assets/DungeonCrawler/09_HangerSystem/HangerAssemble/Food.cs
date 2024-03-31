@@ -1,8 +1,6 @@
 #nullable enable
 
 using System;
-using Codice.Client.GameUI.Explorer;
-using CodiceApp.EventTracking;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Interfaces;
 using UnityEngine;
