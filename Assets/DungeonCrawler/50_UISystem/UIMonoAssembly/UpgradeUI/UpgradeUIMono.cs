@@ -16,11 +16,21 @@ public class UpgradeUIMono : MonoBehaviour
     [SerializeField] CustomButton closeButton;
 
     FlamePoint _flamePoint;
+    
+    PlayerUpgradeStats _playerUpgradeStats;
+    PlayerStats _playerStats;
+    
 
     [Inject]
-    public void Construct(FlamePoint flamePoint)
+    public void Construct(
+        FlamePoint flamePoint,
+        PlayerUpgradeStats playerUpgradeStats,
+        PlayerStats playerStats
+        )
     {
         _flamePoint = flamePoint;
+        _playerUpgradeStats = playerUpgradeStats;
+        _playerStats = playerStats;
     }
 
     public void Init()
@@ -40,33 +50,35 @@ public class UpgradeUIMono : MonoBehaviour
 
     void InstantiateUpgradeContentUIs()
     {
-        foreach (var upgradeKind in Enum.GetValues(typeof(UpgradeKind)))
+        foreach (UpgradeKind upgradeKind in Enum.GetValues(typeof(UpgradeKind)))
         {
             var upgradeContentUIMono = Instantiate(upgradeContentPrefab, Vector3.zero, Quaternion.identity, upgradeContentsParent.transform);
             
             switch (upgradeKind)
             {
-                case UpgradeKind.Test1:
-                    upgradeContentUIMono.SetUp("test1",
-                        () => { Debug.Log("upgrade test1"); },
-                        () => 10,
-                        () => 10,
-                        () => 20,
-                        () => 100); // the last arg is for test
+                case UpgradeKind.PlayerAttack:
+                    upgradeContentUIMono.SetUp(
+                        "Attack",
+                        () => _playerUpgradeStats.Upgrade(upgradeKind),
+                        () => _playerUpgradeStats.UpgradeCost(upgradeKind),
+                        () => _playerStats.Atk,
+                        () => _playerStats.Atk + _playerUpgradeStats.AtkUpgradeDelta,
+                        () => _flamePoint.FlamePointValue
+                    );
                     break;
-                case UpgradeKind.Test2:
-                    upgradeContentUIMono.SetUp("test2",
-                        () => {Debug.Log("upgrade test2");},
-                        () => 1000,
-                        () => 100,
-                        () => 200,
-                        () => _flamePoint.FlamePointValue);
+                case UpgradeKind.PlayerHp:
+                    upgradeContentUIMono.SetUp("MaxHP",
+                        () => _playerUpgradeStats.Upgrade(upgradeKind),
+                        () => _playerUpgradeStats.UpgradeCost(upgradeKind),
+                        () => _playerStats.MaxHp,
+                        () => _playerStats.MaxHp + _playerUpgradeStats.MaxHpUpgradeDelta,
+                        () => _flamePoint.FlamePointValue
+                    );
                     break;
                 default:
                     Debug.LogWarning($"Unsupported UpgradeKind {upgradeKind}");
                     break;
             }
         }
-        
     }
 }
