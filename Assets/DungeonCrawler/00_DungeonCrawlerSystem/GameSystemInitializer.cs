@@ -15,7 +15,7 @@ namespace DungeonCrawler
     {
         GameStateSwitcher _gameStateSwitcher = null!;
         DungeonSwitcher _dungeonSwitcher = null!;
-        MapBuilderMono _mapBuilderMono = null!;
+        MapBuilderMaterialMono _mapBuilderMono = null!;
         
         PlayerSpawnerMono _playerSpawnerMono = null!;
         
@@ -23,7 +23,7 @@ namespace DungeonCrawler
         public void Construct(
             GameStateSwitcher gameStateSwitcher,
             DungeonSwitcher dungeonSwitcher,
-            MapBuilderMono mapBuilderMono,
+            MapBuilderMaterialMono mapBuilderMono,
             PlayerSpawnerMono playerSpawnerMono
             )
         {
