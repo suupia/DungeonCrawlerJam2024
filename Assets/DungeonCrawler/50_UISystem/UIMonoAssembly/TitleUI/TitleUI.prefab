@@ -446,6 +446,7 @@ MonoBehaviour:
   upgradeButton: {fileID: 8039817470937538117}
   settingsButton: {fileID: 2558898198021090824}
   flamePointText: {fileID: 6451410573726272638}
+  highScoreText: {fileID: 7700407840929348932}
   upgradeUIMono: {fileID: 1270298245729144614}
 --- !u!1 &755023798099073809
 GameObject:

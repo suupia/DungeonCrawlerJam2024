@@ -60,6 +60,9 @@ namespace DungeonCrawler
             
             // UpgradeSystem
             builder.Register<FlamePoint>(Lifetime.Scoped);
+            
+            // save
+            builder.Register<HighScore>(Lifetime.Scoped);
 
 
             // Mono
