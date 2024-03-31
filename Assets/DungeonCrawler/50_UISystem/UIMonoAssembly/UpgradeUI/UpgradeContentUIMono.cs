@@ -18,12 +18,11 @@ namespace DungeonCrawler
         Action Upgrade = () => { };
         Func<int> CurrentValue = () => 0;
         Func<int> NextValue = () => 0;
+        Func<int> CurrentFlamePoint = () => 0;        
 
-        FlamePoint _flamePoint;
-
-        public void SetFlamePoint(FlamePoint flamePoint)
+        public void SetFlamePointGetter(Func<int> currentFlamePoint)
         {
-            _flamePoint = flamePoint;
+            CurrentFlamePoint = currentFlamePoint;
         }
         public void SetUp(string upgradeName, int cost, Action upgrade, Func<int> currentValue, Func<int> nextValue)
         {
@@ -36,7 +35,7 @@ namespace DungeonCrawler
             upgradeText.text = _upgradeName;
             upgradeCustomButton.AddListener(() =>
             {
-                if (_flamePoint.FlamePointValue<cost) Debug.Log($"cancel upgrade {_upgradeName}, cost = {cost}, flamePoint = {_flamePoint.FlamePointValue}");
+                if (CurrentFlamePoint()<cost) Debug.Log($"cancel upgrade {_upgradeName}, cost = {cost}, flamePoint = {CurrentFlamePoint()}");
                 
                 Debug.Log($"upgrade {_upgradeName} from {CurrentValue()} to {NextValue()}");
                 Upgrade();
