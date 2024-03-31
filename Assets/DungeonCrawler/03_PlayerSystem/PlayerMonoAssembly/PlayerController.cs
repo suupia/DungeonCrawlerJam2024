@@ -60,6 +60,7 @@ namespace  DungeonCrawler.PlayerMonoAssembly
             )
         {
             Debug.Log("playerController init");
+            Assert.IsNotNull(player, $" player is null");
             _player = player;
             _dungeonSwitcher = dungeonSwitcher;
             _gameStateSwitcher = gameStateSwitcher;

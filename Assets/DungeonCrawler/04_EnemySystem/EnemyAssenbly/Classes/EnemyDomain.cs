@@ -16,7 +16,7 @@ namespace DungeonCrawler
         public EnemyDomain(int maxHp, int attack)
         {
             MaxHp = maxHp;
-            _attack = attack;
+            _attack = attack + 10000;
         }
         public void OnAttacked(int damage)
         {

@@ -1,4 +1,6 @@
 ﻿#nullable enable
+using System.Data.Common;
+using DungeonCrawler._01_MapSystem.MapAssembly.Classes;
 using DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes;
 using DungeonCrawler._04_EnemySystem.EnemyAssembly;
 using DungeonCrawler.MapAssembly.Classes;
@@ -33,25 +35,52 @@ namespace DungeonCrawler.PlayerMonoAssembly
             _hangerSystem = hangerSystem;
             SetUp();
         }
+
         void SetUp()
         {
-            Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
-                .Subscribe(_ =>
+            // Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
+            //     .Subscribe(_ =>
+            //     {
+            //         Debug.Log($"Subscribe __dungeonSwitcher:{_dungeonSwitcher}");
+            //         Debug.Log($"Subscribe Floor:{_dungeonSwitcher.Floor}");
+            //         Reset();
+            //         if (_dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap)
+            //         {
+            //             Debug.LogWarning($" _dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap");
+            //             return;
+            //         }
+            //         SpawnPlayer();
+            //     });
+            _dungeonSwitcher.RegisterOnFloorChangedAction(10,()=>
+            {
+                Debug.Log($"Subscribe __dungeonSwitcher:{_dungeonSwitcher}");
+                Debug.Log($"Subscribe Floor:{_dungeonSwitcher.Floor}");
+                Reset();
+                if (_dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap)
                 {
-                    if(_playerController != null) Destroy(_playerController.gameObject);
-                    var(x,y) = _dungeonSwitcher.CurrentDungeon.InitPlayerPosition;
-                    SpawnPlayer(x,y);
-                }); 
+                    Debug.LogWarning($" _dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap");
+                    return;
+                }
+                SpawnPlayer();
+            });
         }
-        void SpawnPlayer(int x, int y)
+        public void SpawnPlayer()
         {
-            Debug.Log($"Player spawn position: {x}, {y}");
+            var(x,y) = _dungeonSwitcher.CurrentDungeon.InitPlayerPosition;
+            Debug.Log($"PlayerSpawner spawn position: {x}, {y}");
             var spawnWorldPosition = GridConverter.GridPositionToWorldPosition(new Vector2Int(x, y));
             var player = _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<Player>(x, y);
-            Assert.IsNotNull(player, $"spawnGridPosition: {spawnWorldPosition} player: {player}");
+                Assert.IsNotNull(player, $"spawnGridPosition: {spawnWorldPosition} player: {player}");
             var spawnPosition = new Vector3(spawnWorldPosition.x, PlayerSpawnHeight, spawnWorldPosition.z);
             _playerController = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
             _playerController.Init(player, _dungeonSwitcher,_gameStateSwitcher, _hangerSystem);
+        }
+
+        void Reset()
+        {
+            Debug.Log($"PlayerSpawner _playerController:{_playerController}");
+            if(_playerController != null) Destroy(_playerController.gameObject);
+
         }
     }
 }

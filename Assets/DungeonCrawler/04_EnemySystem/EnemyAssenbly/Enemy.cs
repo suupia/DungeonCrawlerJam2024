@@ -31,7 +31,7 @@ namespace DungeonCrawler._04_EnemySystem.EnemyAssembly
         public void GotOn()
         {
             Debug.Log($"Enemy.GotOn()");
-            _battleGameConnector.OnEnemyLose( () => OnDead(this, EventArgs.Empty));
+            _battleGameConnector.RegisterPlayerWinAction( () => OnDead(this, EventArgs.Empty));
             _battleGameConnector.StartBattle();
             
         }

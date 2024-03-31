@@ -1,6 +1,8 @@
+#nullable enable
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DungeonCrawler._01_MapSystem.MapAssembly.Classes;
 using DungeonCrawler._03_PlayerSystem.PlayerAssembly.Classes;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Interfaces;
@@ -23,11 +25,13 @@ namespace DungeonCrawler
         MiniMapTileMono _playerTile;
         Camera _camera;
 
-        Vector3 _offset = new Vector3(300, 0, 300);
-        Quaternion _rotateOffset = Quaternion.AngleAxis(90, new Vector3(1, 0, 0));
+        readonly Vector3 _offset = new Vector3(300, 0, 300);
+        readonly Quaternion _rotateOffset = Quaternion.AngleAxis(90, new Vector3(1, 0, 0));
         Vector3 _cameraOffset;
 
         DungeonSwitcher _dungeonSwitcher;
+        Player? _player;
+
         
         [Inject]
         public void Construct(
@@ -45,19 +49,34 @@ namespace DungeonCrawler
             
             _playerTile = InstantiateTile();
 
-            Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
+            // Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
+            //     .Subscribe(_ =>
+            //     {
+            //         InitMiniMap();
+            //     });
+            _dungeonSwitcher.RegisterOnFloorChangedAction(20,() =>
+            {
+                InitMiniMap();
+            });
+            Observable.EveryValueChanged(this, _ => _player?.GridPosition())
                 .Subscribe(_ =>
                 {
-                    InitMiniMap();
-                });
-            Observable.EveryValueChanged(this, _ => _player.GridPosition())
-                .Subscribe(_ =>
-                {
+                    if (_dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap)
+                    {
+                        Debug.LogWarning($" _dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap in MiniMapManagerMono");
+                        return;
+                    }
                     ChasePlayerPosition();
                 });
-            Observable.EveryValueChanged(this, _ => _player.CurrentRotation())
+            Observable.EveryValueChanged(this, _ => _player?.CurrentRotation())
                 .Subscribe(_ =>
                 {
+                    if (_dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap)
+                    {
+                        Debug.LogWarning(
+                            $" _dungeonSwitcher.CurrentDungeon is DefaultDungeonGridMap in MiniMapManagerMono");
+                        return;
+                    }
                     ChaisePlayerRotation();
                 });
         }
@@ -123,6 +142,7 @@ namespace DungeonCrawler
 
         void ChasePlayerPosition()
         {
+            if (_player == null) return;
             var (x, y) = _player.GridPosition();
             SetTilePosition(_playerTile, _dungeonSwitcher.CurrentDungeon.Map.ToSubscript(x, y));
 
@@ -132,16 +152,16 @@ namespace DungeonCrawler
 
         void ChaisePlayerRotation()
         {
+            if (_player == null) return;
             _playerTile.transform.rotation = _player.CurrentRotation() * _rotateOffset;
         }
 
-        [CanBeNull] Player _player;
-        void Update()
-        {
-            if(_player != null)
-            {
-                Debug.Log($"player grid position: {_player.GridPosition()}"); 
-            }
-        }
+        // void Update()
+        // {
+        //     if(_player != null)
+        //     {
+        //         Debug.Log($"player grid position: {_player.GridPosition()}"); 
+        //     }
+        // }
     }
 }
