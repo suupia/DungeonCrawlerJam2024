@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5668874802762536548}
   - component: {fileID: 3260511304979303421}
   m_Layer: 5
-  m_Name: FloorText
+  m_Name: TorchInventoryText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,10 +32,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7346513412140076625}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 154.7, y: -48.38}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5668874802762536548
 CanvasRenderer:
@@ -143,7 +143,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7346513412140076625}
-  - component: {fileID: 2243590970569297749}
+  - component: {fileID: 5274619018998757827}
   m_Layer: 5
   m_Name: TorchInventoryUI
   m_TagString: Untagged
@@ -166,12 +166,12 @@ RectTransform:
   - {fileID: 8180871038009142598}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2243590970569297749
+--- !u!114 &5274619018998757827
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7974094451536785690}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b28129a83fcd98544b1d0a98acaa26ef, type: 3}
+  m_Script: {fileID: 11500000, guid: 75cfc3b8f3d10754fbb5b2b1c2802058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorText: {fileID: 3260511304979303421}
+  torchInventoryText: {fileID: 3260511304979303421}
