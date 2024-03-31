@@ -64,6 +64,7 @@ namespace DungeonCrawler
             builder.RegisterComponentInHierarchy<BattleUIInputMono>();
             builder.RegisterComponentInHierarchy<BattleUIOutputMono>();
             builder.RegisterComponentInHierarchy<HangerUIMono>();
+            builder.RegisterComponentInHierarchy<TorchUIMono>();
             
             builder.RegisterComponentInHierarchy<TitleInputMono>();
         }
