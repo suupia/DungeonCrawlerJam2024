@@ -1,7 +1,12 @@
 ﻿#nullable enable
+using DungeonCrawler._10_UpgradeSystem.UpgradeAssembly;
+using R3;
+using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.Utilities;
 using UnityEngine.Serialization;
 using VContainer;
+using Observable = R3.Observable; 
 
 namespace DungeonCrawler
 {
@@ -10,18 +15,21 @@ namespace DungeonCrawler
         [SerializeField] CustomButton startButton = null!;
         [SerializeField] CustomButton upgradeButton = null!;
         [SerializeField] CustomButton settingsButton = null!;
+        [SerializeField] TextMeshProUGUI flamePointText = null!;
 
         
         [Header("Upgrade")]
         [SerializeField] UpgradeUIMono upgradeUIMono;
-        
-        
+
+        FlamePoint _flamePoint;
         GameStateSwitcher _gameStateSwitcher;
         
         [Inject]
-        public void Init(GameStateSwitcher gameStateSwitcher)
+        public void Init(GameStateSwitcher gameStateSwitcher, FlamePoint flamePoint)
         {
             _gameStateSwitcher = gameStateSwitcher;
+            _flamePoint = flamePoint;
+            
             SetUp();
         }
 
@@ -38,6 +46,11 @@ namespace DungeonCrawler
                 Debug.Log($"Open Upgrade");
                 upgradeUIMono.ShowUpgradeUI();
             });
+            Observable.EveryValueChanged(this, _ => _flamePoint.FlamePointValue)
+                .Subscribe(_ =>
+                {
+                    flamePointText.text =$"Flame point : {_flamePoint.FlamePointValue}";
+                });
         }
     }
 }
