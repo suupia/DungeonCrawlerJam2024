@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using Codice.CM.WorkspaceServer.Tree.GameUI.Checkin.Updater;
 using DungeonCrawler.MapAssembly.Classes;
 using DungeonCrawler.MapAssembly.Interfaces;
 using DungeonCrawler.MapAssembly.Classes.Entity;
@@ -17,33 +18,38 @@ namespace DungeonCrawler.MapMonoAssembly
         
         [SerializeField] MeshRenderer floorMeshRenderer = null!;
         [SerializeField] MeshRenderer[] wallMeshRenderers = null!;
-        [SerializeField] TextMeshPro debugText = null!;
 
         public void ResetSprites()
         {
-            floorMeshRenderer.material = null;
+            floorMeshRenderer.gameObject.SetActive(false);
             foreach(var wallSpriteRenderer in wallMeshRenderers)
             {
-                wallSpriteRenderer.material = null;
+                wallSpriteRenderer.gameObject.SetActive(false);
             }
         }
         public void SetFloorSprite(IGridTile gridTile)
         {
+            floorMeshRenderer.gameObject.SetActive(true);
+
             if(gridTile is CharacterWall)
             {
+                // floorMeshRenderer.gameObject.SetActive(true);
                 floorMeshRenderer.material = wallMaterial;
             }
             else if(gridTile is CharacterPath)
             {
+                // floorMeshRenderer.gameObject.SetActive(true);
                 floorMeshRenderer.material = pathMaterial;
             }
             else if(gridTile is CharacterRoom)
             {
+                // floorMeshRenderer.gameObject.SetActive(true);
                 floorMeshRenderer.material = roomMaterial;
             }
             else
             {
                 Debug.LogError("Unknown entity");
+                
             }
             
         }
@@ -52,25 +58,26 @@ namespace DungeonCrawler.MapMonoAssembly
         {
             if(gridTile is CharacterWall)
             {
+                wallMeshRenderers[direction.Id].gameObject.SetActive(true);
                 wallMeshRenderers[direction.Id].material = wallMaterial;
             }
             else if(gridTile is CharacterPath)
             {
-                wallMeshRenderers[direction.Id].material = null;
+                wallMeshRenderers[direction.Id].gameObject.SetActive(false);
             }
             else if(gridTile is CharacterRoom)
             {
-                wallMeshRenderers[direction.Id].material = null;
+                wallMeshRenderers[direction.Id].gameObject.SetActive(false);
             }
             else
             {
-                wallMeshRenderers[direction.Id].material = null;
+                wallMeshRenderers[direction.Id].gameObject.SetActive(false);
             }
         }
         
         public void SetDebugText(string text)
         {
-            debugText.text = text;
+            
         }
 
     }

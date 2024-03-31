@@ -61,7 +61,7 @@ namespace DungeonCrawler
 
 
             // Mono
-            builder.RegisterComponentInHierarchy<MapBuilderMono>();
+            builder.RegisterComponentInHierarchy<MapBuilderMaterialMono>();
             builder.RegisterComponentInHierarchy<PlayerSpawnerMono>();
             builder.RegisterComponentInHierarchy<GameSystemInitializer>();
             builder.RegisterComponentInHierarchy<EnemySpawnerMono>();
