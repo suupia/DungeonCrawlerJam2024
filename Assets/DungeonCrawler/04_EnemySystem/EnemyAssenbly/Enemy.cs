@@ -13,6 +13,7 @@ namespace DungeonCrawler._04_EnemySystem.EnemyAssembly
         public Func<(int x, int y)> GridPosition = () => (0, 0);
         readonly BattleGameConnector _battleGameConnector;
         readonly DungeonSwitcher _dungeonSwitcher;
+        readonly EnemyDomain _enemyDomain;
         
         public Enemy(
             BattleGameConnector battleGameConnector,
@@ -26,13 +27,15 @@ namespace DungeonCrawler._04_EnemySystem.EnemyAssembly
                 Debug.Log("Enemy.OnDead()");
                 _dungeonSwitcher.CurrentDungeon.Map.RemoveEntity(GridPosition().x,GridPosition().y, this);
             };
+            var enemyStats = new EnemyStats( () => _dungeonSwitcher.Floor+1);
+            _enemyDomain = new EnemyDomain(enemyStats.MaxHp, enemyStats.Atk);
         }
         
         public void GotOn()
         {
             Debug.Log($"Enemy.GotOn()");
             _battleGameConnector.RegisterPlayerWinAction( () => OnDead(this, EventArgs.Empty));
-            _battleGameConnector.StartBattle();
+            _battleGameConnector.StartBattle(_enemyDomain);
             
         }
   

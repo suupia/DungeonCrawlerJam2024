@@ -14,7 +14,7 @@ public class EnemySpawnerMono : MonoBehaviour
     const float EnemySpawnHeight = 1.0f;
     
     DungeonSwitcher _dungeonSwitcher = null!;
-    EnemyControllerMono? _enemyController;
+    readonly List<EnemyControllerMono> _enemyControllers = new ();
     
     [Inject]
     public void Construct(DungeonSwitcher dungeonSwitcher)
@@ -28,8 +28,14 @@ public class EnemySpawnerMono : MonoBehaviour
         Observable.EveryValueChanged(this, _ => _dungeonSwitcher.Floor)
             .Subscribe(_ =>
             {
-                if(_enemyController != null) Destroy(_enemyController.gameObject);
-                foreach (var (x, y) in _dungeonSwitcher.CurrentDungeon.InitEnemyPositions)
+                foreach (var enemyController in _enemyControllers)
+                {
+                    if (enemyController == null) continue;
+                    Destroy(enemyController.gameObject);
+                }
+                _enemyControllers.Clear();
+                var positions = _dungeonSwitcher.CurrentDungeon.InitEnemyPositions;
+                foreach (var (x,y) in positions)
                 {
                     SpawnEnemy(x,y);
                 }
@@ -42,7 +48,8 @@ public class EnemySpawnerMono : MonoBehaviour
         var enemy = _dungeonSwitcher.CurrentDungeon.Map.GetSingleEntity<Enemy>(x, y);
         Assert.IsNotNull(enemy);
         var spawnPosition = new Vector3(spawnGridPosition.x, EnemySpawnHeight, spawnGridPosition.z);
-        _enemyController = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-        _enemyController.Construct(enemy);
+        var enemyController = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+        enemyController.Construct(enemy);
+        _enemyControllers.Add(enemyController);
     }
 }
