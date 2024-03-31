@@ -6,6 +6,7 @@ using R3;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.Utilities;
+using UnityEngine.UI;
 using Observable = R3.Observable;
 
 namespace DungeonCrawler
@@ -40,6 +41,15 @@ namespace DungeonCrawler
                     var isEnbale = CurrentFlamePoint() >= UpgradeCost();
                     Debug.Log($"upgrade {_upgradeName} isEnable {isEnbale}");
                     upgradeCustomButton.ChangeEnableState(isEnbale);
+
+                    if (isEnbale)
+                    {
+                        upgradeCustomButton.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                    }
+                    else
+                    {
+                        upgradeCustomButton.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+                    }
                 }); 
 
             
