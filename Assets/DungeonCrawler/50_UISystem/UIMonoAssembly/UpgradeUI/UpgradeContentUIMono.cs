@@ -70,7 +70,7 @@ namespace DungeonCrawler
         void SetValuesToUI()
         {
             upgradeText.text = _upgradeName;
-            valueDiffText.text = $"{CurrentValue()} -> {NextValue()}";
+            valueDiffText.text = $"{CurrentValue()} to {NextValue()}";
             costText.text = $"cost: {UpgradeCost()}";
         }
     }
