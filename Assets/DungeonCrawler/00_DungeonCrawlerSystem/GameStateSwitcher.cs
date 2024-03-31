@@ -26,7 +26,7 @@ namespace DungeonCrawler
         {
             { GameStateEnum.None, new() { GameStateEnum.None, GameStateEnum.AtTitle,GameStateEnum.Exploring, GameStateEnum.Battling, GameStateEnum.InSettings}}, 
             { GameStateEnum.AtTitle, new() { GameStateEnum.Exploring, GameStateEnum.InSettings}},
-            { GameStateEnum.Exploring, new() { GameStateEnum.Battling, GameStateEnum.InSettings}},
+            { GameStateEnum.Exploring, new() { GameStateEnum.Battling, GameStateEnum.InSettings, GameStateEnum.AtTitle}},
             { GameStateEnum.Battling, new() { GameStateEnum.AtTitle, GameStateEnum.Exploring, GameStateEnum.InSettings}},
             { GameStateEnum.InSettings, new() {GameStateEnum.AtTitle, GameStateEnum.Exploring, GameStateEnum.Battling}},
         };
