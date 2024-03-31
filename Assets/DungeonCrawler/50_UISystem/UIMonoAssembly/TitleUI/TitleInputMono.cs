@@ -22,6 +22,8 @@ namespace DungeonCrawler
         [Header("Upgrade")]
         [SerializeField] UpgradeUIMono upgradeUIMono;
 
+        [SerializeField] SettingUIMono settingUIMono;
+
         FlamePoint _flamePoint;
         HighScore _highScore;
         GameStateSwitcher _gameStateSwitcher;
@@ -52,6 +54,11 @@ namespace DungeonCrawler
             {
                 Debug.Log($"Open Upgrade");
                 upgradeUIMono.ShowUpgradeUI();
+            });
+            settingsButton.AddListener(() =>
+            {
+                Debug.Log($"Open Setting");
+                settingUIMono.ShowSettingUI();
             });
             Observable.EveryValueChanged(this, _ => _flamePoint.FlamePointValue)
                 .Subscribe(_ =>
