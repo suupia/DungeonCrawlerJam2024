@@ -39,6 +39,9 @@ namespace DungeonCrawler
             builder.Register<BattleSimulator>(Lifetime.Scoped);
             builder.Register<BattleGameConnector>(Lifetime.Scoped);
             
+            // Player
+            builder.Register<PlayerStats>(Lifetime.Scoped);
+            
             // Hanger
             builder.Register<HangerMeter>(Lifetime.Scoped).WithParameter("maxValue",50);
             builder.Register<HangerSystem>(Lifetime.Scoped);
@@ -69,6 +72,7 @@ namespace DungeonCrawler
             builder.RegisterComponentInHierarchy<BattleUIOutputMono>();
             builder.RegisterComponentInHierarchy<HangerUIMono>();
             builder.RegisterComponentInHierarchy<TorchUIMono>();
+            builder.RegisterComponentInHierarchy<StatsUIMono>();
             
             builder.RegisterComponentInHierarchy<TitleInputMono>();
         }
