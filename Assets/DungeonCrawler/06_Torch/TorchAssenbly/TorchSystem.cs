@@ -10,6 +10,12 @@ namespace DungeonCrawler
     public class TorchSystem
     {
         TorchInventory _torchInventory;
+
+        public int TorchInventoryNum()
+        {
+            return _torchInventory.Value;
+        }
+        
         
         [Inject]
         public TorchSystem(TorchInventory torchInventory)

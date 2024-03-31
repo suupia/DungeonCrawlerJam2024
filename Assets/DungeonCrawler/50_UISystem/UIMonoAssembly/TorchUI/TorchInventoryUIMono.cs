@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using DungeonCrawler;
+using DungeonCrawler.MapAssembly.Classes;
+using R3;
+using TMPro;
 using UnityEngine;
+using VContainer;
 
 public class TorchInventoryUIMono : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] TextMeshProUGUI torchInventoryText = null!;
 
-    // Update is called once per frame
-    void Update()
+    public void SetTorchInventoryNum(int num)
     {
-        
+        torchInventoryText.text = $"Torch: {num}";
     }
 }
