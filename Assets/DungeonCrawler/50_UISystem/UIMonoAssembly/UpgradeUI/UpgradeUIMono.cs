@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DungeonCrawler;
@@ -38,5 +39,24 @@ public class UpgradeUIMono : MonoBehaviour
 
     void InstantiateUpgradeContentUIs()
     {
-        Instantiate(upgradeContentPrefab, Vector3.zero, Quaternion.identity, upgradeContentsParent.transform);    }
+        foreach (var upgradeKind in Enum.GetValues(typeof(UpgradeKind)))
+        {
+            var upgradeContentUIMono = Instantiate(upgradeContentPrefab, Vector3.zero, Quaternion.identity, upgradeContentsParent.transform);
+            
+            switch (upgradeKind)
+            {
+                case UpgradeKind.Test1:
+                    upgradeContentUIMono.SetUp("test1", 10,
+                        () => {Debug.Log("upgrade test1");},
+                        () => 0,
+                        () => 1);
+                    break;
+                case UpgradeKind.Test2:
+                    break;
+                default:
+                    Debug.LogWarning($"Unsupported UpgradeKind {upgradeKind}");
+            }
+        }
+        
+    }
 }
