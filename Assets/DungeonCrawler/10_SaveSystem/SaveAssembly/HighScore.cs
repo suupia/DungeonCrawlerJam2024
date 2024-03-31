@@ -12,9 +12,9 @@ namespace DungeonCrawler._10_UpgradeSystem.UpgradeAssembly
             set =>  PlayerPrefs.SetInt(SaveKey, value);
         }
 
-        public void GainFlamePoint(int value)
+        public void SetHighScore(int value)
         {
-            Debug.Log($"Gain HighScore {value}");
-            HighScoreValue += value;
+            HighScoreValue = Mathf.Max(HighScoreValue, value);
+            Debug.Log($"HighScore {HighScoreValue}");
         }
     }}

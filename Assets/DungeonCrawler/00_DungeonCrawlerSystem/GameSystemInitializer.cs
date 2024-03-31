@@ -21,6 +21,7 @@ namespace DungeonCrawler
         PlayerSpawnerMono _playerSpawnerMono = null!;
 
         FlamePoint _flamePoint = null!;
+        HighScore _highScore = null!;
         
         [Inject]
         public void Construct(
@@ -28,7 +29,8 @@ namespace DungeonCrawler
             DungeonSwitcher dungeonSwitcher,
             MapBuilderMaterialMono mapBuilderMono,
             PlayerSpawnerMono playerSpawnerMono,
-            FlamePoint flamePoint
+            FlamePoint flamePoint,
+            HighScore highScore
             )
         {
             _gameStateSwitcher = gameStateSwitcher;
@@ -36,6 +38,7 @@ namespace DungeonCrawler
             _mapBuilderMono = mapBuilderMono;
             _playerSpawnerMono = playerSpawnerMono;
             _flamePoint = flamePoint;
+            _highScore = highScore;
 
             SetUp();
         }
@@ -53,7 +56,8 @@ namespace DungeonCrawler
                     && e.PostGameState == GameStateSwitcher.GameStateEnum.AtTitle)
                 {
                     _flamePoint.GainFlamePoint(_dungeonSwitcher.Floor);
-                    
+                    _highScore.SetHighScore(_dungeonSwitcher.Floor);
+                        
                     Debug.Log($"_dungeonSwitcher.Reset()");
                     _dungeonSwitcher.Reset(0);
                     _mapBuilderMono.BuildFirstDungeon();
